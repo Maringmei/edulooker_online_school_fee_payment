@@ -30,7 +30,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     admissionNumber.dispose();
     mNumber.dispose();
     super.dispose();
@@ -87,7 +86,32 @@ class _LoginPageState extends State<LoginPage> {
               fontSize: 13,
             ),
             Gap(5),
-            InputText(hint: "DD/MM/YYYY"),
+            InkWell(
+              onTap: () {},
+              child: Container(
+                height: 40,
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    color: KColor.filledColor,
+                    borderRadius: BorderRadius.circular(5)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 5.0),
+                      child: TextWidget(
+                        text: dob != null ? dob! : "DD MM YYYY",
+                        tColor: dob != null ? KColor.black : KColor.subText,
+                      ),
+                    ),
+                    Icon(
+                      Icons.calendar_month,
+                      size: 15,
+                    )
+                  ],
+                ),
+              ),
+            ),
             Gap(10),
             // mobile number
             TextWidget(
@@ -103,10 +127,10 @@ class _LoginPageState extends State<LoginPage> {
               text: "Submit",
               onTap: () async {
                 String admissonNumber = "2335";
-              //  String admissonNumber = "2333";
+                //  String admissonNumber = "2333";
                 String dateOfBirth = "1998-01-03";
                 String mobileNumber = "7005807751";
-               // String mobileNumber = "9501179924";
+                // String mobileNumber = "9501179924";
                 await apiRepo
                     .sendOtp(
                         context: context,
@@ -116,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                     .then((value) {
                   if (value == true) {
                     showDialog(
-                        context: context,
+                        context: context.mounted ? context : context,
                         builder: (context) {
                           return OtpDialog(
                             context: context,
