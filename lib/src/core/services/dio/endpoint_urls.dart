@@ -13,5 +13,5 @@ class Endpoint {
   static const String studentProfile = "${group}student";
 
   //fee details
-  static const String feeDetails = "${group}student/fee?fee_type=";
+  static const String feeDetails = "${group}student/fee?fee_type=1";
 }

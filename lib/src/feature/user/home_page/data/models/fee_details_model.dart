@@ -4,11 +4,9 @@
 
 import 'dart:convert';
 
-FeeDetailsModel feeDetailsModelFromJson(String str) =>
-    FeeDetailsModel.fromJson(json.decode(str));
+FeeDetailsModel feeDetailsModelFromJson(String str) => FeeDetailsModel.fromJson(json.decode(str));
 
-String feeDetailsModelToJson(FeeDetailsModel data) =>
-    json.encode(data.toJson());
+String feeDetailsModelToJson(FeeDetailsModel data) => json.encode(data.toJson());
 
 class FeeDetailsModel {
   bool? success;
@@ -21,26 +19,21 @@ class FeeDetailsModel {
     this.message,
   });
 
-  factory FeeDetailsModel.fromJson(Map<String, dynamic> json) =>
-      FeeDetailsModel(
-        success: json["success"],
-        data: json["data"] == null
-            ? []
-            : List<FeeData>.from(json["data"]!.map((x) => FeeData.fromJson(x))),
-        message: json["message"],
-      );
+  factory FeeDetailsModel.fromJson(Map<String, dynamic> json) => FeeDetailsModel(
+    success: json["success"],
+    data: json["data"] == null ? [] : List<FeeData>.from(json["data"]!.map((x) => FeeData.fromJson(x))),
+    message: json["message"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "success": success,
-        "data": data == null
-            ? []
-            : List<dynamic>.from(data!.map((x) => x.toJson())),
-        "message": message,
-      };
+    "success": success,
+    "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
+    "message": message,
+  };
 }
 
 class FeeData {
-  String? amount;
+  String? id;
   String? recievedAmount;
   String? feeId;
   String? paymentOf;
@@ -52,7 +45,7 @@ class FeeData {
   ExtraFee? extraFee;
 
   FeeData({
-    this.amount,
+    this.id,
     this.recievedAmount,
     this.feeId,
     this.paymentOf,
@@ -65,39 +58,37 @@ class FeeData {
   });
 
   factory FeeData.fromJson(Map<String, dynamic> json) => FeeData(
-        amount: json["amount"],
-        recievedAmount: json["recievedAmount"],
-        feeId: json["feeId"],
-        paymentOf: json["payment_of"],
-        paymentFor: json["payment_for"],
-        status: json["status"],
-        feeExempted: json["feeExempted"],
-        receivedDate: json["receivedDate"],
-        receiptNo: json["receiptNo"],
-        extraFee: json["extra_fee"] == null
-            ? null
-            : ExtraFee.fromJson(json["extra_fee"]),
-      );
+    id: json["id"],
+    recievedAmount: json["recievedAmount"],
+    feeId: json["feeId"],
+    paymentOf: json["payment_of"],
+    paymentFor: json["payment_for"],
+    status: json["status"],
+    feeExempted: json["feeExempted"],
+    receivedDate: json["receivedDate"],
+    receiptNo: json["receiptNo"],
+    extraFee: json["extra_fee"] == null ? null : ExtraFee.fromJson(json["extra_fee"]),
+  );
 
   Map<String, dynamic> toJson() => {
-        "amount": amount,
-        "recievedAmount": recievedAmount,
-        "feeId": feeId,
-        "payment_of": paymentOf,
-        "payment_for": paymentFor,
-        "status": status,
-        "feeExempted": feeExempted,
-        "receivedDate": receivedDate,
-        "receiptNo": receiptNo,
-        "extra_fee": extraFee?.toJson(),
-      };
+    "id": id,
+    "recievedAmount": recievedAmount,
+    "feeId": feeId,
+    "payment_of": paymentOf,
+    "payment_for": paymentFor,
+    "status": status,
+    "feeExempted": feeExempted,
+    "receivedDate": receivedDate,
+    "receiptNo": receiptNo,
+    "extra_fee": extraFee?.toJson(),
+  };
 }
 
 class ExtraFee {
   String? fee;
-  dynamic fine;
-  int? disc;
-  int? pay;
+  String? fine;
+  String? disc;
+  String? pay;
   List<dynamic>? defParts;
 
   ExtraFee({
@@ -109,21 +100,18 @@ class ExtraFee {
   });
 
   factory ExtraFee.fromJson(Map<String, dynamic> json) => ExtraFee(
-        fee: json["fee"],
-        fine: json["fine"],
-        disc: json["disc"],
-        pay: json["pay"],
-        defParts: json["defParts"] == null
-            ? []
-            : List<dynamic>.from(json["defParts"]!.map((x) => x)),
-      );
+    fee: json["fee"],
+    fine: json["fine"],
+    disc: json["disc"],
+    pay: json["pay"],
+    defParts: json["defParts"] == null ? [] : List<dynamic>.from(json["defParts"]!.map((x) => x)),
+  );
 
   Map<String, dynamic> toJson() => {
-        "fee": fee,
-        "fine": fine,
-        "disc": disc,
-        "pay": pay,
-        "defParts":
-            defParts == null ? [] : List<dynamic>.from(defParts!.map((x) => x)),
-      };
+    "fee": fee,
+    "fine": fine,
+    "disc": disc,
+    "pay": pay,
+    "defParts": defParts == null ? [] : List<dynamic>.from(defParts!.map((x) => x)),
+  };
 }

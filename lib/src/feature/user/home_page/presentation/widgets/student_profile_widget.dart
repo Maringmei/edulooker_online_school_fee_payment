@@ -36,7 +36,7 @@ class StudentProfileWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextWidget(
-                  text: "Maringmei Shengang Kabui",
+                  text: studentData!.name!,
                   fontSize: 16,
                   fontWeight: 600,
                 ),

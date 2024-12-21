@@ -102,11 +102,11 @@ class _LoginPageState extends State<LoginPage> {
             ButtonWidget(
               text: "Submit",
               onTap: () async {
-                //String admissonNumber = "2335";
-                String admissonNumber = "2333";
+                String admissonNumber = "2335";
+              //  String admissonNumber = "2333";
                 String dateOfBirth = "1998-01-03";
-                // String mobileNumber = "7005807751";
-                String mobileNumber = "9501179924";
+                String mobileNumber = "7005807751";
+               // String mobileNumber = "9501179924";
                 await apiRepo
                     .sendOtp(
                         context: context,
