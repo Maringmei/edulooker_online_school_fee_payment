@@ -80,20 +80,22 @@ class HostelFeeWidget extends StatelessWidget {
                                     fontSize: 18,
                                   ),
                                   Gap(10),
-                                  if (data.status != TransactionStatus.upPaid)
+                                  if (data.status != TransactionStatus.deleted && data.status != TransactionStatus.upPaid)
                                     Container(
                                       padding: EdgeInsets.all(2),
                                       decoration: BoxDecoration(
                                           color: data.status ==
-                                                  TransactionStatus.paid
+                                              TransactionStatus.paid
                                               ? KColor.green
                                               : data.status ==
-                                                      TransactionStatus
-                                                          .initiated
-                                                  ? KColor.pending
-                                                  : KColor.white,
+                                              TransactionStatus
+                                                  .initiated
+                                              ? KColor.pending
+                                              :  data.status ==
+                                              TransactionStatus
+                                                  .failed ? KColor.red : Colors.transparent,
                                           borderRadius:
-                                              BorderRadius.circular(10)),
+                                          BorderRadius.circular(10)),
                                       child: TextWidget(
                                         text: data.statusDesp!,
                                         fontWeight: 600,

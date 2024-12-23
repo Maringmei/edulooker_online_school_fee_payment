@@ -15,15 +15,10 @@ final GoRouter router = GoRouter(
       builder: (context, state) => LoginPage(),
       redirect: (context, state) async {
         String? token = await Store.getToken();
-        if (token != null) {
-          bool isTokenExp = isTokenExpired(token);
-          if (isTokenExp) {
-            return RouteList.login;
-          } else {
-            return null;
-          }
+        if (token == null) {
+          return null;
         } else {
-          return RouteList.login;
+          return RouteList.home;
         }
       },
     ),

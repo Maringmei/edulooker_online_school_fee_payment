@@ -4,16 +4,14 @@ import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/w
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/widgets/student_profile_widget.dart';
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/widgets/transport_fee_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:js/js.dart';
-
 import '../../../../../core/constants/colors/color_constants.dart';
-import '../../../../../core/constants/symbols/symbols_constants.dart';
-import '../../../../../core/constants/widgets/loading_shimmer.dart';
+import '../../../../../core/constants/widgets/logout_dialog.dart';
 import '../../../../../core/constants/widgets/text_widgets.dart';
-import '../../../../../core/utils/download_file.dart';
-import '../manager/bloc/fee_details_cubit/fee_details_cubit.dart';
+import '../../../../../core/storage/storage.dart';
+import '../../../../../route/router_list.dart';
 import '../widgets/hostel_fee_widget.dart';
 import '../widgets/tuition_fee_widget.dart';
 
@@ -32,16 +30,49 @@ class HomePage extends StatelessWidget {
         body: WidgetSpacing.padding(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              TopTitle(
-                pageName: KString.topTitle,
-                enableBackButton: false,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TopTitle(
+                    pageName: KString.topTitle,
+                    enableBackButton: false,
+                  ),
+                  IconButton(
+                      onPressed: () async {
+                        await showDialog(
+                          context: context,
+                          builder: (context) {
+                            return LogoutDialog(context: context);
+                          },
+                        ).then((value) {
+                          if (value == true) {
+                            Store.clear();
+                            context.go(RouteList.login);
+                          }
+                        });
+                      },
+                      icon: Column(
+                        children: [
+                          Icon(
+                            Icons.logout,
+                            color: KColor.red,
+                            size: 14,
+                          ),
+                          TextWidget(
+                            text: "Logout",
+                            fontSize: 8,
+                            tColor: KColor.red,
+                          )
+                        ],
+                      ))
+                ],
               ),
               Gap(30),
               StudentProfileWidget(),
               Gap(10),
               Container(
-                alignment: Alignment.centerLeft,
                 child: TabBar(
                   labelColor: KColor.appColor,
                   unselectedLabelColor: KColor.black,
@@ -64,9 +95,9 @@ class HomePage extends StatelessWidget {
               Expanded(
                 child: TabBarView(
                   children: [
-                    Center(child: TuitionFeeWidget()),
-                    Center(child: TransportFeeWidget()),
-                    Center(child: HostelFeeWidget()),
+                    TuitionFeeWidget(),
+                    TransportFeeWidget(),
+                    HostelFeeWidget(),
                   ],
                 ),
               ),

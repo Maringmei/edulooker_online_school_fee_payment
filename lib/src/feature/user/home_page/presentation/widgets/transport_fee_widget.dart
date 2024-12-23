@@ -79,7 +79,7 @@ class TransportFeeWidget extends StatelessWidget {
                                     fontSize: 18,
                                   ),
                                   Gap(10),
-                                  if (data.status != TransactionStatus.upPaid)
+                                  if (data.status != TransactionStatus.deleted && data.status != TransactionStatus.upPaid)
                                     Container(
                                       padding: EdgeInsets.all(2),
                                       decoration: BoxDecoration(
@@ -90,7 +90,9 @@ class TransportFeeWidget extends StatelessWidget {
                                               TransactionStatus
                                                   .initiated
                                               ? KColor.pending
-                                              : KColor.white,
+                                              :  data.status ==
+                                              TransactionStatus
+                                                  .failed ? KColor.red : Colors.transparent,
                                           borderRadius:
                                           BorderRadius.circular(10)),
                                       child: TextWidget(

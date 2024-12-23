@@ -10,6 +10,7 @@ import 'package:gap/gap.dart';
 import '../../../../../core/constants/colors/color_constants.dart';
 import '../../../../../core/constants/symbols/symbols_constants.dart';
 import '../../../../../core/constants/widgets/loading_shimmer.dart';
+import '../../../../../core/constants/widgets/text_span_widgets.dart';
 import '../../../../../core/constants/widgets/text_widgets.dart';
 import '../../../../../core/services/js_services.dart';
 import '../../../../../core/utils/download_file.dart';
@@ -23,6 +24,11 @@ class TuitionFeeWidget extends StatelessWidget {
   TuitionFeeWidget({super.key});
 
   CreateFeePaymentRepo apiRepo = CreateFeePaymentRepo();
+  TextSpan getSpan() {
+    return TextSpan(
+      text: "text",
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +60,13 @@ class TuitionFeeWidget extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            TextWidget(
-                                text: "${data.paymentFor!} ${data.paymentOf!}"),
+                            TextRowWidget(
+                              children: [
+                                TextWidget(text: "${data.paymentFor!} "),
+                                TextWidget(text: "${data.paymentOf!}", fontWeight: 700,),
+                              ],
+                            ),
+
                             TextWidget(
                                 text: data.receivedDate!.isNotEmpty
                                     ? data.receivedDate!
@@ -82,7 +93,7 @@ class TuitionFeeWidget extends StatelessWidget {
                                     fontSize: 18,
                                   ),
                                   Gap(10),
-                                  if (data.status != TransactionStatus.upPaid)
+                                  if (data.status != TransactionStatus.deleted && data.status != TransactionStatus.upPaid)
                                     Container(
                                       padding: EdgeInsets.all(2),
                                       decoration: BoxDecoration(
@@ -93,7 +104,9 @@ class TuitionFeeWidget extends StatelessWidget {
                                                       TransactionStatus
                                                           .initiated
                                                   ? KColor.pending
-                                                  : KColor.white,
+                                                  :  data.status ==
+                                              TransactionStatus
+                                                  .failed ? KColor.red : Colors.transparent,
                                           borderRadius:
                                               BorderRadius.circular(10)),
                                       child: TextWidget(
