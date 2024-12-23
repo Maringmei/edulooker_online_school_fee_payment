@@ -10,6 +10,7 @@ import 'package:gap/gap.dart';
 import '../../../../../core/constants/colors/color_constants.dart';
 import '../../../../../core/constants/images/images_constants.dart';
 import '../../../../../core/constants/strings/strings_constants.dart';
+import '../../../../../core/utils/date_picker.dart';
 import '../../data/models/login_data_model.dart';
 import '../widgets/verify_otp_dialog.dart';
 
@@ -26,6 +27,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController admissionNumber = TextEditingController();
   TextEditingController mNumber = TextEditingController();
   String? dob;
+  String? formatedDate;
   String? schoolID;
 
   @override
@@ -87,7 +89,15 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Gap(5),
             InkWell(
-              onTap: () {},
+              onTap: () async {
+                var (startDate, endDate, formatedDate) =
+                    await datePicker(context);
+                dob = formatedDate;
+                formatedDate = formatedDate;
+                setState(() {
+
+                });
+              },
               child: Container(
                 height: 40,
                 padding: EdgeInsets.all(10),

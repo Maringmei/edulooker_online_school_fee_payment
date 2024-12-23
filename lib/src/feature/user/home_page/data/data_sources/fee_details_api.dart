@@ -17,9 +17,10 @@ class FeeDetailsAPI {
   final String _url = Endpoint.feeDetails;
 
   /// student profile
-  Future<FeeDetailsModel> getFeeDetails() async {
+  Future<FeeDetailsModel> getFeeDetails({required String id}) async {
     try {
-      final response = await _dio.get(_url);
+      final response = await _dio.get(_url + id);
+      print("Response data: " + response.data.runtimeType.toString());
 
       if (response.statusCode == 200) {
         final responseData = response.data;

@@ -13,6 +13,19 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/login',
       builder: (context, state) => LoginPage(),
+      redirect: (context, state) async {
+        String? token = await Store.getToken();
+        if (token != null) {
+          bool isTokenExp = isTokenExpired(token);
+          if (isTokenExp) {
+            return RouteList.login;
+          } else {
+            return null;
+          }
+        } else {
+          return RouteList.login;
+        }
+      },
     ),
     GoRoute(
       path: '/',

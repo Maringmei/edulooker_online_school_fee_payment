@@ -31,8 +31,26 @@
 
   <title>edulooker_online_school_fee_payment</title>
   <link rel="manifest" href="manifest.json">
+  <script>
+    var cdnScript = document.createElement('script');
+    cdnScript.setAttribute('src', 'https://pgtest.atomtech.in/staticdata/ots/js/atomcheckout.js?v=' + Date.now());
+    document.head.appendChild(cdnScript);
+  </script>
 </head>
 <body>
   <script src="flutter_bootstrap.js" async></script>
+
+  <script>
+    function openPay(atomid, merchID, customerEmail, customerMobile, returnURL) {
+    const options = {
+    "atomTokenId": atomid,
+    "merchId": merchID,
+    "custEmail": customerEmail,
+    "custMobile": customerMobile,
+    "returnUrl": returnURL // replace with your return URL
+    }
+    let atom = new AtomPaynetz(options, 'uat');
+    }
+  </script>
 </body>
 </html>

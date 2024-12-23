@@ -3,27 +3,26 @@ import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/d
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/data/repositories/fee_details_repo.dart';
 import 'package:equatable/equatable.dart';
 
-part 'fee_details_state.dart';
+part 'fee_hostel_state.dart';
 
-class FeeDetailsCubit extends Cubit<FeeDetailsState> {
-  FeeDetailsCubit() : super(FeeDetailsInitial()) {
-    getFeeDetails();
+class FeeHostelCubit extends Cubit<FeeHostelState> {
+  FeeHostelCubit() : super(FeeHostelInitial()) {
+    getFeeHostel();
   }
 
   FeeDetailsRepo apiRepo = FeeDetailsRepo();
 
-  getFeeDetails() async {
-    emit(FeeDetailsInitial());
-    FeeDetailsModel response = await apiRepo.getFeeDetails();
+  getFeeHostel() async {
+    emit(FeeHostelInitial());
+    FeeDetailsModel response = await apiRepo.getFeeHostel();
     if (response.success == true) {
       if (response.data!.isNotEmpty) {
-        emit(FeeDetailsLoaded(response: response));
+        emit(FeeHostelLoaded(response: response));
       } else {
-        emit(FeeDetailsEmpty());
+        emit(FeeHostelEmpty());
       }
     } else {
-      emit(
-          FeeDetailsError(errString: response.message ?? "Unable to get data"));
+      emit(FeeHostelError(errString: response.message ?? "Unable to get data"));
     }
   }
 }

@@ -6,7 +6,25 @@ class FeeDetailsRepo {
   FeeDetailsAPI api = FeeDetailsAPI();
 
   Future<FeeDetailsModel> getFeeDetails() async {
-    FeeDetailsModel response = await api.getFeeDetails();
+    FeeDetailsModel response = await api.getFeeDetails(id: "1");
+    if (response.success == true) {
+      return response;
+    } else {
+      return response;
+    }
+  }
+
+  Future<FeeDetailsModel> getFeeTransport() async {
+    FeeDetailsModel response = await api.getFeeDetails(id: "0");
+    if (response.success == true) {
+      return response;
+    } else {
+      return response;
+    }
+  }
+
+  Future<FeeDetailsModel> getFeeHostel() async {
+    FeeDetailsModel response = await api.getFeeDetails(id: "2");
     if (response.success == true) {
       return response;
     } else {
