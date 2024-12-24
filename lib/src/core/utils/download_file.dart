@@ -21,7 +21,7 @@ Future<void> downloadFile(String receiptNo, {String? fileName, required String b
     final url = html.Url.createObjectUrlFromBlob(blob);
     final anchor = html.AnchorElement(href: url)
       ..target = 'blank' // Opens in a new tab
-      ..download = fileName ?? 'downloaded_file'; // File name
+      ..download = "Fee_Receipt_$receiptNo.pdf" ?? 'downloaded_file'; // File name
     html.document.body?.append(anchor);
     anchor.click();
     anchor.remove(); // Clean up

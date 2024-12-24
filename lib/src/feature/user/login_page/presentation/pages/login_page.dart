@@ -117,8 +117,7 @@ class _LoginPageState extends State<LoginPage> {
               Gap(5),
               InkWell(
                 onTap: () async {
-                  var (startDate, endDate, fdate) =
-                      await datePicker(context);
+                  var (startDate, endDate, fdate) = await datePicker(context);
                   dob = startDate;
                   formatedDate = fdate;
                   setState(() {});

@@ -39,6 +39,7 @@ class _DropDownSchoolListWidgetState extends State<DropDownSchoolListWidget> {
               // Gap(10),
               TextWidget(
                 text: 'Select School',
+                tColor: KColor.subText,
               )
             ],
           ),

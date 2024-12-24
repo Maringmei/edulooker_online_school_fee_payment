@@ -82,7 +82,8 @@ class TuitionFeeWidget extends StatelessWidget {
                               title: Row(
                                 children: [
                                   TextWidget(
-                                    text: KSymbol.inr +
+                                    text: data.status == TransactionStatus.paid ? KSymbol.inr +
+                                        data.recievedAmount.toString() : KSymbol.inr +
                                         data.extraFee!.pay.toString(),
                                     fontWeight: 600,
                                     fontSize: 18,
