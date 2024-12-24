@@ -14,7 +14,8 @@ Future<(String?, String?, String?)> datePicker(BuildContext context) async {
     context: context,
     config: CalendarDatePicker2WithActionButtonsConfig(
       calendarType: CalendarDatePicker2Type.range,
-      firstDate: DateTime(2023),
+      firstDate: DateTime(1950),
+      lastDate: DateTime.now()
     ),
     dialogSize: const Size(325, 400),
     borderRadius: BorderRadius.circular(15),

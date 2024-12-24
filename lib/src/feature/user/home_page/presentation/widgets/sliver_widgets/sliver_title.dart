@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../../../../core/constants/colors/color_constants.dart';
+import '../../../../../../core/constants/widgets/logout_dialog.dart';
+import '../../../../../../core/constants/widgets/text_widgets.dart';
+import '../../../../../../core/storage/storage.dart';
+import '../../../../../../route/router_list.dart';
 
 class SliverTitle extends StatefulWidget {
   final Widget child;
@@ -56,11 +63,40 @@ class _SliverTitleState extends State<SliverTitle> {
     return Visibility(
       visible: _visible ?? true, // Set default visibility to true
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
             width: MediaQuery.of(context).size.width / 2,
             child: widget.child,
+          ),
+          IconButton(
+            onPressed: () async {
+              await showDialog(
+                context: context,
+                builder: (context) {
+                  return LogoutDialog(context: context);
+                },
+              ).then((value) {
+                if (value == true) {
+                  Store.clear();
+                  context.go(RouteList.login);
+                }
+              });
+            },
+            icon: Column(
+              children: [
+                Icon(
+                  Icons.logout,
+                  color: KColor.red,
+                  size: 14,
+                ),
+                TextWidget(
+                  text: "Logout",
+                  fontSize: 8,
+                  tColor: KColor.red,
+                ),
+              ],
+            ),
           ),
         ],
       ),

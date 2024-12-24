@@ -38,7 +38,7 @@ class StudentProfileWidget extends StatelessWidget {
                 TextWidget(
                   text: studentData!.name!,
                   fontSize: 16,
-                  fontWeight: 600,
+                  fontWeight: 700,
                 ),
                 Gap(10),
                 Row(
@@ -54,13 +54,13 @@ class StudentProfileWidget extends StatelessWidget {
                               TextSpan(
                                   text: "Adm no: ",
                                   style: TextStyle(
-                                      fontSize: 12,
+                                      fontSize: 14,
                                       fontWeight: FontWeight.w500,
                                       color: KColor.subText)),
                               TextSpan(
                                   text: studentData!.registrationNo,
                                   style: TextStyle(
-                                      fontSize: 12,
+                                      fontSize: 14,
                                       fontWeight: FontWeight.w600,
                                       color: KColor.black)),
                             ])),
@@ -70,13 +70,13 @@ class StudentProfileWidget extends StatelessWidget {
                               TextSpan(
                                   text: "Section ",
                                   style: TextStyle(
-                                      fontSize: 12,
+                                      fontSize: 14,
                                       fontWeight: FontWeight.w500,
                                       color: KColor.subText)),
                               TextSpan(
                                   text: studentData!.section.toString(),
                                   style: TextStyle(
-                                      fontSize: 12,
+                                      fontSize: 14,
                                       fontWeight: FontWeight.w600,
                                       color: KColor.black)),
                             ])),
@@ -93,13 +93,13 @@ class StudentProfileWidget extends StatelessWidget {
                               TextSpan(
                                   text: "Class: ",
                                   style: TextStyle(
-                                      fontSize: 12,
+                                      fontSize: 14,
                                       fontWeight: FontWeight.w500,
                                       color: KColor.subText)),
                               TextSpan(
                                   text: studentData.course,
                                   style: TextStyle(
-                                      fontSize: 12,
+                                      fontSize: 14,
                                       fontWeight: FontWeight.w600,
                                       color: KColor.black)),
                             ])),
@@ -109,7 +109,7 @@ class StudentProfileWidget extends StatelessWidget {
                               TextSpan(
                                   text: "Roll No ",
                                   style: TextStyle(
-                                      fontSize: 12,
+                                      fontSize: 14,
                                       fontWeight: FontWeight.w500,
                                       color: KColor.subText)),
                               TextSpan(
@@ -117,7 +117,7 @@ class StudentProfileWidget extends StatelessWidget {
                                       ? studentData.rollNo
                                       : "NA",
                                   style: TextStyle(
-                                      fontSize: 12,
+                                      fontSize: 14,
                                       fontWeight: FontWeight.w600,
                                       color: KColor.black)),
                             ])),

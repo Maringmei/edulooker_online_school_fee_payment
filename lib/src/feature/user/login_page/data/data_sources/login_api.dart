@@ -20,15 +20,18 @@ class LoginAPI {
   Map<String, dynamic>? _body;
 
   /// send OTP to device
-  Future<SharedModel> sendOtp(
-      {required String regdNumber,
-      required String dob,
-      required String mobileNumber}) async {
+  Future<SharedModel> sendOtp({
+    required String regdNumber,
+    required String dob,
+    required String mobileNumber,
+    required String schoolId,
+  }) async {
     try {
       _body = {
         "registration_no": regdNumber,
         "date_of_birth": dob,
-        "mobile_no": int.parse(mobileNumber)
+        "mobile_no": int.parse(mobileNumber),
+        "school_id": int.parse(schoolId)
       };
 
       final response = await _dio.post(_sendOtp, data: _body);

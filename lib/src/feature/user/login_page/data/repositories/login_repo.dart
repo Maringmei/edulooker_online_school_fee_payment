@@ -16,13 +16,21 @@ class LoginRepo {
       {required BuildContext context,
       required String regdNumber,
       required String dob,
-      required String mobileNumber}) async {
-    showStatus(msg: "Sending OTP...");
+      required String mobileNumber,
+      required String schoolId}) async {
+    showStatus(msg: "Please wait...");
     SharedModel res = await api.sendOtp(
-        regdNumber: regdNumber, dob: dob, mobileNumber: mobileNumber);
+        regdNumber: regdNumber,
+        dob: dob,
+        mobileNumber: mobileNumber,
+        schoolId: schoolId);
     if (res.success == true) {
-      showDismiss();
-      TopSnackBar.showSuccess(context, res.message);
+       showDismiss();
+      // TopSnackBar.showSuccess(context, res.message);
+      Store.saveUserInfo(username: "", data: res);
+      await Future.delayed(const Duration(seconds: 1));
+      //BlocManager.afterLoginRefresh(context);
+      context.go(RouteList.home);
       return true;
     } else {
       showDismiss();
@@ -31,26 +39,26 @@ class LoginRepo {
     }
   }
 
-  verifyOtp(
-      {required BuildContext context,
-      required String regdNumber,
-      required String mobileNumber,
-      required String otp}) async {
-    showStatus(msg: "Verifying OTP...");
-    SharedModel res = await api.verifyOTP(
-        regdNumber: regdNumber, mobileNumber: mobileNumber, otp: otp);
-    if (res.success == true) {
-      Store.saveUserInfo(username: "", data: res);
-      await Future.delayed(const Duration(seconds: 1));
-      //BlocManager.afterLoginRefresh(context);
-      context.go(RouteList.home);
-      // Navigator.push(
-      //     context, MaterialPageRoute(builder: (context) => HomePage()));
-      showDismiss();
-      TopSnackBar.showSuccess(context, res.message ?? "Otp verified");
-    } else {
-      showDismiss();
-      TopSnackBar.showError(context, res.message ?? "Unable to login");
-    }
-  }
+  // verifyOtp(
+  //     {required BuildContext context,
+  //     required String regdNumber,
+  //     required String mobileNumber,
+  //     required String otp}) async {
+  //   showStatus(msg: "Verifying OTP...");
+  //   SharedModel res = await api.verifyOTP(
+  //       regdNumber: regdNumber, mobileNumber: mobileNumber, otp: otp);
+  //   if (res.success == true) {
+  //     Store.saveUserInfo(username: "", data: res);
+  //     await Future.delayed(const Duration(seconds: 1));
+  //     //BlocManager.afterLoginRefresh(context);
+  //     context.go(RouteList.home);
+  //     // Navigator.push(
+  //     //     context, MaterialPageRoute(builder: (context) => HomePage()));
+  //     showDismiss();
+  //     TopSnackBar.showSuccess(context, res.message ?? "Otp verified");
+  //   } else {
+  //     showDismiss();
+  //     TopSnackBar.showError(context, res.message ?? "Unable to login");
+  //   }
+  // }
 }

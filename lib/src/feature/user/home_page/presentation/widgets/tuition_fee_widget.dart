@@ -1,6 +1,5 @@
 import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/button_widgets.dart';
 import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/top_snack_bar.dart';
-import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/data/data_sources/create_fee_payment_api.dart';
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/data/models/create_fee_model.dart';
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/data/repositories/create_fee_payment_repo.dart';
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/manager/fee_type.dart';
@@ -13,22 +12,16 @@ import '../../../../../core/constants/widgets/loading_shimmer.dart';
 import '../../../../../core/constants/widgets/text_span_widgets.dart';
 import '../../../../../core/constants/widgets/text_widgets.dart';
 import '../../../../../core/services/js_services.dart';
+import '../../../../../core/storage/storage.dart';
 import '../../../../../core/utils/download_file.dart';
 import '../../data/models/fee_details_model.dart';
 import '../manager/bloc/fee_details_cubit/fee_details_cubit.dart';
-
 import '../manager/transaction_status.dart';
-import '../pages/home_page.dart';
 
 class TuitionFeeWidget extends StatelessWidget {
   TuitionFeeWidget({super.key});
 
   CreateFeePaymentRepo apiRepo = CreateFeePaymentRepo();
-  TextSpan getSpan() {
-    return TextSpan(
-      text: "text",
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,10 +56,12 @@ class TuitionFeeWidget extends StatelessWidget {
                             TextRowWidget(
                               children: [
                                 TextWidget(text: "${data.paymentFor!} "),
-                                TextWidget(text: "${data.paymentOf!}", fontWeight: 700,),
+                                TextWidget(
+                                  text: data.paymentOf!,
+                                  fontWeight: 700,
+                                ),
                               ],
                             ),
-
                             TextWidget(
                                 text: data.receivedDate!.isNotEmpty
                                     ? data.receivedDate!
@@ -93,9 +88,12 @@ class TuitionFeeWidget extends StatelessWidget {
                                     fontSize: 18,
                                   ),
                                   Gap(10),
-                                  if (data.status != TransactionStatus.deleted && data.status != TransactionStatus.upPaid)
+                                  if (data.status !=
+                                          TransactionStatus.deleted &&
+                                      data.status != TransactionStatus.upPaid)
                                     Container(
-                                      padding: EdgeInsets.all(2),
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 2, horizontal: 3),
                                       decoration: BoxDecoration(
                                           color: data.status ==
                                                   TransactionStatus.paid
@@ -104,15 +102,18 @@ class TuitionFeeWidget extends StatelessWidget {
                                                       TransactionStatus
                                                           .initiated
                                                   ? KColor.pending
-                                                  :  data.status ==
-                                              TransactionStatus
-                                                  .failed ? KColor.red : Colors.transparent,
+                                                  : data.status ==
+                                                          TransactionStatus
+                                                              .failed
+                                                      ? KColor.red
+                                                      : Colors.transparent,
                                           borderRadius:
                                               BorderRadius.circular(10)),
                                       child: TextWidget(
                                         text: data.statusDesp!,
                                         fontWeight: 600,
                                         fontSize: 8,
+                                        tColor: KColor.white,
                                       ),
                                     ),
                                 ],
@@ -124,20 +125,14 @@ class TuitionFeeWidget extends StatelessWidget {
                                 ListTile(
                                   title: TextWidget(
                                     text: "Total fee",
-                                    fontSize: 11,
-                                    fontWeight: 400,
                                   ),
                                   trailing: TextWidget(
                                     text: KSymbol.inr + data.extraFee!.fee!,
-                                    fontSize: 11,
-                                    fontWeight: 400,
                                   ),
                                 ),
                                 ListTile(
                                   title: TextWidget(
                                     text: "Extra fee",
-                                    fontSize: 11,
-                                    fontWeight: 400,
                                   ),
                                   trailing: TextWidget(
                                     text: KSymbol.inr + data.extraFee!.fine!,
@@ -148,14 +143,10 @@ class TuitionFeeWidget extends StatelessWidget {
                                 ListTile(
                                   title: TextWidget(
                                     text: "Discount",
-                                    fontSize: 11,
-                                    fontWeight: 400,
                                   ),
                                   trailing: TextWidget(
                                     text: KSymbol.inr +
                                         data.extraFee!.disc!.toString(),
-                                    fontSize: 11,
-                                    fontWeight: 400,
                                   ),
                                 ),
                                 ListTile(
@@ -210,7 +201,7 @@ class TuitionFeeWidget extends StatelessWidget {
                                       CreateFeeModel response = await apiRepo
                                           .createRetryFeePayment(
                                               feeType: FeeType.tuition,
-                                              feeID: data.id!)
+                                              feeID: data.feeId!)
                                           .then((value) {
                                         if (value.success == true &&
                                             value.data!.atomTokenId != null) {
@@ -236,22 +227,46 @@ class TuitionFeeWidget extends StatelessWidget {
                                 if (data.feeExempted == "1")
                                   ButtonWidget(
                                     text: "Download receipt",
-                                    onTap: () {
-                                      downloadFile(data.receiptNo!,
-                                          fileName: 'receipt.pdf');
+                                    onTap: () async {
+                                      // downloadFile(data.receiptNo!,
+                                      //     fileName: 'receipt.pdf');
+                                      String? token =
+                                          await Store.getToken().then((value) {
+                                        if (value != null) {
+                                          downloadFile(data.receiptNo!,
+                                              fileName: 'receipt.pdf',
+                                              bearerToken: value.toString());
+                                        }
+                                        return null;
+                                      });
                                     },
                                     color: KColor.appColor,
                                     fullWidth: true,
+                                    icon: Icon(
+                                      Icons.download,
+                                      color: KColor.white,
+                                    ),
                                   ),
                                 if (data.status == TransactionStatus.paid)
                                   ButtonWidget(
                                     text: "Download receipt",
-                                    onTap: () {
-                                      downloadFile(data.receiptNo!,
-                                          fileName: 'receipt.pdf');
+                                    onTap: () async {
+                                      String? token =
+                                          await Store.getToken().then((value) {
+                                        if (value != null) {
+                                          downloadFile(data.receiptNo!,
+                                              fileName: 'receipt.pdf',
+                                              bearerToken: value.toString());
+                                        }
+                                        return null;
+                                      });
                                     },
                                     color: KColor.appColor,
                                     fullWidth: true,
+                                    icon: Icon(
+                                      Icons.download,
+                                      color: KColor.white,
+                                    ),
                                   )
                               ],
                             ),

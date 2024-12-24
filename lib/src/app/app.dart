@@ -20,6 +20,7 @@ class App extends StatelessWidget {
         return MultiBlocWrapper(
           app: MaterialApp.router(
             debugShowCheckedModeBanner: false,
+            title: "Edulooker Online School Fee Payment",
             theme: ThemeData(
               fontFamily: "Poppins",
               appBarTheme: const AppBarTheme(

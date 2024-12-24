@@ -1,5 +1,6 @@
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/manager/bloc/fee_transport_cubit/fee_transport_cubit.dart';
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/manager/transaction_status.dart';
+import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/widgets/tuition_fee_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -10,6 +11,7 @@ import '../../../../../core/constants/widgets/button_widgets.dart';
 import '../../../../../core/constants/widgets/loading_shimmer.dart';
 import '../../../../../core/constants/widgets/text_widgets.dart';
 import '../../../../../core/constants/widgets/top_snack_bar.dart';
+import '../../../../../core/services/js_services.dart';
 import '../../data/models/create_fee_model.dart';
 import '../../data/models/fee_details_model.dart';
 import '../../data/repositories/create_fee_payment_repo.dart';

@@ -9,20 +9,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:js/js.dart';
 import '../../../../../core/constants/colors/color_constants.dart';
 import '../../../../../core/constants/widgets/logout_dialog.dart';
 import '../../../../../core/constants/widgets/text_widgets.dart';
 import '../../../../../core/storage/storage.dart';
 import '../../../../../route/router_list.dart';
-import '../widgets/hostel_fee_widget.dart';
 import '../widgets/sliver_widgets/persistant_header.dart';
 import '../widgets/sliver_widgets/sliver_title.dart';
 import '../widgets/tuition_fee_widget.dart';
-
-@JS()
-external void openPay(String atomId, String merchID, String custEmail,
-    String custMobile, String returnURL); // Declare the JS function
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -30,7 +24,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 1, // only tuition fee , set 3 for tuition, transport, hostel
       child: Scaffold(
         body: WidgetSpacing.padding(
           child: NestedScrollView(
@@ -45,7 +39,7 @@ class HomePage extends StatelessWidget {
                           ? TextWidget(
                               text: state.response.data!.name!,
                               fontSize: 15,
-                              fontWeight: 600,
+                              fontWeight: 700,
                             )
                           : LoadingWidget(count: 1);
                     },
@@ -57,7 +51,7 @@ class HomePage extends StatelessWidget {
                   scrolledUnderElevation: 0,
                   pinned: true,
                   floating: false,
-                  expandedHeight: 200.0, // Adjust height as needed
+                  expandedHeight: 180, // Adjust height as needed
                   backgroundColor: KColor.white,
 
                   flexibleSpace: FlexibleSpaceBar(
@@ -130,10 +124,11 @@ class HomePage extends StatelessWidget {
                       isScrollable: true,
                       labelPadding: EdgeInsets.only(right: 10),
                       tabAlignment: TabAlignment.start,
+                      indicatorPadding: EdgeInsets.only(bottom: 10),
                       tabs: [
                         Tab(text: "Tuition Fee"),
-                        Tab(text: "Transport Fee"),
-                        Tab(text: "Hostel Fee"),
+                        // Tab(text: "Transport Fee"),
+                        // Tab(text: "Hostel Fee"),
                       ],
                     ),
                   ),
@@ -143,8 +138,8 @@ class HomePage extends StatelessWidget {
             body: TabBarView(
               children: [
                 TuitionFeeWidget(), // Wrap in CustomScrollView or fix scrolling below
-                TransportFeeWidget(),
-                HostelFeeWidget(),
+                // TransportFeeWidget(),
+                // HostelFeeWidget(),
               ],
             ),
           ),

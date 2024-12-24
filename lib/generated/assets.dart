@@ -4,6 +4,8 @@ class Assets {
 
   static const String fontsPoppinsMedium = 'assets/fonts/Poppins-Medium.ttf';
   static const String imagesBranding = 'assets/images/branding.png';
+  static const String imagesLogo = 'assets/images/logo.png';
+  static const String imagesLogoFull = 'assets/images/logo_full.png';
   static const String imagesStudent = 'assets/images/student.png';
 
 }

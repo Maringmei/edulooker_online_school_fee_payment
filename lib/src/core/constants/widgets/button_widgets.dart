@@ -1,5 +1,6 @@
 import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/text_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 import '../colors/color_constants.dart';
 import 'button_style.dart';
@@ -9,8 +10,9 @@ class ButtonWidget extends StatelessWidget {
   final String text;
   final bool? fullWidth;
   final Color? color;
+  final Widget? icon;
   const ButtonWidget(
-      {super.key, required this.text, required this.onTap, this.fullWidth, this.color});
+      {super.key, required this.text, required this.onTap, this.fullWidth, this.color, this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,18 @@ class ButtonWidget extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () => onTap(), // Correctly invoking the onTap function
           style: btnStyle(clr: color),
-          child: TextWidget(
+          child: icon != null ? Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              icon!,
+              Gap(5),
+              TextWidget(
+                text: text,
+                tColor: KColor.white,
+                maxLine: 1,
+              ),
+            ],
+          ):TextWidget(
             text: text,
             tColor: KColor.white,
             maxLine: 1,
