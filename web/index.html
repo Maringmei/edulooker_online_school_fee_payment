@@ -37,7 +37,7 @@
     document.head.appendChild(cdnScript);
   </script>
 </head>
-// CSS
+
 <style>
   .container{
     width: 100vw;
@@ -80,6 +80,7 @@
   animation: progress 5s ease-in-out forwards;
 }
 </style>
+
 <body style="overflow: hidden;">
   <div id="loading_indicator" class="container">
     <img class="indicator" src="./assets/images/logo_full.png"/>
@@ -95,10 +96,9 @@
       setTimeout(() => {
         var loadingIndicator = document.getElementById('loading_indicator');
         if(loadingIndicator)loadingIndicator.remove()
-      }, 3000);
+      }, 5000);
     }
   </script>
-
 
   <script>
     function openPay(atomid, merchID, customerEmail, customerMobile, returnURL) {
@@ -112,5 +112,6 @@
     let atom = new AtomPaynetz(options, 'uat');
     }
   </script>
+
 </body>
 </html>
