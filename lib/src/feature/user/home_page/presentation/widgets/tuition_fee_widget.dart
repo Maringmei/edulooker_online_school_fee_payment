@@ -82,9 +82,11 @@ class TuitionFeeWidget extends StatelessWidget {
                               title: Row(
                                 children: [
                                   TextWidget(
-                                    text: data.status == TransactionStatus.paid ? KSymbol.inr +
-                                        data.recievedAmount.toString() : KSymbol.inr +
-                                        data.extraFee!.pay.toString(),
+                                    text: data.status == TransactionStatus.paid
+                                        ? KSymbol.inr +
+                                            data.recievedAmount.toString()
+                                        : KSymbol.inr +
+                                            data.extraFee!.pay.toString(),
                                     fontWeight: 600,
                                     fontSize: 18,
                                   ),
@@ -177,12 +179,13 @@ class TuitionFeeWidget extends StatelessWidget {
                                         if (value.success == true &&
                                             value.data!.atomTokenId != null) {
                                           openPay(
-                                              value.data!.atomTokenId
-                                                  .toString(),
-                                              value.data!.merchId.toString(),
-                                              value.data!.custEmail.toString(),
-                                              value.data!.custMobile.toString(),
-                                              value.data!.returnUrl.toString());
+                                            value.data!.atomTokenId.toString(),
+                                            value.data!.merchId.toString(),
+                                            value.data!.custEmail.toString(),
+                                            value.data!.custMobile.toString(),
+                                            value.data!.returnUrl.toString(),
+                                            value.data!.mode.toString(),
+                                          );
                                         } else {
                                           TopSnackBar.showError(context,
                                               "Unable to make payment, try again later");
@@ -207,12 +210,13 @@ class TuitionFeeWidget extends StatelessWidget {
                                         if (value.success == true &&
                                             value.data!.atomTokenId != null) {
                                           openPay(
-                                              value.data!.atomTokenId
-                                                  .toString(),
-                                              value.data!.merchId.toString(),
-                                              value.data!.custEmail.toString(),
-                                              value.data!.custMobile.toString(),
-                                              value.data!.returnUrl.toString());
+                                            value.data!.atomTokenId.toString(),
+                                            value.data!.merchId.toString(),
+                                            value.data!.custEmail.toString(),
+                                            value.data!.custMobile.toString(),
+                                            value.data!.returnUrl.toString(),
+                                            value.data!.mode.toString(),
+                                          );
                                         } else {
                                           TopSnackBar.showError(context,
                                               "Unable to make payment, try again later");

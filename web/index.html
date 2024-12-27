@@ -33,7 +33,7 @@
   <link rel="manifest" href="manifest.json">
   <script>
     var cdnScript = document.createElement('script');
-    cdnScript.setAttribute('src', 'https://pgtest.atomtech.in/staticdata/ots/js/atomcheckout.js?v=' + Date.now());
+    cdnScript.setAttribute('src', 'https://psa.atomtech.in/staticdata/ots/js/atomcheckout.js?v=' + Date.now());
     document.head.appendChild(cdnScript);
   </script>
 </head>
@@ -83,7 +83,7 @@
 
 <body style="overflow: hidden;">
   <div id="loading_indicator" class="container">
-    <img class="indicator" src="./assets/images/logo_full.png"/>
+    <img class="indicator" src="logo_full.png"/>
     <div class="progress-bar">
       <div class="progress-bar-fill" style="width: 50%;"></div>
     </div>
@@ -101,7 +101,7 @@
   </script>
 
   <script>
-    function openPay(atomid, merchID, customerEmail, customerMobile, returnURL) {
+    function openPay(atomid, merchID, customerEmail, customerMobile, returnURL, mode) {
     const options = {
     "atomTokenId": atomid,
     "merchId": merchID,
@@ -109,7 +109,7 @@
     "custMobile": customerMobile,
     "returnUrl": returnURL // replace with your return URL
     }
-    let atom = new AtomPaynetz(options, 'uat');
+    let atom = new AtomPaynetz(options, "uat");
     }
   </script>
 

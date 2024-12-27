@@ -1,6 +1,7 @@
 import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/button_widgets.dart';
 import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/dummy_dropdown.dart';
 import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/input_text.dart';
+import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/text_span_widgets.dart';
 import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/text_widgets.dart';
 import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/top_snack_bar.dart';
 import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/widget_spacing.dart';
@@ -17,7 +18,9 @@ import 'package:gap/gap.dart';
 import '../../../../../core/constants/colors/color_constants.dart';
 import '../../../../../core/constants/images/images_constants.dart';
 import '../../../../../core/constants/strings/strings_constants.dart';
+import '../../../../../core/services/dio/endpoint_urls.dart';
 import '../../../../../core/utils/date_picker.dart';
+import '../../../../../core/utils/redirect_page.dart';
 import '../../../../shared/drop_down_widgets/school_list_dropdown.dart';
 import '../../data/models/login_data_model.dart';
 import '../widgets/verify_otp_dialog.dart';
@@ -37,6 +40,7 @@ class _LoginPageState extends State<LoginPage> {
   String? dob;
   String? formatedDate;
   String? schoolID;
+  bool termAndCondition = false;
 
   @override
   void dispose() {
@@ -48,10 +52,14 @@ class _LoginPageState extends State<LoginPage> {
   SchoolListModel schoolList = SchoolListModel(
       success: true,
       data: [
-        SchoolData(id: "1", label: "Unacco School Khongman"),
-        SchoolData(id: "2", label: "Unacco School Meitram"),
-        SchoolData(id: "3", label: "Unacco School Chanung"),
-        SchoolData(id: "4", label: "Unacco School Chanura"),
+        SchoolData(
+            id: "1",
+            label: "Unacco School Khongman",
+            baseUrl: "https://unacco.edulooker.com"),
+        SchoolData(
+            id: "2",
+            label: "Unacco School Meitram",
+            baseUrl: "https://unacco-meitram.edulooker.com"),
       ],
       message: null);
 
@@ -93,6 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                 dataModel: schoolList,
                 onChanged: (String value) {
                   schoolID = value;
+
                 },
               ),
               Gap(10),
@@ -164,67 +173,158 @@ class _LoginPageState extends State<LoginPage> {
                 isPhoneNumber: true,
                 isNumber: true,
               ),
+              Gap(10),
+              // Terms and condition
+              TextRowWidget(children: [
+                Checkbox(
+                    value: termAndCondition,
+                    onChanged: (value) {
+                      termAndCondition = value!;
+                      setState(() {});
+                    }),
+                TextWidget(text: "I agree to "),
+                InkWell(
+                    onTap: () {
+                      redirectToNewTab(Endpoint.term_and_condition);
+                    },
+                    child: TextWidget(
+                      text: "Terms and Condition",
+                      tColor: KColor.blue,
+                    )),
+              ]),
               Gap(20),
               // Submit
               ButtonWidget(
                 text: "Submit",
-                onTap: () async {
-                  if (dob != null &&
-                      mNumber.text.isNotEmpty &&
-                      admissionNumber.text.isNotEmpty &&
-                      schoolID != null) {
-                    // String admissonNumber = "2335";
-                    // String dateOfBirth = "1998-01-03";
-                    // String mobileNumber = "7005807751";
+                height: 50,
+                onTap: termAndCondition == true
+                    ? () async {
+                        if (dob != null &&
+                            mNumber.text.isNotEmpty &&
+                            admissionNumber.text.isNotEmpty &&
+                            schoolID != null) {
+                          // String admissonNumber = "2335";
+                          // String dateOfBirth = "1998-01-03";
+                          // String mobileNumber = "7005807751";
 
-                    String admissonNumber = admissionNumber.text;
-                    String dateOfBirth = dob!;
-                    String mobileNumber = mNumber.text;
-                    await apiRepo
-                        .sendOtp(
-                      context: context,
-                      regdNumber: admissonNumber,
-                      dob: dateOfBirth,
-                      mobileNumber: mobileNumber,
-                      schoolId: '1',
-                    )
-                        .then((value) {
-                      if (value == true) {
-                        BlocProvider.of<StudentProfileCubit>(context)
-                            .getStudentProfile();
-                        BlocProvider.of<FeeDetailsCubit>(context)
-                            .getFeeDetails();
-                        BlocProvider.of<FeeTransportCubit>(context)
-                            .getFeeTransport();
-                        BlocProvider.of<FeeHostelCubit>(context).getFeeHostel();
-                        // showDialog(
-                        //     context: context.mounted ? context : context,
-                        //     builder: (context) {
-                        //       return OtpDialog(
-                        //         context: context,
-                        //         data: LoginDataModel(
-                        //             registrationNumber: admissonNumber,
-                        //             mobileNumber: mobileNumber,
-                        //             dob: dateOfBirth),
-                        //       );
-                        //     });
+                          String admissonNumber = admissionNumber.text;
+                          String dateOfBirth = dob!;
+                          String mobileNumber = mNumber.text;
+                          await apiRepo
+                              .sendOtp(
+                            context: context,
+                            regdNumber: admissonNumber,
+                            dob: dateOfBirth,
+                            mobileNumber: mobileNumber,
+                            schoolId: '1',
+                          )
+                              .then((value) {
+                            if (value == true) {
+                              BlocProvider.of<StudentProfileCubit>(context)
+                                  .getStudentProfile();
+                              BlocProvider.of<FeeDetailsCubit>(context)
+                                  .getFeeDetails();
+                              BlocProvider.of<FeeTransportCubit>(context)
+                                  .getFeeTransport();
+                              BlocProvider.of<FeeHostelCubit>(context)
+                                  .getFeeHostel();
+                              // showDialog(
+                              //     context: context.mounted ? context : context,
+                              //     builder: (context) {
+                              //       return OtpDialog(
+                              //         context: context,
+                              //         data: LoginDataModel(
+                              //             registrationNumber: admissonNumber,
+                              //             mobileNumber: mobileNumber,
+                              //             dob: dateOfBirth),
+                              //       );
+                              //     });
+                            }
+                          });
+                        } else {
+                          TopSnackBar.showError(
+                              context, "All fields are required");
+                        }
                       }
-                    });
-                  } else {
-                    TopSnackBar.showError(context, "All fields are required");
-                  }
-                },
+                    : null,
                 fullWidth: true,
               ),
               SizedBox(
                   height: MediaQuery.of(context).size.height *
                       0.05), // Spacer with dynamic height
+              IntrinsicHeight(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    InkWell(
+                        onTap: () {
+                          redirectToNewTab(Endpoint.privacy);
+                        },
+                        child: TextWidget(
+                          text: "Privacy Policy",
+                          fontSize: 10,
+                        )),
+                    VerticalDivider(
+                      color: KColor.black,
+                    ),
+                    InkWell(
+                        onTap: () {
+                          redirectToNewTab(Endpoint.about);
+                        },
+                        child: TextWidget(
+                          text: "About us",
+                          fontSize: 10,
+                        )),
+                  ],
+                ),
+              ),
+              IntrinsicHeight(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    InkWell(
+                        onTap: () {
+                          redirectToNewTab(Endpoint.cancellation);
+                        },
+                        child: TextWidget(
+                          text: "Cancellation & Refund",
+                          fontSize: 10,
+                        )),
+                    VerticalDivider(
+                      color: KColor.black,
+                    ),
+                    InkWell(
+                        onTap: () {
+                          redirectToNewTab(Endpoint.contact);
+                        },
+                        child: TextWidget(
+                          text: "Contact us",
+                          fontSize: 10,
+                        )),
+                  ],
+                ),
+              ),
+              Gap(10),
               Center(
-                child: SizedBox(
-                    height: 23,
-                    width: 148,
-                    child: Image.asset(KImage.branding)),
-              )
+                  child: InkWell(
+                onTap: () {
+                  redirectToNewTab(Endpoint.globizs);
+                },
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  TextWidget(
+                    text: "Powered by ",
+                    fontSize: 12,
+                    fontWeight: 900,
+                  ),
+                  TextWidget(
+                    text: "Globizs",
+                    fontSize: 15,
+                    fontWeight: 900,
+                    tColor: KColor.red,
+                  )
+                ]),
+              ))
             ],
           ),
         ),

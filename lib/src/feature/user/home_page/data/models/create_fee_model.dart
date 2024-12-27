@@ -39,6 +39,7 @@ class Data {
   String? custEmail;
   String? custMobile;
   String? returnUrl;
+  String? mode;
 
   Data({
     this.id,
@@ -47,6 +48,7 @@ class Data {
     this.custEmail,
     this.custMobile,
     this.returnUrl,
+    this.mode
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -56,6 +58,7 @@ class Data {
     custEmail: json["custEmail"],
     custMobile: json["custMobile"],
     returnUrl: json["returnUrl"],
+    mode: json["mode"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -65,5 +68,6 @@ class Data {
     "custEmail": custEmail,
     "custMobile": custMobile,
     "returnUrl": returnUrl,
+    "mode": mode,
   };
 }

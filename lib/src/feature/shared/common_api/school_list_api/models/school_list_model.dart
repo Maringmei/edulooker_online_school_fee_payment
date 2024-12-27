@@ -26,7 +26,8 @@ class SchoolListModel {
         success: json["success"],
         data: json["data"] == null
             ? []
-            : List<SchoolData>.from(json["data"]!.map((x) => SchoolData.fromJson(x))),
+            : List<SchoolData>.from(
+                json["data"]!.map((x) => SchoolData.fromJson(x))),
         message: json["message"],
       );
 
@@ -42,19 +43,23 @@ class SchoolListModel {
 class SchoolData {
   String? id;
   String? label;
+  String? baseUrl;
 
   SchoolData({
     this.id,
     this.label,
+    this.baseUrl,
   });
 
   factory SchoolData.fromJson(Map<String, dynamic> json) => SchoolData(
         id: json["id"],
         label: json["label"],
+        baseUrl: json["baseUrl"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "label": label,
+        "baseUrl": baseUrl,
       };
 }

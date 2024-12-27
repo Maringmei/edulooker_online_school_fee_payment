@@ -6,6 +6,7 @@ class Store {
 
   static const String _tokenKeyAccess = "TOKEN_ACCRESS";
   static const String _tokenKeyRefresh = "TOKEN_REFRESH";
+  static const String _baseUrl = "BASE_URL";
   static const String _username = "USERNAME";
   static const String _profileType = "PROFILE_TYPE";
   static const String _darkmode = "darkmode";
@@ -15,6 +16,12 @@ class Store {
   static Future<void> setToken(String token) async {
     final preferences = await SharedPreferences.getInstance();
     await preferences.setString(_tokenKeyAccess, token);
+  }
+
+  //store baseUrl
+  static Future<void> setBaseUrl(String baseUrl) async {
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.setString(_tokenKeyAccess, baseUrl);
   }
 
   //store token refresh
@@ -33,6 +40,12 @@ class Store {
   static Future<String?> getToken() async {
     final preferences = await SharedPreferences.getInstance();
     return preferences.getString(_tokenKeyAccess);
+  }
+
+  // Get baseURL
+  static Future<String?> getBaseUrl() async {
+    final preferences = await SharedPreferences.getInstance();
+    return preferences.getString(_baseUrl);
   }
 
 // Get token refresh
