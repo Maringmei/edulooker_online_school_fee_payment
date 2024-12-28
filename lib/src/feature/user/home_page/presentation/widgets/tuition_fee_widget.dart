@@ -365,7 +365,14 @@ class TuitionFeeWidget extends StatelessWidget {
         }
         if (state is FeeDetailsEmpty) {
           return Center(
-            child: TextWidget(text: "No data to show"),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(KImage.noData, width: 150,height: 150,),
+                Gap(5),
+                TextWidget(text: "No data to show"),
+              ],
+            ),
           );
         }
         if (state is FeeDetailsError) {

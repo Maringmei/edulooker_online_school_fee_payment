@@ -25,7 +25,8 @@ class LoginRepo {
         mobileNumber: mobileNumber,
         schoolId: schoolId);
     if (res.success == true) {
-       showDismiss();TopSnackBar.showSuccess(context, res.message ?? "Otp send");
+       showDismiss();
+       //TopSnackBar.showSuccess(context, res.message ?? "Otp send");
 
       Store.saveUserInfo(username: "", data: res);
       await Future.delayed(const Duration(seconds: 1));
