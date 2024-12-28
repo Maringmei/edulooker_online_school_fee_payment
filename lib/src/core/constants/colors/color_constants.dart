@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class KColor {
   // app color
-  static const appColor = Color(0xFF48208E);
-  static const btnColor = Color(0xFF48208E);
+  static const appColor = Color(0xFF00874A);
+  static const btnColor = Color(0xFF00874A);
 
   static const filledColor = Color(0xFFEDEDED);
   static const subText = Color(0xFF747474);

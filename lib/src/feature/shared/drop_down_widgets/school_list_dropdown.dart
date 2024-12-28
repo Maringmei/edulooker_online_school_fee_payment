@@ -77,7 +77,7 @@ class _DropDownSchoolListWidgetState extends State<DropDownSchoolListWidget> {
             height: 50,
             width: double.infinity,
             decoration: BoxDecoration(
-              color: KColor.filledColor,
+              color: KColor.white,
               borderRadius: BorderRadius.circular(5),
             ),
           ),

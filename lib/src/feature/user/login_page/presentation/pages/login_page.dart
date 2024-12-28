@@ -138,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 40,
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                      color: KColor.filledColor,
+                      color: KColor.white,
                       borderRadius: BorderRadius.circular(5)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

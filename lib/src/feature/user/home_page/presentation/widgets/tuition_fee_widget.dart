@@ -15,6 +15,7 @@ import '../../../../../core/constants/widgets/text_span_widgets.dart';
 import '../../../../../core/constants/widgets/text_widgets.dart';
 import '../../../../../core/services/js_services.dart';
 import '../../../../../core/storage/storage.dart';
+import '../../../../../core/utils/date_format.dart';
 import '../../../../../core/utils/download_file.dart';
 import '../../data/models/fee_details_model.dart';
 import '../manager/bloc/fee_details_cubit/fee_details_cubit.dart';
@@ -56,26 +57,32 @@ class TuitionFeeWidget extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            TextRowWidget(
-                              children: [
-                                TextWidget(
-                                  text: "${data.paymentFor!} ",
-                                  tColor: KColor.subText,
-                                ),
-                                TextWidget(
-                                  text: data.paymentOf!,
-                                  tColor: KColor.subText,
-                                ),
-                              ],
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  TextWidget(
+                                    text: "${data.paymentFor!} ",
+                                    tColor: KColor.subText,
+                                  ),
+                                  TextWidget(
+                                    text: data.paymentOf! ,
+                                    tColor: KColor.subText,
+                                    overflow: TextOverflow
+                                        .ellipsis, // To handle overflow
+                                  ),
+                                ],
+                              ),
                             ),
                             TextWidget(
                               text: data.receivedDate!.isNotEmpty
-                                  ? data.receivedDate!
+                                  ? formatDateShort(data.receivedDate!)
                                   : "",
                               tColor: KColor.subText,
+                              fontSize: 10,
                             ),
                           ],
                         ),
+
                         /*********************************************************** Unpaid ******************/
                         if (data.status != TransactionStatus.upPaid)
                           Theme(

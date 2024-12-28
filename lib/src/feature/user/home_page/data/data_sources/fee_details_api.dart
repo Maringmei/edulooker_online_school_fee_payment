@@ -15,8 +15,6 @@ class FeeDetailsAPI {
     _dio.interceptors.add(DioInterceptors());
   }
 
-
-
   final String _url = Endpoint.feeDetails;
 
   /// student profile

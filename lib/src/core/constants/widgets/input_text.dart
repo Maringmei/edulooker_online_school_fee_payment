@@ -89,7 +89,7 @@ class InputText extends StatelessWidget {
                 )
               : null,
           filled: true,
-          fillColor: fillColor ?? KColor.filledColor,
+          fillColor: fillColor ?? KColor.white,
           hintText: hint,
           hintStyle: const TextStyle(
               color: KColor.subText,
