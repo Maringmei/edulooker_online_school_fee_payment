@@ -105,8 +105,6 @@ class _LoginPageState extends State<LoginPage> {
                 },
                 onChangedUrl: (String value) async {
                   Store.setBaseUrl(value);
-                  String? baseUrl = await Store.getBaseUrl();
-                  print("The baseUrl :" + baseUrl!);
                 },
               ),
               Gap(10),

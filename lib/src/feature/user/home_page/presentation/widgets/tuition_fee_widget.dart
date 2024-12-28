@@ -204,7 +204,7 @@ class TuitionFeeWidget extends StatelessWidget {
                                           }
                                           return value;
                                         });
-                                        print(response.data!.atomTokenId);
+                                        //print(response.data!.atomTokenId);
                                       },
                                       color: KColor.appColor,
                                       fullWidth: true,
@@ -236,7 +236,7 @@ class TuitionFeeWidget extends StatelessWidget {
                                           }
                                           return value;
                                         });
-                                        print(response.data!.atomTokenId);
+                                        // print(response.data!.atomTokenId);
                                       },
                                       color: KColor.appColor,
                                       fullWidth: true,
@@ -310,7 +310,7 @@ class TuitionFeeWidget extends StatelessWidget {
                               ButtonWidget(
                                 text: "Pay",
                                 onTap: () async {
-                                  bool response = await showDialog(
+                                  bool? response = await showDialog(
                                       context: context,
                                       builder: (context) {
                                         return PayDetailsDialog(
@@ -340,7 +340,7 @@ class TuitionFeeWidget extends StatelessWidget {
                                         }
                                         return value;
                                       });
-                                      print(response.data!.atomTokenId);
+                                      // print(response.data!.atomTokenId);
                                     }
                                     return value;
                                   });

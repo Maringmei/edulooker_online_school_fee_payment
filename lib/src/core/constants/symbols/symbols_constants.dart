@@ -1,3 +1,3 @@
 class KSymbol {
-  static const inr = "₹";
+  static const inr = "\u20B9";
 }

@@ -30,6 +30,7 @@ class PayDetailsDialog extends StatelessWidget {
   Widget contentBox(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return Stack(
+      clipBehavior : Clip.hardEdge,
       children: <Widget>[
         Container(
           padding: const EdgeInsets.all(20),
@@ -49,17 +50,20 @@ class PayDetailsDialog extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
+              Gap(10),
               TextRowWidget(
                 children: [
                   TextWidget(
                     text: "${data.paymentFor!} ",
                     tColor: KColor.black,
                     fontSize: 15,
+                    fontWeight: 700,
                   ),
                   TextWidget(
                     text: data.paymentOf!,
                     tColor: KColor.black,
                     fontSize: 15,
+                    fontWeight: 700,
                   ),
                 ],
               ),
@@ -128,6 +132,12 @@ class PayDetailsDialog extends StatelessWidget {
             ],
           ),
         ),
+        Positioned(
+            top: -5,
+            right: -5,
+            child: IconButton(onPressed: (){
+              Navigator.pop(context, false);
+            }, icon: Icon(Icons.cancel, color: KColor.red,)))
       ],
     );
   }
