@@ -4,20 +4,24 @@ import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/d
 
 import '../../../../../core/services/dio/dio_interceptor.dart';
 import '../../../../../core/shared/models/shared_model.dart';
+import '../../../../../core/storage/storage.dart';
 import '../models/fee_details_model.dart';
 
 class FeeDetailsAPI {
   late final Dio _dio;
 
   FeeDetailsAPI() {
-    _dio = Dio(BaseOptions(baseUrl: Endpoint.baseUrl));
+    _dio = Dio();
     _dio.interceptors.add(DioInterceptors());
   }
+
+
 
   final String _url = Endpoint.feeDetails;
 
   /// student profile
   Future<FeeDetailsModel> getFeeDetails({required String id}) async {
+
     try {
       final response = await _dio.get(_url + id);
       print("Response data: " + response.data.runtimeType.toString());

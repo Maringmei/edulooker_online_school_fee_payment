@@ -26,7 +26,7 @@ class StudentProfileWidget extends StatelessWidget {
           return Container(
             padding: EdgeInsets.all(20),
             decoration: BoxDecoration(
-                color: KColor.filledColor,
+                color: KColor.white,
                 image: DecorationImage(
                   image: AssetImage(KImage.student),
                   alignment: Alignment.centerRight,
@@ -130,8 +130,18 @@ class StudentProfileWidget extends StatelessWidget {
           );
         }
         if (state is StudentProfileError) {
-          return Container(
-            child: Icon(Icons.error),
+          return Center(
+            child: Column(
+              children: [
+                TextWidget(text: state.errString),
+                TextButton(
+                    onPressed: () {
+                      BlocProvider.of<StudentProfileCubit>(context)
+                          .getStudentProfile();
+                    },
+                    child: TextWidget(text: "Retry")),
+              ],
+            ),
           );
         }
         return Container();

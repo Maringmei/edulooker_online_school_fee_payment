@@ -18,5 +18,5 @@ class KColor {
   static const red = Color(0xFFE53935);
   static const black = Color(0xFF000000);
   static const white = Color(0xFFFFFFFF);
-  static const blue = Color(0xFF0B5FE1);
+  static const blue = Color(0xFF007BFF);
 }

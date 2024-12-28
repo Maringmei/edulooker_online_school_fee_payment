@@ -19,6 +19,7 @@ import '../../../../../core/constants/colors/color_constants.dart';
 import '../../../../../core/constants/images/images_constants.dart';
 import '../../../../../core/constants/strings/strings_constants.dart';
 import '../../../../../core/services/dio/endpoint_urls.dart';
+import '../../../../../core/storage/storage.dart';
 import '../../../../../core/utils/date_picker.dart';
 import '../../../../../core/utils/redirect_page.dart';
 import '../../../../shared/drop_down_widgets/school_list_dropdown.dart';
@@ -101,7 +102,11 @@ class _LoginPageState extends State<LoginPage> {
                 dataModel: schoolList,
                 onChanged: (String value) {
                   schoolID = value;
-
+                },
+                onChangedUrl: (String value) async {
+                  Store.setBaseUrl(value);
+                  String? baseUrl = await Store.getBaseUrl();
+                  print("The baseUrl :" + baseUrl!);
                 },
               ),
               Gap(10),
@@ -113,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Gap(5),
               InputText(
-                hint: "ADM123456",
+                hint: "123456",
                 controller: admissionNumber,
               ),
               Gap(10),
@@ -210,13 +215,14 @@ class _LoginPageState extends State<LoginPage> {
                           String admissonNumber = admissionNumber.text;
                           String dateOfBirth = dob!;
                           String mobileNumber = mNumber.text;
+                          String sID = schoolID!;
                           await apiRepo
                               .sendOtp(
                             context: context,
                             regdNumber: admissonNumber,
                             dob: dateOfBirth,
                             mobileNumber: mobileNumber,
-                            schoolId: '1',
+                            schoolId: schoolID!,
                           )
                               .then((value) {
                             if (value == true) {
@@ -224,10 +230,11 @@ class _LoginPageState extends State<LoginPage> {
                                   .getStudentProfile();
                               BlocProvider.of<FeeDetailsCubit>(context)
                                   .getFeeDetails();
-                              BlocProvider.of<FeeTransportCubit>(context)
-                                  .getFeeTransport();
-                              BlocProvider.of<FeeHostelCubit>(context)
-                                  .getFeeHostel();
+                              // BlocProvider.of<FeeTransportCubit>(context)
+                              //     .getFeeTransport();
+                              // BlocProvider.of<FeeHostelCubit>(context)
+                              //     .getFeeHostel();
+
                               // showDialog(
                               //     context: context.mounted ? context : context,
                               //     builder: (context) {
@@ -236,7 +243,8 @@ class _LoginPageState extends State<LoginPage> {
                               //         data: LoginDataModel(
                               //             registrationNumber: admissonNumber,
                               //             mobileNumber: mobileNumber,
-                              //             dob: dateOfBirth),
+                              //             dob: dateOfBirth,
+                              //             schoolId: sID),
                               //       );
                               //     });
                             }

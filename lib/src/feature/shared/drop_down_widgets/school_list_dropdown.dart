@@ -8,8 +8,9 @@ import '../../../core/constants/widgets/text_widgets.dart';
 class DropDownSchoolListWidget extends StatefulWidget {
   final SchoolListModel dataModel;
   final ValueChanged<String>? onChanged;
+  final ValueChanged<String>? onChangedUrl;
   const DropDownSchoolListWidget(
-      {super.key, required this.dataModel, required this.onChanged});
+      {super.key, required this.dataModel, required this.onChanged, required this.onChangedUrl});
 
   @override
   State<DropDownSchoolListWidget> createState() =>
@@ -67,6 +68,9 @@ class _DropDownSchoolListWidgetState extends State<DropDownSchoolListWidget> {
             if (widget.onChanged != null) {
               widget.onChanged!('${selectedDatum.id}');
             }
+            if (widget.onChangedUrl != null) {
+              widget.onChangedUrl!('${selectedDatum.baseUrl}');
+            }
           },
           buttonStyleData: ButtonStyleData(
             padding: const EdgeInsets.symmetric(horizontal: 18),
@@ -77,7 +81,8 @@ class _DropDownSchoolListWidgetState extends State<DropDownSchoolListWidget> {
               borderRadius: BorderRadius.circular(5),
             ),
           ),
-          dropdownStyleData: const DropdownStyleData(maxHeight: 500, width: 350),
+          dropdownStyleData:
+              const DropdownStyleData(maxHeight: 500, width: 350),
           menuItemStyleData: const MenuItemStyleData(
             height: 40,
           ),

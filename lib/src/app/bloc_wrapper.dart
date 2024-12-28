@@ -23,12 +23,12 @@ class MultiBlocWrapper extends StatelessWidget {
       BlocProvider(
         create: (context) => FeeDetailsCubit(),
       ),
-      BlocProvider(
-        create: (context) => FeeTransportCubit(),
-      ),
-      BlocProvider(
-        create: (context) => FeeHostelCubit(),
-      ),
+      // BlocProvider(
+      //   create: (context) => FeeTransportCubit(),
+      // ),
+      // BlocProvider(
+      //   create: (context) => FeeHostelCubit(),
+      // ),
     ], child: app);
   }
 }

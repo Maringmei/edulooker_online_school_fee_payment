@@ -25,11 +25,10 @@ class LoginRepo {
         mobileNumber: mobileNumber,
         schoolId: schoolId);
     if (res.success == true) {
-       showDismiss();
-      // TopSnackBar.showSuccess(context, res.message);
+       showDismiss();TopSnackBar.showSuccess(context, res.message ?? "Otp send");
+
       Store.saveUserInfo(username: "", data: res);
       await Future.delayed(const Duration(seconds: 1));
-      //BlocManager.afterLoginRefresh(context);
       context.go(RouteList.home);
       return true;
     } else {
@@ -39,26 +38,26 @@ class LoginRepo {
     }
   }
 
-  // verifyOtp(
-  //     {required BuildContext context,
-  //     required String regdNumber,
-  //     required String mobileNumber,
-  //     required String otp}) async {
-  //   showStatus(msg: "Verifying OTP...");
-  //   SharedModel res = await api.verifyOTP(
-  //       regdNumber: regdNumber, mobileNumber: mobileNumber, otp: otp);
-  //   if (res.success == true) {
-  //     Store.saveUserInfo(username: "", data: res);
-  //     await Future.delayed(const Duration(seconds: 1));
-  //     //BlocManager.afterLoginRefresh(context);
-  //     context.go(RouteList.home);
-  //     // Navigator.push(
-  //     //     context, MaterialPageRoute(builder: (context) => HomePage()));
-  //     showDismiss();
-  //     TopSnackBar.showSuccess(context, res.message ?? "Otp verified");
-  //   } else {
-  //     showDismiss();
-  //     TopSnackBar.showError(context, res.message ?? "Unable to login");
-  //   }
-  // }
+  verifyOtp(
+      {required BuildContext context,
+      required String regdNumber,
+      required String mobileNumber,
+      required String otp}) async {
+    showStatus(msg: "Verifying OTP...");
+    SharedModel res = await api.verifyOTP(
+        regdNumber: regdNumber, mobileNumber: mobileNumber, otp: otp);
+    if (res.success == true) {
+      Store.saveUserInfo(username: "", data: res);
+      await Future.delayed(const Duration(seconds: 1));
+      //BlocManager.afterLoginRefresh(context);
+      context.go(RouteList.home);
+      // Navigator.push(
+      //     context, MaterialPageRoute(builder: (context) => HomePage()));
+      showDismiss();
+      TopSnackBar.showSuccess(context, res.message ?? "Otp verified");
+    } else {
+      showDismiss();
+      TopSnackBar.showError(context, res.message ?? "Unable to login");
+    }
+  }
 }

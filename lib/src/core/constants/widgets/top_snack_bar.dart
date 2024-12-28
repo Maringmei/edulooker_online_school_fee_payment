@@ -16,6 +16,7 @@ class TopSnackBar {
       message: msg,
       duration: const Duration(seconds: 2),
       animationDuration: Duration(milliseconds: 100),
+      messageStyle: TextStyle(color: KColor.white),
       trailingWidget: IconButton(
         icon: const Icon(
           Icons.close,
@@ -40,7 +41,7 @@ class TopSnackBar {
       ),
       message: msg,
       duration: const Duration(seconds: 1),
-
+      messageStyle: TextStyle(color: KColor.white),
       trailingWidget: IconButton(
         icon: const Icon(
           Icons.close,

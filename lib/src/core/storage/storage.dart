@@ -21,7 +21,7 @@ class Store {
   //store baseUrl
   static Future<void> setBaseUrl(String baseUrl) async {
     final preferences = await SharedPreferences.getInstance();
-    await preferences.setString(_tokenKeyAccess, baseUrl);
+    await preferences.setString(_baseUrl, baseUrl);
   }
 
   //store token refresh

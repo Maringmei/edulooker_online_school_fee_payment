@@ -1,60 +1,74 @@
 import 'package:dio/dio.dart';
-
+import 'package:edulooker_online_school_fee_payment/src/core/services/dio/endpoint_urls.dart';
 import '../../storage/storage.dart';
 
 class DioInterceptors extends Interceptor {
-  // Dio dio = Dio(BaseOptions(baseUrl: "base-api-url"));
-
-  // Future<(bool, String?)> checkTokenPresent() async {
-  //   String? token = await Store.getToken();
-  //   print("TOKENi $token");
-  //   if (token != null && token.isNotEmpty) {
-  //     // check if token is expire
-  //     checkToken();
-  //     token = await Store.getToken();
-  //   }
-  //   return (token != null && token.isNotEmpty, token);
-  // }
-
   @override
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    // final (isTokenPresent, token) = await checkTokenPresent();
+    // Fetch the base URL dynamically before making the request
+    String? baseUrl = await Store.getBaseUrl();
+    if (baseUrl != null) {
+      options.baseUrl = Endpoint.baseUrl; // Set the baseUrl in the request options
+     // options.baseUrl = baseUrl; // Set the baseUrl in the request options
+    } else {
+      // Handle case where baseUrl is not found, could throw an error or use a fallback URL
+      options.baseUrl = 'https://defaultbaseurl.com'; // Example fallback
+    }
+
+    // Add token to headers if available
     String? token = await Store.getToken();
     if (token != null) {
       options.headers['Authorization'] = 'Bearer $token';
     }
+
+    // Set common headers
     options.headers['Content-Type'] = 'application/json';
     options.headers['Accept'] = 'application/json';
-
-    // options.headers['Access-Control-Allow-Origin'] = '*';
-    // options.headers['Access-Control-Allow-Credentials'] = true;
-    // options.headers['Access-Control-Allow-Methods'] = 'GET,HEAD,OPTIONS,POST,PUT';
-    // options.headers['Access-Control-Allow-Headers'] = 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers';
-    //
 
     super.onRequest(options, handler);
   }
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    //   EasyLoading.dismiss();
-    // logger(response.data.toString());
-    // logger(response.statusCode.toString());
-    // logger("Interceptor response");
-    // logger("Interceptor : ${response.data}");
-    // if(response.statusCode == 403){
-    //   Storage.clear();
-    // }
-
     super.onResponse(response, handler);
   }
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
-    // TODO: implement onError
-    // EasyLoading.showToast("Unable to connect");
-    //logger("ERROR: ${err.error}");
     super.onError(err, handler);
   }
 }
+
+
+// import 'package:dio/dio.dart';
+//
+// import '../../storage/storage.dart';
+//
+// class DioInterceptors extends Interceptor {
+//   @override
+//   void onRequest(
+//       RequestOptions options, RequestInterceptorHandler handler) async {
+//
+//     String? token = await Store.getToken();
+//     if (token != null) {
+//       options.headers['Authorization'] = 'Bearer $token';
+//     }
+//     options.headers['Content-Type'] = 'application/json';
+//     options.headers['Accept'] = 'application/json';
+//
+//     super.onRequest(options, handler);
+//   }
+//
+//   @override
+//   void onResponse(Response response, ResponseInterceptorHandler handler) {
+//
+//
+//     super.onResponse(response, handler);
+//   }
+//
+//   @override
+//   void onError(DioException err, ErrorInterceptorHandler handler) {
+//     super.onError(err, handler);
+//   }
+// }

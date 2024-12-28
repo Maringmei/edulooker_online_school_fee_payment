@@ -21,12 +21,14 @@ class App extends StatelessWidget {
           app: MaterialApp.router(
             debugShowCheckedModeBanner: false,
             title: "Edulooker Online School Fee Payment",
+
             theme: ThemeData(
               fontFamily: "Poppins",
               appBarTheme: const AppBarTheme(
                 backgroundColor: KColor.appColor, // Set background color here
               ),
-              scaffoldBackgroundColor: KColor.white,
+              scaffoldBackgroundColor: KColor.filledColor,
+
             ),
             routerConfig: router,
             builder: EasyLoading.init(builder: FlashyFlushbarProvider.init()),

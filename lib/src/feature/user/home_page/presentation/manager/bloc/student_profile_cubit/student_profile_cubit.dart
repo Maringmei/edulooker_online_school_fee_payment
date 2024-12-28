@@ -13,6 +13,7 @@ class StudentProfileCubit extends Cubit<StudentProfileState> {
   StudentProfileRepo apiRepo = StudentProfileRepo();
 
   getStudentProfile() async {
+    emit(StudentProfileInitial());
     StudentProfileModel response = await apiRepo.getStudentProfile();
     if (response.success == true) {
       emit(StudentProfileLoaded(response: response));

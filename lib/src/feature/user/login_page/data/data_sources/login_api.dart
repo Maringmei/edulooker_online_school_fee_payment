@@ -8,8 +8,9 @@ class LoginAPI {
   late final Dio _dio;
 
   LoginAPI() {
-    _dio = Dio(BaseOptions(baseUrl: Endpoint.baseUrl));
-    _dio.interceptors.add(DioInterceptors());
+    _dio = Dio();
+    _dio.interceptors
+        .add(DioInterceptors()); // Adding the interceptor to handle baseUrl
   }
 
   final String _sendOtp = Endpoint.sendOtp;

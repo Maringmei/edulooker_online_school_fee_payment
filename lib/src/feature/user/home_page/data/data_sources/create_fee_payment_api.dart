@@ -4,13 +4,14 @@ import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/d
 
 import '../../../../../core/services/dio/dio_interceptor.dart';
 import '../../../../../core/shared/models/shared_model.dart';
+import '../../../../../core/storage/storage.dart';
 import '../models/create_fee_model.dart';
 
 class CreateFeePaymentAPI {
   late final Dio _dio;
 
   CreateFeePaymentAPI() {
-    _dio = Dio(BaseOptions(baseUrl: Endpoint.baseUrl));
+    _dio = Dio();
     _dio.interceptors.add(DioInterceptors());
   }
 
@@ -91,6 +92,7 @@ class CreateFeePaymentAPI {
   /// create retry payment
   Future<CreateFeeModel> createRetryFeePayment(
       {required String feeType, required String feeID}) async {
+
     try {
       _body = {"fee_type": feeType, "fee_id": feeID};
       final response = await _dio.post(_urlRetry, data: _body);
