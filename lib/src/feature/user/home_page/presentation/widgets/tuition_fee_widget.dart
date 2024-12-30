@@ -65,7 +65,7 @@ class TuitionFeeWidget extends StatelessWidget {
                                     tColor: KColor.subText,
                                   ),
                                   TextWidget(
-                                    text: data.paymentOf! ,
+                                    text: data.paymentOf!,
                                     tColor: KColor.subText,
                                     overflow: TextOverflow
                                         .ellipsis, // To handle overflow
@@ -368,9 +368,12 @@ class TuitionFeeWidget extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(KImage.noData, width: 150,height: 150,),
-                Gap(5),
-                TextWidget(text: "No data to show"),
+                Image.asset(
+                  KImage.noData,
+                  width: 150,
+                  height: 150,
+                ),
+
               ],
             ),
           );
