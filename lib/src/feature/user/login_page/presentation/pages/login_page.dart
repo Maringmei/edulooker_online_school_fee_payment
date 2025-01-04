@@ -285,6 +285,7 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
               ),
+              Gap(5),
               IntrinsicHeight(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
