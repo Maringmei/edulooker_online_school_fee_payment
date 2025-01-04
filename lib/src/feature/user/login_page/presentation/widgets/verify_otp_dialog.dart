@@ -9,6 +9,7 @@ import '../../../../../core/constants/colors/color_constants.dart';
 import '../../../../../core/constants/widgets/easy_loading.dart';
 import '../../../../../core/constants/widgets/pinput_widget.dart';
 import '../../../../../core/constants/widgets/text_widgets.dart';
+import '../../../../../route/router_list.dart';
 import '../../data/models/login_data_model.dart';
 import '../../data/repositories/login_repo.dart';
 
@@ -48,7 +49,6 @@ class _OtpDialogState extends State<OtpDialog> {
         if (widget.context.mounted) {
           await Future.delayed(Duration(seconds: 1));
           Navigator.of(context).pop(true);
-          //ctx.go(RouteList.home);
         }
       }
     });

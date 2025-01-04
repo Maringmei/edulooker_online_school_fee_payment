@@ -224,27 +224,28 @@ class _LoginPageState extends State<LoginPage> {
                           )
                               .then((value) {
                             if (value == true) {
-                              BlocProvider.of<StudentProfileCubit>(context)
-                                  .getStudentProfile();
-                              BlocProvider.of<FeeDetailsCubit>(context)
-                                  .getFeeDetails();
+                              // BlocProvider.of<StudentProfileCubit>(context)
+                              //     .getStudentProfile();
+                              // BlocProvider.of<FeeDetailsCubit>(context)
+                              //     .getFeeDetails();
+
                               // BlocProvider.of<FeeTransportCubit>(context)
                               //     .getFeeTransport();
                               // BlocProvider.of<FeeHostelCubit>(context)
                               //     .getFeeHostel();
 
-                              // showDialog(
-                              //     context: context.mounted ? context : context,
-                              //     builder: (context) {
-                              //       return OtpDialog(
-                              //         context: context,
-                              //         data: LoginDataModel(
-                              //             registrationNumber: admissonNumber,
-                              //             mobileNumber: mobileNumber,
-                              //             dob: dateOfBirth,
-                              //             schoolId: sID),
-                              //       );
-                              //     });
+                              showDialog(
+                                  context: context.mounted ? context : context,
+                                  builder: (context) {
+                                    return OtpDialog(
+                                      context: context,
+                                      data: LoginDataModel(
+                                          registrationNumber: admissonNumber,
+                                          mobileNumber: mobileNumber,
+                                          dob: dateOfBirth,
+                                          schoolId: sID),
+                                    );
+                                  });
                             }
                           });
                         } else {
