@@ -145,7 +145,7 @@ class TuitionFeeWidget extends StatelessWidget {
                                   Divider(),
                                   ListTile(
                                     title: TextWidget(
-                                      text: "Total fee",
+                                      text: "Fee",
                                     ),
                                     trailing: TextWidget(
                                       text: KSymbol.inr + data.extraFee!.fee!,
@@ -176,9 +176,10 @@ class TuitionFeeWidget extends StatelessWidget {
                                       fontSize: 12,
                                       fontWeight: 700,
                                     ),
+
                                     trailing: TextWidget(
                                       text: KSymbol.inr +
-                                          data.extraFee!.pay.toString(),
+                                          data.recievedAmount.toString(),
                                       fontSize: 12,
                                       fontWeight: 700,
                                     ),

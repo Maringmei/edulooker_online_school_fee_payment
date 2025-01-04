@@ -181,6 +181,7 @@ class _LoginPageState extends State<LoginPage> {
               TextRowWidget(children: [
                 Checkbox(
                     value: termAndCondition,
+                    activeColor: KColor.appColor,
                     onChanged: (value) {
                       termAndCondition = value!;
                       setState(() {});
