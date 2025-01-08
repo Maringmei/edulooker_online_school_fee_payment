@@ -1,3 +1,3 @@
 class Env{
-  static bool isStaging = true;
+  static bool isStaging = false;
 }

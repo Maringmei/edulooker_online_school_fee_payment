@@ -67,6 +67,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: KColor.white,
       body: SingleChildScrollView(
         // Wrap with SingleChildScrollView for scrolling
         child: WidgetSpacing.padding(
@@ -138,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 40,
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                      color: KColor.white,
+                      color: KColor.filledColor,
                       borderRadius: BorderRadius.circular(5)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
