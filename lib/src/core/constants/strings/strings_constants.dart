@@ -1,4 +1,6 @@
 class KString {
+
+  static const appName = "UNACCOSCHOOL";
   // Login
   static const schoolName = "Unacco";
   static const schoolOnline = "Unacco School Online";
