@@ -1,6 +1,7 @@
 import 'package:edulooker_online_school_fee_payment/src/core/shared/models/shared_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../feature/user/login_page/data/models/verify_otp_model.dart';
 import '../constants/strings/strings_constants.dart';
 
 class Store {
@@ -70,10 +71,12 @@ class Store {
 
   //save user data
   static Future<void> saveUserInfo(
-      {required String username, required SharedModel data}) async {
+      {required String username, required VerifyOtpModel data}) async {
     if (data.data != null) {
-      final token = data.data;
-      await Store.setToken(token);
+      final token = data.data!.accessToken;
+      final tokenRefresh = data.data!.refreshToken;
+      await Store.setToken(token!);
+      await Store.setTokenRefresh(tokenRefresh!);
     }
   }
 }

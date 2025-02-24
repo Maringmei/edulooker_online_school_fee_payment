@@ -3,6 +3,7 @@ import 'package:edulooker_online_school_fee_payment/src/core/services/dio/endpoi
 
 import '../../../../../core/services/dio/dio_interceptor.dart';
 import '../../../../../core/shared/models/shared_model.dart';
+import '../models/verify_otp_model.dart';
 
 class LoginAPI {
   late final Dio _dio;
@@ -100,7 +101,7 @@ class LoginAPI {
   }
 
   /// verify otp to device
-  Future<SharedModel> verifyOTP(
+  Future<VerifyOtpModel> verifyOTP(
       {required String regdNumber,
       required String mobileNumber,
       required String otp}) async {
@@ -116,16 +117,16 @@ class LoginAPI {
       if (response.statusCode == 200) {
         final responseData = response.data;
         if (responseData['success'] == true) {
-          return SharedModel.fromJson(responseData);
+          return VerifyOtpModel.fromJson(responseData);
         } else {
-          return SharedModel(
+          return VerifyOtpModel(
             success: false,
             data: null,
             message: responseData['message'] ?? "Unexpected error",
           );
         }
       } else {
-        return SharedModel(
+        return VerifyOtpModel(
           success: false,
           data: null,
           message: "Unexpected status code: ${response.statusCode}",
@@ -134,24 +135,24 @@ class LoginAPI {
     } on DioException catch (e) {
       if (e.response != null) {
         // Server error
-        return SharedModel.fromJson(e.response!.data);
+        return VerifyOtpModel.fromJson(e.response!.data);
       } else if (e.type == DioExceptionType.connectionTimeout) {
         // Connection timeout
-        return SharedModel(
+        return VerifyOtpModel(
           success: false,
           data: null,
           message: "Connection timeout, please try again later.",
         );
       } else if (e.type == DioExceptionType.receiveTimeout) {
         // Receive timeout
-        return SharedModel(
+        return VerifyOtpModel(
           success: false,
           data: null,
           message: "Receive timeout, please try again later.",
         );
       } else if (e.type == DioExceptionType.unknown) {
         // No internet connection or other network-related issues
-        return SharedModel(
+        return VerifyOtpModel(
           success: false,
           data: null,
           message:
@@ -159,7 +160,7 @@ class LoginAPI {
         );
       } else {
         // Other errors
-        return SharedModel(
+        return VerifyOtpModel(
           success: false,
           data: null,
           message: "Not able to connect server",
@@ -167,7 +168,7 @@ class LoginAPI {
       }
     } catch (e) {
       // Generic error handling
-      return SharedModel(
+      return VerifyOtpModel(
         success: false,
         data: null,
         message: "An unexpected error occurred: ${e.toString()}",
