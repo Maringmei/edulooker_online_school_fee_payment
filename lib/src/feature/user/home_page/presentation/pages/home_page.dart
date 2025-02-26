@@ -118,7 +118,8 @@ class HomePage extends StatelessWidget {
                       unselectedLabelColor: KColor.black,
                       indicatorColor: KColor.appColor,
                       dividerColor: Colors.transparent,
-                      labelStyle: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+                      labelStyle:
+                          TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
                       padding: EdgeInsets.zero,
                       isScrollable: true,
                       labelPadding: EdgeInsets.only(right: 10),

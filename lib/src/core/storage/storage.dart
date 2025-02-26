@@ -1,13 +1,14 @@
 import 'package:edulooker_online_school_fee_payment/src/core/shared/models/shared_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../env.dart';
 import '../../feature/user/login_page/data/models/verify_otp_model.dart';
 import '../constants/strings/strings_constants.dart';
 
 class Store {
   const Store._();
 
-  static const String _tokenKeyAccess = "${KString.appName}TOKEN_ACCRESS";
+  static const String _tokenKeyAccess = "${KString.appName}TOKEN_ACCRESS${Env.updateVersion}";
   static const String _tokenKeyRefresh = "TOKEN_REFRESH";
   static const String _baseUrl = "BASE_URL";
   static const String _username = "USERNAME";

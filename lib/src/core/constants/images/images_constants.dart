@@ -6,4 +6,5 @@ class KImage {
   static const String notFound = "assets/images/not_found.png";
 
   static const String noData = "assets/images/no_data.png";
+  static const String expire = "assets/images/session_expire.png";
 }
