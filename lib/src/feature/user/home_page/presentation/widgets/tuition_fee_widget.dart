@@ -75,7 +75,9 @@ class _TuitionFeeWidgetState extends State<TuitionFeeWidget> {
                                 margin: EdgeInsets.only(bottom: 10),
                                 padding: EdgeInsets.all(20),
                                 decoration: BoxDecoration(
-                                  color: feePayList.contains(data.feeId) ? KColor.appColor.withAlpha(30) : KColor.white,
+                                  color: feePayList.contains(data.feeId)
+                                      ? KColor.appColor.withAlpha(30)
+                                      : KColor.white,
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Column(
@@ -433,7 +435,6 @@ class _TuitionFeeWidgetState extends State<TuitionFeeWidget> {
                       }),
                 ),
               ),
-
               // pay button
               if (feePayList.isNotEmpty) Gap(5),
               if (feePayList.isNotEmpty)
@@ -449,6 +450,37 @@ class _TuitionFeeWidgetState extends State<TuitionFeeWidget> {
                           text: "Pay",
                           onTap: () async {
                             // Payment logic
+                            bool? response = await showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return PayDetailsDialog(context: context);
+                                }).then((value) async {
+                              if (value) {
+                                // CreateFeeModel response = await apiRepo
+                                //     .createFeePayment(
+                                //         feeType: FeeType.tuition,
+                                //         feeID: data.feeId!)
+                                //     .then((value) {
+                                //   if (value.success == true &&
+                                //       value.data!.atomTokenId != null) {
+                                //     openPay(
+                                //       value.data!.atomTokenId.toString(),
+                                //       value.data!.merchId.toString(),
+                                //       value.data!.custEmail.toString(),
+                                //       value.data!.custMobile.toString(),
+                                //       value.data!.returnUrl.toString(),
+                                //       value.data!.mode.toString(),
+                                //     );
+                                //   } else {
+                                //     TopSnackBar.showError(context,
+                                //         "Unable to make payment, try again later");
+                                //   }
+                                //   return value;
+                                // });
+                                // print(response.data!.atomTokenId);
+                              }
+                              return value;
+                            });
                           },
                         ),
                       ),

@@ -10,10 +10,8 @@ import '../../../../../core/constants/widgets/text_span_widgets.dart';
 
 class PayDetailsDialog extends StatelessWidget {
   final BuildContext context;
-  final data;
 
-  const PayDetailsDialog(
-      {super.key, required this.context, required this.data});
+  const PayDetailsDialog({super.key, required this.context});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +28,7 @@ class PayDetailsDialog extends StatelessWidget {
   Widget contentBox(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return Stack(
-      clipBehavior : Clip.hardEdge,
+      clipBehavior: Clip.hardEdge,
       children: <Widget>[
         Container(
           padding: const EdgeInsets.all(20),
@@ -54,13 +52,13 @@ class PayDetailsDialog extends StatelessWidget {
               TextRowWidget(
                 children: [
                   TextWidget(
-                    text: "${data.paymentFor!} ",
+                    text: " ",
                     tColor: KColor.black,
                     fontSize: 15,
                     fontWeight: 700,
                   ),
                   TextWidget(
-                    text: data.paymentOf!,
+                    text: "",
                     tColor: KColor.black,
                     fontSize: 15,
                     fontWeight: 700,
@@ -77,7 +75,7 @@ class PayDetailsDialog extends StatelessWidget {
                   text: "Total fee",
                 ),
                 trailing: TextWidget(
-                  text: KSymbol.inr + data.extraFee!.fee!,
+                  text: KSymbol.inr + "",
                 ),
               ),
               ListTile(
@@ -86,7 +84,7 @@ class PayDetailsDialog extends StatelessWidget {
                   text: "Extra fee",
                 ),
                 trailing: TextWidget(
-                  text: KSymbol.inr + data.extraFee!.fine!,
+                  text: KSymbol.inr + "",
                   fontSize: 11,
                   fontWeight: 400,
                 ),
@@ -97,7 +95,7 @@ class PayDetailsDialog extends StatelessWidget {
                   text: "Discount",
                 ),
                 trailing: TextWidget(
-                  text: KSymbol.inr + data.extraFee!.disc!.toString(),
+                  text: KSymbol.inr + "",
                 ),
               ),
               ListTile(
@@ -108,7 +106,7 @@ class PayDetailsDialog extends StatelessWidget {
                   fontWeight: 700,
                 ),
                 trailing: TextWidget(
-                  text: KSymbol.inr + data.extraFee!.pay.toString(),
+                  text: KSymbol.inr + "",
                   fontSize: 12,
                   fontWeight: 700,
                 ),
@@ -135,9 +133,14 @@ class PayDetailsDialog extends StatelessWidget {
         Positioned(
             top: -5,
             right: -5,
-            child: IconButton(onPressed: (){
-              Navigator.pop(context, false);
-            }, icon: Icon(Icons.cancel, color: KColor.red,)))
+            child: IconButton(
+                onPressed: () {
+                  Navigator.pop(context, false);
+                },
+                icon: Icon(
+                  Icons.cancel,
+                  color: KColor.red,
+                )))
       ],
     );
   }
