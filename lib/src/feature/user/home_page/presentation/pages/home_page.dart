@@ -27,6 +27,7 @@ class HomePage extends StatelessWidget {
       length: 1, // only tuition fee , set 3 for tuition, transport, hostel
       child: Scaffold(
         body: WidgetSpacing.padding(
+          bottom: 0,
           child: NestedScrollView(
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
