@@ -10,8 +10,8 @@ String createFeeModelToJson(CreateFeeModel data) => json.encode(data.toJson());
 
 class CreateFeeModel {
   bool? success;
-  Data? data;
-  String? message;
+  CreateFeeModelData? data;
+  dynamic message;
 
   CreateFeeModel({
     this.success,
@@ -21,7 +21,7 @@ class CreateFeeModel {
 
   factory CreateFeeModel.fromJson(Map<String, dynamic> json) => CreateFeeModel(
     success: json["success"],
-    data: json["data"] == null ? null : Data.fromJson(json["data"]),
+    data: json["data"] == null ? null : CreateFeeModelData.fromJson(json["data"]),
     message: json["message"],
   );
 
@@ -32,42 +32,58 @@ class CreateFeeModel {
   };
 }
 
+class CreateFeeModelData {
+  String? message;
+  Data? data;
+
+  CreateFeeModelData({
+    this.message,
+    this.data,
+  });
+
+  factory CreateFeeModelData.fromJson(Map<String, dynamic> json) => CreateFeeModelData(
+    message: json["message"],
+    data: json["data"] == null ? null : Data.fromJson(json["data"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "message": message,
+    "data": data?.toJson(),
+  };
+}
+
 class Data {
-  int? id;
-  int? atomTokenId;
   String? merchId;
   String? custEmail;
   String? custMobile;
   String? returnUrl;
   String? mode;
+  int? atomTokenId;
 
   Data({
-    this.id,
-    this.atomTokenId,
     this.merchId,
     this.custEmail,
     this.custMobile,
     this.returnUrl,
-    this.mode
+    this.mode,
+    this.atomTokenId,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-    id: json["id"],
-    atomTokenId: json["atomTokenId"],
     merchId: json["merchId"],
     custEmail: json["custEmail"],
     custMobile: json["custMobile"],
     returnUrl: json["returnUrl"],
     mode: json["mode"],
+    atomTokenId: json["atomTokenId"],
   );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "atomTokenId": atomTokenId,
     "merchId": merchId,
     "custEmail": custEmail,
     "custMobile": custMobile,
     "returnUrl": returnUrl,
     "mode": mode,
+    "atomTokenId": atomTokenId,
   };
 }

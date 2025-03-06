@@ -8,7 +8,7 @@ class CreateFeePaymentRepo {
   CreateFeePaymentAPI api = CreateFeePaymentAPI();
 
   Future<CreateFeeModel> createFeePayment(
-      {required String feeType, required String feeID}) async {
+      {required String feeType, required List feeID}) async {
     EasyLoading.show(status: "Please wait...");
     CreateFeeModel response =
         await api.createFeePayment(feeType: feeType, feeID: feeID);

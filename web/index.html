@@ -110,6 +110,16 @@
     "returnUrl": returnURL // replace with your return URL
     }
     let atom = new AtomPaynetz(options, "uat");
+
+     // Listen for success or failure
+        atom.on("paymentSuccess", function(response) {
+            window.paymentCallback(JSON.stringify({ status: "success", data: response }));
+        });
+
+        atom.on("paymentFailure", function(response) {
+            window.paymentCallback(JSON.stringify({ status: "failure", data: response }));
+        });
+
     }
   </script>
 

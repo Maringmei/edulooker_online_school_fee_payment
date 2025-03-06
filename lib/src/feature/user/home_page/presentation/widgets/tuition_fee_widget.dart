@@ -243,26 +243,30 @@ class _TuitionFeeWidgetState extends State<TuitionFeeWidget> {
                                                                 feeType: FeeType
                                                                     .tuition,
                                                                 feeID:
-                                                                    data.feeId!)
+                                                                    feePayList)
                                                             .then((value) {
                                                       if (value.success ==
                                                               true &&
-                                                          value.data!
+                                                          value.data!.data!
                                                                   .atomTokenId !=
                                                               null) {
                                                         openPay(
-                                                          value
-                                                              .data!.atomTokenId
+                                                          value.data!.data!
+                                                              .atomTokenId
                                                               .toString(),
-                                                          value.data!.merchId
+                                                          value.data!.data!
+                                                              .merchId
                                                               .toString(),
-                                                          value.data!.custEmail
+                                                          value.data!.data!
+                                                              .custEmail
                                                               .toString(),
-                                                          value.data!.custMobile
+                                                          value.data!.data!
+                                                              .custMobile
                                                               .toString(),
-                                                          value.data!.returnUrl
+                                                          value.data!.data!
+                                                              .returnUrl
                                                               .toString(),
-                                                          value.data!.mode
+                                                          value.data!.data!.mode
                                                               .toString(),
                                                         );
                                                       } else {
@@ -293,22 +297,26 @@ class _TuitionFeeWidgetState extends State<TuitionFeeWidget> {
                                                             .then((value) {
                                                       if (value.success ==
                                                               true &&
-                                                          value.data!
+                                                          value.data!.data!
                                                                   .atomTokenId !=
                                                               null) {
                                                         openPay(
-                                                          value
-                                                              .data!.atomTokenId
+                                                          value.data!.data!
+                                                              .atomTokenId
                                                               .toString(),
-                                                          value.data!.merchId
+                                                          value.data!.data!
+                                                              .merchId
                                                               .toString(),
-                                                          value.data!.custEmail
+                                                          value.data!.data!
+                                                              .custEmail
                                                               .toString(),
-                                                          value.data!.custMobile
+                                                          value.data!.data!
+                                                              .custMobile
                                                               .toString(),
-                                                          value.data!.returnUrl
+                                                          value.data!.data!
+                                                              .returnUrl
                                                               .toString(),
-                                                          value.data!.mode
+                                                          value.data!.data!.mode
                                                               .toString(),
                                                         );
                                                       } else {
@@ -456,28 +464,34 @@ class _TuitionFeeWidgetState extends State<TuitionFeeWidget> {
                                   return PayDetailsDialog(context: context);
                                 }).then((value) async {
                               if (value) {
-                                // CreateFeeModel response = await apiRepo
-                                //     .createFeePayment(
-                                //         feeType: FeeType.tuition,
-                                //         feeID: data.feeId!)
-                                //     .then((value) {
-                                //   if (value.success == true &&
-                                //       value.data!.atomTokenId != null) {
-                                //     openPay(
-                                //       value.data!.atomTokenId.toString(),
-                                //       value.data!.merchId.toString(),
-                                //       value.data!.custEmail.toString(),
-                                //       value.data!.custMobile.toString(),
-                                //       value.data!.returnUrl.toString(),
-                                //       value.data!.mode.toString(),
-                                //     );
-                                //   } else {
-                                //     TopSnackBar.showError(context,
-                                //         "Unable to make payment, try again later");
-                                //   }
-                                //   return value;
-                                // });
-                                // print(response.data!.atomTokenId);
+                                CreateFeeModel response = await apiRepo
+                                    .createFeePayment(
+                                        feeType: FeeType.tuition,
+                                        feeID: feePayList)
+                                    .then((paymentDetails) {
+                                  if (paymentDetails.success == true &&
+                                      paymentDetails.data!.data!.atomTokenId !=
+                                          null) {
+                                    openPay(
+                                      paymentDetails.data!.data!.atomTokenId
+                                          .toString(),
+                                      paymentDetails.data!.data!.merchId
+                                          .toString(),
+                                      paymentDetails.data!.data!.custEmail
+                                          .toString(),
+                                      paymentDetails.data!.data!.custMobile
+                                          .toString(),
+                                      paymentDetails.data!.data!.returnUrl
+                                          .toString(),
+                                      paymentDetails.data!.data!.mode
+                                          .toString(),
+                                    );
+                                  } else {
+                                    TopSnackBar.showError(context,
+                                        "Unable to make payment, try again later");
+                                  }
+                                  return value;
+                                });
                               }
                               return value;
                             });

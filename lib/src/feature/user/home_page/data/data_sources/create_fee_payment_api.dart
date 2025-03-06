@@ -22,9 +22,9 @@ class CreateFeePaymentAPI {
 
   /// create payment
   Future<CreateFeeModel> createFeePayment(
-      {required String feeType, required String feeID}) async {
+      {required String feeType, required List feeID}) async {
     try {
-      _body = {"fee_type": feeType, "fee_id": feeID};
+      _body = {"fee_id": feeID};
       final response = await _dio.post(_url, data: _body);
 
       if (response.statusCode == 200) {
@@ -92,7 +92,6 @@ class CreateFeePaymentAPI {
   /// create retry payment
   Future<CreateFeeModel> createRetryFeePayment(
       {required String feeType, required String feeID}) async {
-
     try {
       _body = {"fee_type": feeType, "fee_id": feeID};
       final response = await _dio.post(_urlRetry, data: _body);
