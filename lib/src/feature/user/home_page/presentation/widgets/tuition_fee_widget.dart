@@ -69,375 +69,356 @@ class _TuitionFeeWidgetState extends State<TuitionFeeWidget> {
                               print(feePayList.toString());
                             }
                           },
-                          child: Stack(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(bottom: 10),
-                                padding: EdgeInsets.all(20),
-                                decoration: BoxDecoration(
-                                  color: feePayList.contains(data.feeId)
-                                      ? KColor.appColor.withAlpha(30)
-                                      : KColor.white,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
+                          child: Container(
+                            margin: EdgeInsets.only(bottom: 10),
+                            padding: EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              // color: feePayList.contains(data.feeId)
+                              //     ? KColor.appColor.withAlpha(30)
+                              //     : KColor.white,
+                              color: KColor.white,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: Row(
-                                            children: [
-                                              TextWidget(
-                                                text: "${data.paymentFor!} ",
-                                                tColor: KColor.subText,
-                                              ),
-                                              TextWidget(
-                                                text: data.paymentOf!,
-                                                tColor: KColor.subText,
-                                                overflow: TextOverflow
-                                                    .ellipsis, // To handle overflow
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        TextWidget(
-                                          text: data.receivedDate!.isNotEmpty
-                                              ? formatDateShort(
-                                                  data.receivedDate!)
-                                              : "",
-                                          tColor: KColor.subText,
-                                          fontSize: 10,
-                                        ),
-                                      ],
-                                    ),
-
-                                    /*********************************************************** Unpaid - when fail to pay ******************/
-                                    if (data.status != TransactionStatus.upPaid)
-                                      Theme(
-                                        data: ThemeData().copyWith(
-                                            dividerColor: Colors.transparent),
-                                        child: ListTileTheme(
-                                          contentPadding: EdgeInsets.all(0),
-                                          dense: true,
-                                          horizontalTitleGap: 0.0,
-                                          minLeadingWidth: 0,
-                                          child: ExpansionTile(
-                                            childrenPadding: EdgeInsets.zero,
-                                            dense: true,
-                                            title: Row(
-                                              children: [
-                                                TextWidget(
-                                                  text: data.status ==
-                                                          TransactionStatus.paid
-                                                      ? KSymbol.inr +
-                                                          data.recievedAmount
-                                                              .toString()
-                                                      : KSymbol.inr +
-                                                          data.extraFee!.pay
-                                                              .toString(),
-                                                  fontWeight: 600,
-                                                  fontSize: 18,
-                                                ),
-                                                Gap(10),
-                                                if (data.status !=
-                                                        TransactionStatus
-                                                            .deleted &&
-                                                    data.status !=
-                                                        TransactionStatus
-                                                            .upPaid)
-                                                  Container(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            vertical: 2,
-                                                            horizontal: 5),
-                                                    decoration: BoxDecoration(
-                                                        color: data.status ==
-                                                                TransactionStatus
-                                                                    .paid
-                                                            ? KColor.green
-                                                            : data.status ==
-                                                                    TransactionStatus
-                                                                        .initiated
-                                                                ? KColor.pending
-                                                                : data.status ==
-                                                                        TransactionStatus
-                                                                            .failed
-                                                                    ? KColor.red
-                                                                    : Colors
-                                                                        .transparent,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5)),
-                                                    child: TextWidget(
-                                                      text: data.statusDesp!,
-                                                      fontWeight: 600,
-                                                      fontSize: 10,
-                                                      tColor: KColor.white,
-                                                    ),
-                                                  ),
-                                              ],
-                                            ),
-                                            expandedCrossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Divider(),
-                                              ListTile(
-                                                title: TextWidget(
-                                                  text: "Fee",
-                                                ),
-                                                trailing: TextWidget(
-                                                  text: KSymbol.inr +
-                                                      data.extraFee!.fee!,
-                                                ),
-                                              ),
-                                              ListTile(
-                                                title: TextWidget(
-                                                  text: "Extra fee",
-                                                ),
-                                                trailing: TextWidget(
-                                                  text: KSymbol.inr +
-                                                      data.extraFee!.fine
-                                                          .toString(),
-                                                  fontSize: 11,
-                                                  fontWeight: 400,
-                                                ),
-                                              ),
-                                              ListTile(
-                                                title: TextWidget(
-                                                  text: "Discount",
-                                                ),
-                                                trailing: TextWidget(
-                                                  text: KSymbol.inr +
-                                                      data.extraFee!.disc!
-                                                          .toString(),
-                                                ),
-                                              ),
-                                              ListTile(
-                                                title: TextWidget(
-                                                  text: "Total Fee",
-                                                  fontSize: 12,
-                                                  fontWeight: 700,
-                                                ),
-                                                trailing: TextWidget(
-                                                  text: KSymbol.inr +
-                                                      data.recievedAmount
-                                                          .toString(),
-                                                  fontSize: 12,
-                                                  fontWeight: 700,
-                                                ),
-                                              ),
-                                              Gap(20),
-                                              if (data.feeExempted ==
-                                                      feeNotExempted &&
-                                                  data.status ==
-                                                      TransactionStatus.upPaid)
-                                                ButtonWidget(
-                                                  text: "Pay",
-                                                  onTap: () async {
-                                                    CreateFeeModel response =
-                                                        await apiRepo
-                                                            .createFeePayment(
-                                                                feeType: FeeType
-                                                                    .tuition,
-                                                                feeID:
-                                                                    feePayList)
-                                                            .then((value) {
-                                                      if (value.success ==
-                                                              true &&
-                                                          value.data!.data!
-                                                                  .atomTokenId !=
-                                                              null) {
-                                                        openPay(
-                                                          value.data!.data!
-                                                              .atomTokenId
-                                                              .toString(),
-                                                          value.data!.data!
-                                                              .merchId
-                                                              .toString(),
-                                                          value.data!.data!
-                                                              .custEmail
-                                                              .toString(),
-                                                          value.data!.data!
-                                                              .custMobile
-                                                              .toString(),
-                                                          value.data!.data!
-                                                              .returnUrl
-                                                              .toString(),
-                                                          value.data!.data!.mode
-                                                              .toString(),
-                                                        );
-                                                      } else {
-                                                        TopSnackBar.showError(
-                                                            context,
-                                                            "Unable to make payment, try again later");
-                                                      }
-                                                      return value;
-                                                    });
-                                                    //print(response.data!.atomTokenId);
-                                                  },
-                                                  color: KColor.appColor,
-                                                  fullWidth: true,
-                                                ),
-                                              //if transaction failed
-                                              if (data.status ==
-                                                  TransactionStatus.failed)
-                                                ButtonWidget(
-                                                  text: "Pay",
-                                                  onTap: () async {
-                                                    CreateFeeModel response =
-                                                        await apiRepo
-                                                            .createRetryFeePayment(
-                                                                feeType: FeeType
-                                                                    .tuition,
-                                                                feeID:
-                                                                    data.feeId!)
-                                                            .then((value) {
-                                                      if (value.success ==
-                                                              true &&
-                                                          value.data!.data!
-                                                                  .atomTokenId !=
-                                                              null) {
-                                                        openPay(
-                                                          value.data!.data!
-                                                              .atomTokenId
-                                                              .toString(),
-                                                          value.data!.data!
-                                                              .merchId
-                                                              .toString(),
-                                                          value.data!.data!
-                                                              .custEmail
-                                                              .toString(),
-                                                          value.data!.data!
-                                                              .custMobile
-                                                              .toString(),
-                                                          value.data!.data!
-                                                              .returnUrl
-                                                              .toString(),
-                                                          value.data!.data!.mode
-                                                              .toString(),
-                                                        );
-                                                      } else {
-                                                        TopSnackBar.showError(
-                                                            context,
-                                                            "Unable to make payment, try again later");
-                                                      }
-                                                      return value;
-                                                    });
-                                                    // print(response.data!.atomTokenId);
-                                                  },
-                                                  color: KColor.appColor,
-                                                  fullWidth: true,
-                                                ),
-                                              // if fee exampted 1 = TRUE
-                                              if (data.feeExempted ==
-                                                  feeExempted)
-                                                ButtonWidget(
-                                                  text: "Download receipt",
-                                                  onTap: () async {
-                                                    // downloadFile(data.receiptNo!,
-                                                    //     fileName: 'receipt.pdf');
-                                                    String? token =
-                                                        await Store.getToken()
-                                                            .then((value) {
-                                                      if (value != null) {
-                                                        downloadFile(
-                                                            data.receiptNo!,
-                                                            fileName:
-                                                                'receipt.pdf',
-                                                            bearerToken: value
-                                                                .toString());
-                                                      }
-                                                      return null;
-                                                    });
-                                                  },
-                                                  color: KColor.appColor,
-                                                  fullWidth: true,
-                                                  icon: Icon(
-                                                    Icons.download,
-                                                    color: KColor.white,
-                                                  ),
-                                                ),
-                                              if (data.status ==
-                                                  TransactionStatus.paid)
-                                                ButtonWidget(
-                                                  text: "Download receipt",
-                                                  onTap: () async {
-                                                    String? token =
-                                                        await Store.getToken()
-                                                            .then((value) {
-                                                      if (value != null) {
-                                                        downloadFile(
-                                                            data.receiptNo!,
-                                                            fileName:
-                                                                'receipt.pdf',
-                                                            bearerToken: value
-                                                                .toString());
-                                                      }
-                                                      return null;
-                                                    });
-                                                  },
-                                                  color: KColor.appColor,
-                                                  fullWidth: true,
-                                                  icon: Icon(
-                                                    Icons.download,
-                                                    color: KColor.white,
-                                                  ),
-                                                )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-
-                                    /*********************************************************** PAY list - holder ******************/
-                                    if (data.status == TransactionStatus.upPaid)
-                                      Gap(10),
-                                    if (data.status == TransactionStatus.upPaid)
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                    Expanded(
+                                      child: Row(
                                         children: [
                                           TextWidget(
-                                            text: data.status ==
-                                                    TransactionStatus.paid
-                                                ? KSymbol.inr +
-                                                    data.recievedAmount
-                                                        .toString()
-                                                : KSymbol.inr +
-                                                    data.extraFee!.pay
-                                                        .toString(),
-                                            fontWeight: 500,
-                                            fontSize: 18,
+                                            text: "${data.paymentFor!} ",
+                                            tColor: KColor.subText,
                                           ),
-                                          Gap(10),
+                                          TextWidget(
+                                            text: data.paymentOf!,
+                                            tColor: KColor.subText,
+                                            overflow: TextOverflow
+                                                .ellipsis, // To handle overflow
+                                          ),
                                         ],
                                       ),
-                                    if (data.status == TransactionStatus.upPaid)
-                                      Gap(10),
+                                    ),
+                                    TextWidget(
+                                      text: data.receivedDate!.isNotEmpty
+                                          ? formatDateShort(data.receivedDate!)
+                                          : "",
+                                      tColor: KColor.subText,
+                                      fontSize: 10,
+                                    ),
                                   ],
                                 ),
-                              ),
-                              if (feePayList.contains(data.feeId))
-                                Positioned(
-                                    top: 0,
-                                    right: 0,
-                                    child: Container(
-                                      width: 30,
-                                      padding: EdgeInsets.all(1),
-                                      decoration: BoxDecoration(
-                                          color: KColor.btnColor,
-                                          borderRadius: BorderRadius.only(
-                                              topRight: Radius.circular(10),
-                                              bottomLeft: Radius.circular(10))),
-                                      child: Icon(
-                                        Icons.check,
-                                        color: KColor.white,
-                                        size: 15,
+
+                                /*********************************************************** Unpaid - when fail to pay ******************/
+                                if (data.status != TransactionStatus.upPaid)
+                                  Theme(
+                                    data: ThemeData().copyWith(
+                                        dividerColor: Colors.transparent),
+                                    child: ListTileTheme(
+                                      contentPadding: EdgeInsets.all(0),
+                                      dense: true,
+                                      horizontalTitleGap: 0.0,
+                                      minLeadingWidth: 0,
+                                      child: ExpansionTile(
+                                        childrenPadding: EdgeInsets.zero,
+                                        dense: true,
+                                        title: Row(
+                                          children: [
+                                            TextWidget(
+                                              text: data.status ==
+                                                      TransactionStatus.paid
+                                                  ? KSymbol.inr +
+                                                      data.recievedAmount
+                                                          .toString()
+                                                  : KSymbol.inr +
+                                                      data.extraFee!.pay
+                                                          .toString(),
+                                              fontWeight: 600,
+                                              fontSize: 18,
+                                            ),
+                                            Gap(10),
+                                            if (data.status !=
+                                                    TransactionStatus.deleted &&
+                                                data.status !=
+                                                    TransactionStatus.upPaid)
+                                              Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: 2, horizontal: 5),
+                                                decoration: BoxDecoration(
+                                                    color: data.status ==
+                                                            TransactionStatus
+                                                                .paid
+                                                        ? KColor.green
+                                                        : data.status ==
+                                                                TransactionStatus
+                                                                    .initiated
+                                                            ? KColor.pending
+                                                            : data.status ==
+                                                                    TransactionStatus
+                                                                        .failed
+                                                                ? KColor.red
+                                                                : Colors
+                                                                    .transparent,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5)),
+                                                child: TextWidget(
+                                                  text: data.statusDesp!,
+                                                  fontWeight: 600,
+                                                  fontSize: 10,
+                                                  tColor: KColor.white,
+                                                ),
+                                              ),
+                                          ],
+                                        ),
+                                        expandedCrossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Divider(),
+                                          ListTile(
+                                            title: TextWidget(
+                                              text: "Fee",
+                                            ),
+                                            trailing: TextWidget(
+                                              text: KSymbol.inr +
+                                                  data.extraFee!.fee!,
+                                            ),
+                                          ),
+                                          ListTile(
+                                            title: TextWidget(
+                                              text: "Extra fee",
+                                            ),
+                                            trailing: TextWidget(
+                                              text: KSymbol.inr +
+                                                  data.extraFee!.fine
+                                                      .toString(),
+                                              fontSize: 11,
+                                              fontWeight: 400,
+                                            ),
+                                          ),
+                                          ListTile(
+                                            title: TextWidget(
+                                              text: "Discount",
+                                            ),
+                                            trailing: TextWidget(
+                                              text: KSymbol.inr +
+                                                  data.extraFee!.disc!
+                                                      .toString(),
+                                            ),
+                                          ),
+                                          ListTile(
+                                            title: TextWidget(
+                                              text: "Total Fee",
+                                              fontSize: 12,
+                                              fontWeight: 700,
+                                            ),
+                                            trailing: TextWidget(
+                                              text: KSymbol.inr +
+                                                  data.recievedAmount
+                                                      .toString(),
+                                              fontSize: 12,
+                                              fontWeight: 700,
+                                            ),
+                                          ),
+                                          Gap(20),
+                                          if (data.feeExempted ==
+                                                  feeNotExempted &&
+                                              data.status ==
+                                                  TransactionStatus.upPaid)
+                                            ButtonWidget(
+                                              text: "Pay",
+                                              onTap: () async {
+                                                CreateFeeModel response =
+                                                    await apiRepo
+                                                        .createFeePayment(
+                                                            feeType:
+                                                                FeeType.tuition,
+                                                            feeID: feePayList)
+                                                        .then((value) {
+                                                  if (value.success == true &&
+                                                      value.data!.data!
+                                                              .atomTokenId !=
+                                                          null) {
+                                                    openPay(
+                                                      value.data!.data!
+                                                          .atomTokenId
+                                                          .toString(),
+                                                      value.data!.data!.merchId
+                                                          .toString(),
+                                                      value
+                                                          .data!.data!.custEmail
+                                                          .toString(),
+                                                      value.data!.data!
+                                                          .custMobile
+                                                          .toString(),
+                                                      value
+                                                          .data!.data!.returnUrl
+                                                          .toString(),
+                                                      value.data!.data!.mode
+                                                          .toString(),
+                                                    );
+                                                  } else {
+                                                    TopSnackBar.showError(
+                                                        context,
+                                                        "Unable to make payment, try again later");
+                                                  }
+                                                  return value;
+                                                });
+                                                //print(response.data!.atomTokenId);
+                                              },
+                                              color: KColor.appColor,
+                                              fullWidth: true,
+                                            ),
+                                          //if transaction failed
+                                          if (data.status ==
+                                              TransactionStatus.failed)
+                                            ButtonWidget(
+                                              text: "Pay",
+                                              onTap: () async {
+                                                CreateFeeModel response =
+                                                    await apiRepo
+                                                        .createRetryFeePayment(
+                                                            feeType:
+                                                                FeeType.tuition,
+                                                            feeID: data.feeId!)
+                                                        .then((value) {
+                                                  if (value.success == true &&
+                                                      value.data!.data!
+                                                              .atomTokenId !=
+                                                          null) {
+                                                    openPay(
+                                                      value.data!.data!
+                                                          .atomTokenId
+                                                          .toString(),
+                                                      value.data!.data!.merchId
+                                                          .toString(),
+                                                      value
+                                                          .data!.data!.custEmail
+                                                          .toString(),
+                                                      value.data!.data!
+                                                          .custMobile
+                                                          .toString(),
+                                                      value
+                                                          .data!.data!.returnUrl
+                                                          .toString(),
+                                                      value.data!.data!.mode
+                                                          .toString(),
+                                                    );
+                                                  } else {
+                                                    TopSnackBar.showError(
+                                                        context,
+                                                        "Unable to make payment, try again later");
+                                                  }
+                                                  return value;
+                                                });
+                                                // print(response.data!.atomTokenId);
+                                              },
+                                              color: KColor.appColor,
+                                              fullWidth: true,
+                                            ),
+                                          // if fee exampted 1 = TRUE
+                                          if (data.feeExempted == feeExempted)
+                                            ButtonWidget(
+                                              text: "Download receipt",
+                                              onTap: () async {
+                                                // downloadFile(data.receiptNo!,
+                                                //     fileName: 'receipt.pdf');
+                                                String? token =
+                                                    await Store.getToken()
+                                                        .then((value) {
+                                                  if (value != null) {
+                                                    downloadFile(
+                                                        data.receiptNo!,
+                                                        fileName: 'receipt.pdf',
+                                                        bearerToken:
+                                                            value.toString());
+                                                  }
+                                                  return null;
+                                                });
+                                              },
+                                              color: KColor.appColor,
+                                              fullWidth: true,
+                                              icon: Icon(
+                                                Icons.download,
+                                                color: KColor.white,
+                                              ),
+                                            ),
+                                          if (data.status ==
+                                              TransactionStatus.paid)
+                                            ButtonWidget(
+                                              text: "Download receipt",
+                                              onTap: () async {
+                                                String? token =
+                                                    await Store.getToken()
+                                                        .then((value) {
+                                                  if (value != null) {
+                                                    downloadFile(
+                                                        data.receiptNo!,
+                                                        fileName: 'receipt.pdf',
+                                                        bearerToken:
+                                                            value.toString());
+                                                  }
+                                                  return null;
+                                                });
+                                              },
+                                              color: KColor.appColor,
+                                              fullWidth: true,
+                                              icon: Icon(
+                                                Icons.download,
+                                                color: KColor.white,
+                                              ),
+                                            )
+                                        ],
                                       ),
-                                    ))
-                            ],
+                                    ),
+                                  ),
+
+                                /*********************************************************** PAY list - holder ******************/
+                                if (data.status == TransactionStatus.upPaid)
+                                  Gap(10),
+                                if (data.status == TransactionStatus.upPaid)
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      TextWidget(
+                                        text: data.status ==
+                                                TransactionStatus.paid
+                                            ? KSymbol.inr +
+                                                data.recievedAmount.toString()
+                                            : KSymbol.inr +
+                                                data.extraFee!.pay.toString(),
+                                        fontWeight: 500,
+                                        fontSize: 18,
+                                      ),
+                                      Gap(10),
+                                      Checkbox(
+                                          activeColor: KColor.appColor,
+                                          checkColor: KColor.white,
+                                          value:
+                                              feePayList.contains(data.feeId),
+                                          onChanged: (value) {
+                                            if (data.feeExempted !=
+                                                feeExempted) {
+                                              if (feePayList
+                                                  .contains(data.feeId)) {
+                                                feePayList.remove(data.feeId);
+                                              } else {
+                                                feePayList.add(data.feeId);
+                                              }
+                                              setState(() {});
+                                              print(feePayList.toString());
+                                            }
+                                          })
+                                    ],
+                                  ),
+                                if (data.status == TransactionStatus.upPaid)
+                                  Gap(10),
+                              ],
+                            ),
                           ),
                         );
                       }),

@@ -41,6 +41,11 @@ String formatDateShort(String? dateString) {
   }
 }
 
+String convertDateFormat(String dateStr) {
+  DateTime parsedDate = DateFormat("dd/MM/yyyy").parse(dateStr);
+  return DateFormat("yyyy-MM-dd").format(parsedDate);
+}
+
 String _addOrdinalSuffix(int day) {
   if (day >= 11 && day <= 13) {
     return '${day}th';
