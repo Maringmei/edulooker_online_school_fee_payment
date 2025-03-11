@@ -2,7 +2,6 @@ import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/b
 import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/input_text.dart';
 import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/text_span_widgets.dart';
 import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/text_widgets.dart';
-import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/top_snack_bar.dart';
 import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/widget_spacing.dart';
 import 'package:edulooker_online_school_fee_payment/src/feature/shared/common_api/school_list_api/models/school_list_model.dart';
 import 'package:edulooker_online_school_fee_payment/src/feature/user/login_page/data/repositories/login_repo.dart';
@@ -125,6 +124,7 @@ class _LoginPageState extends State<LoginPage> {
                   hint: "123456",
                   controller: admissionNumber,
                   validation: true,
+                  validationMsg: "admission number",
                 ),
                 Gap(10),
                 // Date of birth
@@ -195,6 +195,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   validation: true,
+                  validationMsg: "date of birth",
                 ),
                 Gap(10),
                 // Mobile number
@@ -210,6 +211,7 @@ class _LoginPageState extends State<LoginPage> {
                   isPhoneNumber: true,
                   isNumber: true,
                   validation: true,
+                  validationMsg: "mobile number",
                 ),
                 Gap(10),
                 // Terms and condition

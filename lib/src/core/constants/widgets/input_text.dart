@@ -14,6 +14,7 @@ class InputText extends StatelessWidget {
   final String? initValue;
   final ValueChanged<String>? onChanged;
   final bool? validation;
+  final String? validationMsg;
   final Color? fillColor;
   final Widget? suffixWidget;
   final Widget? prefixWidget;
@@ -34,6 +35,7 @@ class InputText extends StatelessWidget {
       this.initValue,
       this.onChanged,
       this.validation,
+      this.validationMsg,
       this.fillColor,
       this.suffixWidget,
       this.prefixWidget,
@@ -125,6 +127,10 @@ class InputText extends StatelessWidget {
           fontWeight: FontWeight.normal,
           color: KColor.red,
         ),
+        errorStyle: const TextStyle(
+          color: KColor.red,
+          fontSize: 12,
+        ),
       ),
       style: const TextStyle(
         fontSize: 14.0,
@@ -140,7 +146,7 @@ class InputText extends StatelessWidget {
           ? null
           : (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter ${hint.toLowerCase()}';
+                return 'Please enter ${validationMsg ?? hint.toLowerCase()}';
               }
               if (isEmail == true) {
                 if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {

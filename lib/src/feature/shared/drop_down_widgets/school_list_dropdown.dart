@@ -48,7 +48,7 @@ class _DropDownSchoolListWidgetState extends State<DropDownSchoolListWidget> {
         filled: true,
         fillColor: KColor.filledColor,
         errorStyle: const TextStyle(
-          color: Colors.red,
+          color: KColor.red,
           fontSize: 12,
         ),
       ),
@@ -114,42 +114,42 @@ class _DropDownSchoolListWidgetState extends State<DropDownSchoolListWidget> {
         height: 40,
         padding: EdgeInsets.symmetric(horizontal: 16),
       ),
-      dropdownSearchData: DropdownSearchData(
-        searchController: textEditingController,
-        searchInnerWidgetHeight: 50,
-        searchInnerWidget: Container(
-          height: 50,
-          padding: const EdgeInsets.only(
-            top: 8,
-            bottom: 4,
-            right: 8,
-            left: 8,
-          ),
-          child: TextFormField(
-            expands: true,
-            maxLines: null,
-            controller: textEditingController,
-            decoration: InputDecoration(
-              isDense: true,
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 8,
-              ),
-              hintText: 'Search School',
-              hintStyle: const TextStyle(fontSize: 12),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-          ),
-        ),
-        searchMatchFn: (item, searchValue) {
-          return item.value
-              .toString()
-              .toLowerCase()
-              .contains(searchValue.toLowerCase());
-        },
-      ),
+      // dropdownSearchData: DropdownSearchData(
+      //   searchController: textEditingController,
+      //   searchInnerWidgetHeight: 50,
+      //   searchInnerWidget: Container(
+      //     height: 50,
+      //     padding: const EdgeInsets.only(
+      //       top: 8,
+      //       bottom: 4,
+      //       right: 8,
+      //       left: 8,
+      //     ),
+      //     child: TextFormField(
+      //       expands: true,
+      //       maxLines: null,
+      //       controller: textEditingController,
+      //       decoration: InputDecoration(
+      //         isDense: true,
+      //         contentPadding: const EdgeInsets.symmetric(
+      //           horizontal: 10,
+      //           vertical: 8,
+      //         ),
+      //         hintText: 'Search School',
+      //         hintStyle: const TextStyle(fontSize: 12),
+      //         border: OutlineInputBorder(
+      //           borderRadius: BorderRadius.circular(8),
+      //         ),
+      //       ),
+      //     ),
+      //   ),
+      //   searchMatchFn: (item, searchValue) {
+      //     return item.value
+      //         .toString()
+      //         .toLowerCase()
+      //         .contains(searchValue.toLowerCase());
+      //   },
+      // ),
       onMenuStateChange: (isOpen) {
         if (!isOpen) {
           textEditingController.clear();
