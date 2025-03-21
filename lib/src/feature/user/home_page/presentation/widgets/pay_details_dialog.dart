@@ -58,7 +58,7 @@ class PayDetailsDialog extends StatelessWidget {
                   count: 1,
                 );
               }
-              if (state is TotalFeeLoaded) {
+              if (state is TotalFeeError) {
                 return LoadingWidget(
                   count: 1,
                 );

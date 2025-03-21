@@ -3,6 +3,7 @@ import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/t
 import 'package:edulooker_online_school_fee_payment/src/core/storage/storage.dart';
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/data/models/sibling_list_model.dart';
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/manager/bloc/fee_details_cubit/fee_details_cubit.dart';
+import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/manager/bloc/fee_list_cubit/fee_list_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -25,7 +26,7 @@ class StudentProfileWidget extends StatelessWidget {
         }
         if (state is StudentProfileLoaded) {
           return SizedBox(
-            height: 250, // Adjust as needed
+            height: 150, // Adjust as needed
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
@@ -34,15 +35,18 @@ class StudentProfileWidget extends StatelessWidget {
                   SiblingData? studentData = state.response.data![index];
                   double screenWidth = MediaQuery.of(context).size.width;
                   return GestureDetector(
-                    onTap: () async{
+                    onTap: () async {
                       if (studentData.accessToken != null ||
                           studentData.accessToken!.isNotEmpty) {
                         print("BASEURL : " + studentData.baseUrl!);
                         print("ACCESS TOKEN : " + studentData.accessToken!);
+
                         Store.setBaseUrlSiblings(studentData.baseUrl!);
                         Store.setTokenSibling(studentData.accessToken!);
                         await Future.delayed(Duration(seconds: 1));
-                        BlocProvider.of<FeeDetailsCubit>(context).getFeeDetails();
+                        BlocProvider.of<FeeListCubit>(context).clear();
+                        BlocProvider.of<FeeDetailsCubit>(context)
+                            .getFeeDetails();
                       } else {
                         TopSnackBar.showError(
                             context, "Student data not found.");
@@ -106,8 +110,8 @@ class StudentProfileWidget extends StatelessWidget {
                                                     fontWeight: FontWeight.w500,
                                                     color: KColor.subText)),
                                             TextSpan(
-                                                text: studentData!.section
-                                                    .toString(),
+                                                text: studentData!.section ??
+                                                    "N/A",
                                                 style: TextStyle(
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.w600,

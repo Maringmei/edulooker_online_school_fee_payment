@@ -23,7 +23,7 @@ class Endpoint {
   static const String feeDetails = "${group}student/fee?fee_type=";
 
   // fee - total report
-  static const String totalFee = "${group}pay-fee/multiple-fee";
+  static const String totalFee = "${group}pay-fee/multiplefee";
 
   //fee payment
   static const String createFeePayment = "${group}pay-fee";

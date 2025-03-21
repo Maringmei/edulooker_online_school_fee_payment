@@ -26,44 +26,43 @@ class HomePage extends StatelessWidget {
     return DefaultTabController(
       length: 1, // only tuition fee , set 3 for tuition, transport, hostel
       child: Scaffold(
-        body: WidgetSpacing.padding(
-          bottom: 0,
-          child: NestedScrollView(
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
-              return [
-                SliverAppBar(
-                  title: SliverTitle(child:
-                      BlocBuilder<StudentProfileCubit, StudentProfileState>(
-                    builder: (context, state) {
-                      return state is StudentProfileLoaded
-                          ? TextWidget(
-                              text: "Fee Payment--- Student Name",
-                              fontSize: 15,
-                              fontWeight: 700,
-                            )
-                          : LoadingWidget(count: 1);
-                    },
-                  )),
-                  automaticallyImplyLeading: true,
-                  elevation: 0,
-                  forceElevated: true,
-                  titleSpacing: 0,
-                  scrolledUnderElevation: 0,
-                  pinned: true,
-                  floating: false,
-                  expandedHeight: 200, // Adjust height as needed
-                  backgroundColor: KColor.filledColor,
+        body: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return [
+              SliverAppBar(
+                title: SliverTitle(child:
+                    BlocBuilder<StudentProfileCubit, StudentProfileState>(
+                  builder: (context, state) {
+                    return state is StudentProfileLoaded
+                        ? TextWidget(
+                            text: "Fee Payment",
+                            fontSize: 15,
+                            fontWeight: 700,
+                          )
+                        : LoadingWidget(count: 1);
+                  },
+                )),
+                automaticallyImplyLeading: true,
+                elevation: 0,
+                forceElevated: true,
+                titleSpacing: 0,
+                scrolledUnderElevation: 0,
+                pinned: true,
+                floating: false,
+                expandedHeight: 200, // Adjust height as needed
+                backgroundColor: KColor.filledColor,
 
-                  flexibleSpace: FlexibleSpaceBar(
-                    collapseMode: CollapseMode.parallax,
-                    background: CustomScrollView(
-                      slivers: [
-                        SliverToBoxAdapter(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
+                flexibleSpace: FlexibleSpaceBar(
+                  collapseMode: CollapseMode.parallax,
+                  background: CustomScrollView(
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            WidgetSpacing.padding(
+                              bottom: 0,
+                              child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -102,47 +101,50 @@ class HomePage extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              Gap(20),
-                              StudentProfileWidget()
-                            ],
-                          ),
+                            ),
+                            Gap(20),
+                            StudentProfileWidget()
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-                SliverPersistentHeader(
-                  pinned: true,
-                  delegate: MySliverPersistentHeaderDelegate(
-                    TabBar(
-                      labelColor: KColor.appColor,
-                      unselectedLabelColor: KColor.black,
-                      indicatorColor: KColor.appColor,
-                      dividerColor: Colors.transparent,
-                      labelStyle:
-                          TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
-                      padding: EdgeInsets.zero,
-                      isScrollable: true,
-                      labelPadding: EdgeInsets.only(right: 10),
-                      tabAlignment: TabAlignment.start,
-                      indicatorPadding: EdgeInsets.only(bottom: 10),
-                      tabs: [
-                        Tab(text: "Tuition Fee"),
-                        // Tab(text: "Transport Fee"),
-                        // Tab(text: "Hostel Fee"),
-                      ],
-                    ),
+              ),
+              SliverPersistentHeader(
+                pinned: true,
+                delegate: MySliverPersistentHeaderDelegate(
+                  TabBar(
+                    labelColor: KColor.appColor,
+                    unselectedLabelColor: KColor.black,
+                    indicatorColor: KColor.appColor,
+                    dividerColor: Colors.transparent,
+                    labelStyle:
+                        TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+                    padding: EdgeInsets.zero,
+                    isScrollable: true,
+                    labelPadding: EdgeInsets.symmetric(horizontal: 20),
+                    tabAlignment: TabAlignment.start,
+                    indicatorPadding: EdgeInsets.only(bottom: 10),
+                    tabs: [
+                      Tab(text: "Tuition Fee"),
+                      // Tab(text: "Transport Fee"),
+                      // Tab(text: "Hostel Fee"),
+                    ],
                   ),
                 ),
-              ];
-            },
-            body: TabBarView(
-              children: [
-                TuitionFeeWidget(), // Wrap in CustomScrollView or fix scrolling below
-                // TransportFeeWidget(),
-                // HostelFeeWidget(),
-              ],
-            ),
+              ),
+            ];
+          },
+          body: TabBarView(
+            children: [
+              WidgetSpacing.padding(
+                  bottom: 0,
+                  child:
+                      TuitionFeeWidget()), // Wrap in CustomScrollView or fix scrolling below
+              // TransportFeeWidget(),
+              // HostelFeeWidget(),
+            ],
           ),
         ),
       ),

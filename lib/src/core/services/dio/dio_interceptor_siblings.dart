@@ -17,7 +17,7 @@ class DioInterceptorsSiblings extends Interceptor {
     }
 
     // Add token to headers if available
-    String? token = await Store.getBaseUrlSiblings();
+    String? token = await Store.getTokenSibling();
     if (token != null) {
       options.headers['Authorization'] = 'Bearer $token';
     }

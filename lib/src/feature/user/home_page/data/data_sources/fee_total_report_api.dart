@@ -17,7 +17,8 @@ class FeeTotalReportAPI {
   Future<FeeTotalMultipleModel> getTotalFeeReport(List<String> ids) async {
     try {
       List<int> intList = ids.map(int.parse).toList();
-      final response = await _dio.post(_url, data: {"fee_id": intList});
+      Map<String, dynamic> feeIds = {"fee_ids": intList};
+      final response = await _dio.post(_url, data: feeIds);
       print("Response data: " + response.data.runtimeType.toString());
 
       if (response.statusCode == 200) {
