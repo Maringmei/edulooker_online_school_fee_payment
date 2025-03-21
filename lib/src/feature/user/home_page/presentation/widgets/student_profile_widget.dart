@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:edulooker_online_school_fee_payment/src/core/constants/colors/color_constants.dart';
 import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/top_snack_bar.dart';
 import 'package:edulooker_online_school_fee_payment/src/core/storage/storage.dart';
@@ -27,148 +29,163 @@ class StudentProfileWidget extends StatelessWidget {
         if (state is StudentProfileLoaded) {
           return SizedBox(
             height: 150, // Adjust as needed
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                itemCount: state.response.data!.length,
-                itemBuilder: (context, index) {
-                  SiblingData? studentData = state.response.data![index];
-                  double screenWidth = MediaQuery.of(context).size.width;
-                  return GestureDetector(
-                    onTap: () async {
-                      if (studentData.accessToken != null ||
-                          studentData.accessToken!.isNotEmpty) {
-                        print("BASEURL : " + studentData.baseUrl!);
-                        print("ACCESS TOKEN : " + studentData.accessToken!);
-
-                        Store.setBaseUrlSiblings(studentData.baseUrl!);
-                        Store.setTokenSibling(studentData.accessToken!);
-                        await Future.delayed(Duration(seconds: 1));
-                        BlocProvider.of<FeeListCubit>(context).clear();
-                        BlocProvider.of<FeeDetailsCubit>(context)
-                            .getFeeDetails();
-                      } else {
-                        TopSnackBar.showError(
-                            context, "Student data not found.");
-                      }
-                    },
-                    child: Container(
-                        width: screenWidth / 1.5,
-                        height: 200,
-                        margin: EdgeInsets.all(5),
-                        decoration: BoxDecoration(color: KColor.white),
-                        child: Container(
-                          padding: EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                              color: KColor.white,
-                              image: DecorationImage(
-                                image: AssetImage(KImage.student),
-                                alignment: Alignment.centerRight,
-                              ),
-                              borderRadius: BorderRadius.circular(8)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              TextWidget(
-                                text: studentData.firstName ?? "NA",
-                                fontSize: 16,
-                                fontWeight: 700,
-                              ),
-                              Gap(10),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                      flex: 5,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          RichText(
-                                              text: TextSpan(children: [
-                                            TextSpan(
-                                                text: "Adm no: ",
-                                                style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: KColor.subText)),
-                                            TextSpan(
-                                                text:
-                                                    studentData!.registrationNo,
-                                                style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: KColor.black)),
-                                          ])),
-                                          Gap(5),
-                                          RichText(
-                                              text: TextSpan(children: [
-                                            TextSpan(
-                                                text: "Section ",
-                                                style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: KColor.subText)),
-                                            TextSpan(
-                                                text: studentData!.section ??
-                                                    "N/A",
-                                                style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: KColor.black)),
-                                          ])),
-                                        ],
-                                      )),
-                                  Gap(10),
-                                  Expanded(
-                                      flex: 5,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          RichText(
-                                              text: TextSpan(children: [
-                                            TextSpan(
-                                                text: "Class: ",
-                                                style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: KColor.subText)),
-                                            TextSpan(
-                                                text: studentData.course,
-                                                style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: KColor.black)),
-                                          ])),
-                                          Gap(5),
-                                          RichText(
-                                              text: TextSpan(children: [
-                                            TextSpan(
-                                                text: "Roll No ",
-                                                style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: KColor.subText)),
-                                            TextSpan(
-                                                text: studentData
-                                                        .rollNo!.isNotEmpty
-                                                    ? studentData.rollNo
-                                                    : "NA",
-                                                style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: KColor.black)),
-                                          ])),
-                                        ],
-                                      )),
-                                ],
-                              )
-                            ],
-                          ),
-                        )),
-                  );
-                }),
+            child: ScrollConfiguration(
+              behavior: ScrollBehavior().copyWith(
+                scrollbars: true,
+                dragDevices: {
+                  PointerDeviceKind.touch,
+                  PointerDeviceKind.mouse, // Enables mouse scrolling
+                },
+              ),
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: state.response.data!.length,
+                  itemBuilder: (context, index) {
+                    SiblingData? studentData = state.response.data![index];
+                    double screenWidth = MediaQuery.of(context).size.width;
+                    return GestureDetector(
+                      onTap: () async {
+                        if (studentData.accessToken != null ||
+                            studentData.accessToken!.isNotEmpty) {
+                          Store.setBaseUrlSiblings(studentData.baseUrl!);
+                          Store.setTokenSibling(studentData.accessToken!);
+                          await Future.delayed(Duration(seconds: 1));
+                          BlocProvider.of<FeeListCubit>(context).clear();
+                          BlocProvider.of<FeeDetailsCubit>(context)
+                              .getFeeDetails();
+                        } else {
+                          TopSnackBar.showError(
+                              context, "Student data not found.");
+                        }
+                      },
+                      child: Container(
+                          width: screenWidth / 1.5,
+                          height: 200,
+                          margin: EdgeInsets.all(5),
+                          decoration: BoxDecoration(color: KColor.white),
+                          child: Container(
+                            padding: EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                                color: KColor.white,
+                                image: DecorationImage(
+                                  image: AssetImage(KImage.student),
+                                  alignment: Alignment.centerRight,
+                                ),
+                                borderRadius: BorderRadius.circular(8)),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextWidget(
+                                  text: studentData.firstName ?? "NA",
+                                  fontSize: 16,
+                                  fontWeight: 700,
+                                ),
+                                Gap(10),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                        flex: 5,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            RichText(
+                                                text: TextSpan(children: [
+                                              TextSpan(
+                                                  text: "Adm no: ",
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color: KColor.subText)),
+                                              TextSpan(
+                                                  text: studentData!
+                                                      .registrationNo,
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: KColor.black)),
+                                            ])),
+                                            Gap(5),
+                                            RichText(
+                                                text: TextSpan(children: [
+                                              TextSpan(
+                                                  text: "Section ",
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color: KColor.subText)),
+                                              TextSpan(
+                                                  text: studentData!.section ??
+                                                      "N/A",
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: KColor.black)),
+                                            ])),
+                                          ],
+                                        )),
+                                    Gap(10),
+                                    Expanded(
+                                        flex: 5,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            RichText(
+                                                text: TextSpan(children: [
+                                              TextSpan(
+                                                  text: "Class: ",
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color: KColor.subText)),
+                                              TextSpan(
+                                                  text: studentData.course,
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: KColor.black)),
+                                            ])),
+                                            Gap(5),
+                                            RichText(
+                                                text: TextSpan(children: [
+                                              TextSpan(
+                                                  text: "Roll No ",
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color: KColor.subText)),
+                                              TextSpan(
+                                                  text: studentData
+                                                          .rollNo!.isNotEmpty
+                                                      ? studentData.rollNo
+                                                      : "NA",
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: KColor.black)),
+                                            ])),
+                                          ],
+                                        )),
+                                  ],
+                                )
+                              ],
+                            ),
+                          )),
+                    );
+                  }),
+            ),
           );
         }
         if (state is StudentProfileError) {

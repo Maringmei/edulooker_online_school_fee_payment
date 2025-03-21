@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                 scrolledUnderElevation: 0,
                 pinned: true,
                 floating: false,
-                expandedHeight: 200, // Adjust height as needed
+                expandedHeight: 250, // Adjust height as needed
                 backgroundColor: KColor.filledColor,
 
                 flexibleSpace: FlexibleSpaceBar(
