@@ -8,9 +8,12 @@ import '../constants/strings/strings_constants.dart';
 class Store {
   const Store._();
 
-  static const String _tokenKeyAccess = "${KString.appName}TOKEN_ACCRESS${Env.updateVersion}";
+  static const String _tokenKeyAccess =
+      "${KString.appName}TOKEN_ACCRESS${Env.updateVersion}";
+  static const String _tokenKeySibling = "TOKEN_SIBLING";
   static const String _tokenKeyRefresh = "TOKEN_REFRESH";
   static const String _baseUrl = "BASE_URL";
+  static const String _baseUrlSiblings = "BASE_URL_SIBLINGS";
   static const String _username = "USERNAME";
   static const String _profileType = "PROFILE_TYPE";
   static const String _darkmode = "darkmode";
@@ -38,6 +41,33 @@ class Store {
   static Future<void> setDarkMode(bool data) async {
     final preferences = await SharedPreferences.getInstance();
     await preferences.setBool(_darkmode, data);
+  }
+
+  /******************************************************************** SIBLING TOKEN *******************************/
+  //store token student
+  static Future<void> setTokenSibling(String token) async {
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.setString(_tokenKeySibling, token);
+  }
+
+  // Get token student
+  static Future<String?> getTokenSibling() async {
+    final preferences = await SharedPreferences.getInstance();
+    return preferences.getString(_tokenKeySibling);
+  }
+
+  /******************************************************************** BASEURL SIBLING *******************************/
+
+  //store token baseUrl siblings
+  static Future<void> setBaseUrlSiblings(String token) async {
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.setString(_baseUrlSiblings, token);
+  }
+
+  // Get baseURL Siblings
+  static Future<String?> getBaseUrlSiblings() async {
+    final preferences = await SharedPreferences.getInstance();
+    return preferences.getString(_baseUrlSiblings);
   }
 
   // Get token

@@ -38,7 +38,7 @@ class HomePage extends StatelessWidget {
                     builder: (context, state) {
                       return state is StudentProfileLoaded
                           ? TextWidget(
-                              text: state.response.data!.name!,
+                              text: "Fee Payment--- Student Name",
                               fontSize: 15,
                               fontWeight: 700,
                             )
@@ -52,7 +52,7 @@ class HomePage extends StatelessWidget {
                   scrolledUnderElevation: 0,
                   pinned: true,
                   floating: false,
-                  expandedHeight: 180, // Adjust height as needed
+                  expandedHeight: 200, // Adjust height as needed
                   backgroundColor: KColor.filledColor,
 
                   flexibleSpace: FlexibleSpaceBar(

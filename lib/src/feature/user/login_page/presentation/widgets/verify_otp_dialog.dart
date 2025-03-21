@@ -2,14 +2,11 @@ import 'dart:async';
 import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/button_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
 import 'package:heroicons/heroicons.dart';
-
 import '../../../../../core/constants/colors/color_constants.dart';
 import '../../../../../core/constants/widgets/easy_loading.dart';
 import '../../../../../core/constants/widgets/pinput_widget.dart';
 import '../../../../../core/constants/widgets/text_widgets.dart';
-import '../../../../../route/router_list.dart';
 import '../../data/models/login_data_model.dart';
 import '../../data/repositories/login_repo.dart';
 
@@ -34,13 +31,11 @@ class _OtpDialogState extends State<OtpDialog> {
 
   otpVerify(
       {required BuildContext context,
-      required String regdNumber,
       required String mobileNumber,
       required String pin}) async {
     await apiRepo
         .verifyOtp(
       context: context,
-      regdNumber: regdNumber,
       mobileNumber: mobileNumber,
       otp: pin,
     )
@@ -58,10 +53,7 @@ class _OtpDialogState extends State<OtpDialog> {
     await apiRepo
         .sendOtp(
       context: context,
-      regdNumber: widget.data.registrationNumber,
-      dob: widget.data.dob,
       mobileNumber: widget.data.mobileNumber,
-      schoolId: widget.data.schoolId,
     )
         .then((value) {
       if (value) {
@@ -204,7 +196,6 @@ class _OtpDialogState extends State<OtpDialog> {
                         otpVerify(
                             context: context,
                             pin: otpPin!,
-                            regdNumber: widget.data.registrationNumber,
                             mobileNumber: widget.data.mobileNumber);
                       } else {
                         showToast(msg: "Not valid otp.");

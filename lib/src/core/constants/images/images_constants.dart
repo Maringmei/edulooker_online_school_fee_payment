@@ -7,4 +7,5 @@ class KImage {
 
   static const String noData = "assets/images/no_data.png";
   static const String expire = "assets/images/session_expire.png";
+  static const String login = "assets/images/login.png";
 }

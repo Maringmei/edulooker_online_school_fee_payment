@@ -1,42 +1,38 @@
 import 'package:dio/dio.dart';
 import 'package:edulooker_online_school_fee_payment/src/core/services/dio/endpoint_urls.dart';
-import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/data/models/student_profile_model.dart';
-
-import '../../../../../core/services/dio/dio_interceptor.dart';
 import '../../../../../core/services/dio/dio_interceptor_siblings.dart';
-import '../../../../../core/shared/models/shared_model.dart';
-import '../../../../../core/storage/storage.dart';
-import '../models/fee_details_model.dart';
+import '../models/fee_total_multiple_model.dart';
 
-class FeeDetailsAPI {
+class FeeTotalReportAPI {
   late final Dio _dio;
 
-  FeeDetailsAPI() {
+  FeeTotalReportAPI() {
     _dio = Dio();
     _dio.interceptors.add(DioInterceptorsSiblings());
   }
 
-  final String _url = Endpoint.feeDetails;
+  final String _url = Endpoint.totalFee;
 
-  /// student profile
-  Future<FeeDetailsModel> getFeeDetails({required String id}) async {
+  /// fee details
+  Future<FeeTotalMultipleModel> getTotalFeeReport(List<String> ids) async {
     try {
-      final response = await _dio.get(_url + id);
+      List<int> intList = ids.map(int.parse).toList();
+      final response = await _dio.post(_url, data: {"fee_id": intList});
       print("Response data: " + response.data.runtimeType.toString());
 
       if (response.statusCode == 200) {
         final responseData = response.data;
         if (responseData['success'] == true) {
-          return FeeDetailsModel.fromJson(responseData);
+          return FeeTotalMultipleModel.fromJson(responseData);
         } else {
-          return FeeDetailsModel(
+          return FeeTotalMultipleModel(
             success: false,
             data: null,
             message: responseData['message'] ?? "Unexpected error",
           );
         }
       } else {
-        return FeeDetailsModel(
+        return FeeTotalMultipleModel(
           success: false,
           data: null,
           message: "Unexpected status code: ${response.statusCode}",
@@ -45,24 +41,24 @@ class FeeDetailsAPI {
     } on DioException catch (e) {
       if (e.response != null) {
         // Server error
-        return FeeDetailsModel.fromJson(e.response!.data);
+        return FeeTotalMultipleModel.fromJson(e.response!.data);
       } else if (e.type == DioExceptionType.connectionTimeout) {
         // Connection timeout
-        return FeeDetailsModel(
+        return FeeTotalMultipleModel(
           success: false,
           data: null,
           message: "Connection timeout, please try again later.",
         );
       } else if (e.type == DioExceptionType.receiveTimeout) {
         // Receive timeout
-        return FeeDetailsModel(
+        return FeeTotalMultipleModel(
           success: false,
           data: null,
           message: "Receive timeout, please try again later.",
         );
       } else if (e.type == DioExceptionType.unknown) {
         // No internet connection or other network-related issues
-        return FeeDetailsModel(
+        return FeeTotalMultipleModel(
           success: false,
           data: null,
           message:
@@ -70,7 +66,7 @@ class FeeDetailsAPI {
         );
       } else {
         // Other errors
-        return FeeDetailsModel(
+        return FeeTotalMultipleModel(
           success: false,
           data: null,
           message: "Not able to connect server",
@@ -78,7 +74,7 @@ class FeeDetailsAPI {
       }
     } catch (e) {
       // Generic error handling
-      return FeeDetailsModel(
+      return FeeTotalMultipleModel(
         success: false,
         data: null,
         message: "An unexpected error occurred: ${e.toString()}",

@@ -9,7 +9,7 @@ sealed class StudentProfileState extends Equatable {
 final class StudentProfileInitial extends StudentProfileState {}
 
 final class StudentProfileLoaded extends StudentProfileState {
-  final StudentProfileModel response;
+  final SiblingModel response;
   const StudentProfileLoaded({required this.response});
 
   @override

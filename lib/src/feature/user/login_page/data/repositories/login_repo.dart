@@ -16,18 +16,14 @@ import '../data_sources/login_api.dart';
 class LoginRepo {
   LoginAPI api = LoginAPI();
 
-  Future<bool> sendOtp(
-      {required BuildContext context,
-      required String regdNumber,
-      required String dob,
-      required String mobileNumber,
-      required String schoolId}) async {
+  Future<bool> sendOtp({
+    required BuildContext context,
+    required String mobileNumber,
+  }) async {
     showStatus(msg: "Please wait...");
     SharedModel res = await api.sendOtp(
-        regdNumber: regdNumber,
-        dob: dob,
-        mobileNumber: mobileNumber,
-        schoolId: schoolId);
+      mobileNumber: mobileNumber,
+    );
     if (res.success == true) {
       showDismiss();
       //TopSnackBar.showSuccess(context, res.message ?? "Otp send");
@@ -45,14 +41,12 @@ class LoginRepo {
 
   verifyOtp(
       {required BuildContext context,
-      required String regdNumber,
       required String mobileNumber,
       required String otp}) async {
     showStatus(msg: "Verifying OTP...");
-    VerifyOtpModel res = await api.verifyOTP(
-        regdNumber: regdNumber, mobileNumber: mobileNumber, otp: otp);
+    VerifyOtpModel res =
+        await api.verifyOTP(mobileNumber: mobileNumber, otp: otp);
     if (res.success == true) {
-
       //store data
       Store.saveUserInfo(username: "", data: res);
       await Future.delayed(const Duration(seconds: 1));

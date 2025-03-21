@@ -13,9 +13,7 @@ import '../../../../../core/constants/strings/strings_constants.dart';
 import '../../../../../core/services/dio/endpoint_urls.dart';
 import '../../../../../core/storage/storage.dart';
 import '../../../../../core/utils/date_format.dart';
-import '../../../../../core/utils/date_picker.dart';
 import '../../../../../core/utils/redirect_page.dart';
-import '../../../../shared/drop_down_widgets/school_list_dropdown.dart';
 import '../../data/models/login_data_model.dart';
 import '../widgets/verify_otp_dialog.dart';
 
@@ -35,9 +33,33 @@ class _LoginPageState extends State<LoginPage> {
   String? dob;
   String? formatedDate;
   String? schoolID;
-  bool termAndCondition = false;
+  bool termAndCondition = true;
 
   final _form = GlobalKey<FormState>();
+
+  String? token;
+
+  getToken() async {
+    token = await Store.getBaseUrl();
+    setState(() {});
+  }
+
+  setToken(value) {
+    Store.setBaseUrl(value);
+    getToken();
+    setState(() {});
+  }
+
+  initBaseUrl() {
+    // Store.setBaseUrl("Www.google.com");
+  }
+
+  @override
+  void initState() {
+    initBaseUrl();
+    getToken();
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -64,308 +86,194 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: KColor.white,
-      body: SingleChildScrollView(
-        // Wrap with SingleChildScrollView for scrolling
-        child: WidgetSpacing.padding(
-          child: Form(
-            key: _form,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Image.asset(
-                  KImage.logoFull,
-                  width: 250,
-                ),
-                Gap(10),
-                TextWidget(
-                  text: KString.schoolOnline,
-                  fontWeight: 700,
-                  fontSize: 25,
-                  lineHeight: 2,
-                ),
-                TextWidget(
-                  text: KString.feePayment,
-                  fontWeight: 700,
-                  fontSize: 25,
-                  lineHeight: 1,
-                ),
-                Gap(20),
-                // Select school
-                TextWidget(
-                  text: KString.selectSchool,
-                  fontWeight: 400,
-                  fontSize: 13,
-                ),
-                Gap(5),
-                DropDownSchoolListWidget(
-                  dataModel: schoolList,
-                  validator: (value) {
-                    if (schoolID == null) {
-                      return "Please select school";
-                    }
-                    return null;
-                  },
-                  onChanged: (String value) {
-                    schoolID = value;
-                  },
-                  onChangedUrl: (String value) async {
-                    Store.setBaseUrl(value);
-                  },
-                ),
-                Gap(10),
-                // Admission number
-                TextWidget(
-                  text: KString.admissionNumber,
-                  fontWeight: 400,
-                  fontSize: 13,
-                ),
-                Gap(5),
-                InputText(
-                  hint: "123456",
-                  controller: admissionNumber,
-                  validation: true,
-                  validationMsg: "admission number",
-                ),
-                Gap(10),
-                // Date of birth
-                TextWidget(
-                  text: KString.dateOfBirth,
-                  fontWeight: 400,
-                  fontSize: 13,
-                ),
-                Gap(5),
-                // InkWell(
-                //   onTap: () async {
-                //     var (startDate, endDate, fdate) = await datePicker(context);
-                //     dob = startDate;
-                //     formatedDate = fdate;
-                //     setState(() {});
-                //   },
-                //   child: Container(
-                //     height: 40,
-                //     padding: EdgeInsets.all(10),
-                //     decoration: BoxDecoration(
-                //         color: KColor.filledColor,
-                //         borderRadius: BorderRadius.circular(5)),
-                //     child: Row(
-                //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //       children: [
-                //         Padding(
-                //           padding: const EdgeInsets.only(left: 5.0),
-                //           child: TextWidget(
-                //             text: formatedDate != null
-                //                 ? formatedDate!
-                //                 : "DD MM YYYY",
-                //             tColor: formatedDate != null
-                //                 ? KColor.black
-                //                 : KColor.subText,
-                //           ),
-                //         ),
-                //         Icon(
-                //           Icons.calendar_month,
-                //           size: 15,
-                //         )
-                //       ],
-                //     ),
-                //   ),
-                // ),
-                InputText(
-                  hint: "DD/MM/YYYY",
-                  controller: dateController,
-                  isDate: true,
-                  suffixWidget: InkWell(
-                    onTap: () async {
-                      var (startDate, endDate, fdate, defaultDate) =
-                          await datePicker(context);
-                      dob = startDate;
-                      formatedDate = fdate;
-                      dateController.text = defaultDate!;
-                      setState(() {});
-                    },
-                    child: SizedBox(
-                      height: 25,
-                      child: CircleAvatar(
-                        backgroundColor: KColor.appColor,
-                        child: Icon(
-                          Icons.calendar_month,
-                          size: 12,
-                          color: KColor.white,
-                        ),
-                      ),
-                    ),
+      body: WidgetSpacing.padding(
+        child: Form(
+          key: _form,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Image.asset(
+                    KImage.logoFull,
+                    width: 250,
                   ),
-                  validation: true,
-                  validationMsg: "date of birth",
-                ),
-                Gap(10),
-                // Mobile number
-                TextWidget(
-                  text: KString.mobileNumber,
-                  fontWeight: 400,
-                  fontSize: 13,
-                ),
-                Gap(5),
-                InputText(
-                  hint: "9862000000",
-                  controller: mNumber,
-                  isPhoneNumber: true,
-                  isNumber: true,
-                  validation: true,
-                  validationMsg: "mobile number",
-                ),
-                Gap(10),
-                // Terms and condition
-                TextRowWidget(children: [
-                  Checkbox(
-                      value: termAndCondition,
-                      activeColor: KColor.appColor,
-                      onChanged: (value) {
-                        termAndCondition = value!;
-                        setState(() {});
-                      }),
-                  TextWidget(text: "I agree to "),
-                  InkWell(
-                      onTap: () {
-                        redirectToNewTab(Endpoint.term_and_condition);
-                      },
-                      child: TextWidget(
-                        text: "Terms and Condition",
-                        tColor: KColor.blue,
-                      )),
-                ]),
-                Gap(20),
-                // Submit
-                ButtonWidget(
-                  text: "Submit",
-                  height: 50,
-                  onTap: termAndCondition == true
-                      ? () async {
-                          if (_form.currentState!.validate()) {
-                            String admissonNumber = admissionNumber.text;
-                            String dateOfBirth =
-                                convertDateFormat(dateController.text);
-                            String mobileNumber = mNumber.text;
-                            String sID = schoolID!;
-                            await apiRepo
-                                .sendOtp(
-                              context: context,
-                              regdNumber: admissonNumber,
-                              dob: dateOfBirth,
-                              mobileNumber: mobileNumber,
-                              schoolId: schoolID!,
-                            )
-                                .then((value) {
-                              if (value == true) {
-                                // BlocProvider.of<StudentProfileCubit>(context)
-                                //     .getStudentProfile();
-                                // BlocProvider.of<FeeDetailsCubit>(context)
-                                //     .getFeeDetails();
+                  Gap(10),
+                  TextWidget(
+                    text: KString.schoolOnline,
+                    fontWeight: 700,
+                    fontSize: 25,
+                    lineHeight: 2,
+                  ),
+                  TextWidget(
+                    text: KString.feePayment,
+                    fontWeight: 700,
+                    fontSize: 25,
+                    lineHeight: 1,
+                  ),
+                  Gap(20),
+                ],
+              ),
+              // Mobile number
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                      child: Image.asset(
+                    KImage.login,
+                    scale: 3.5,
+                  )),
+                  Gap(20),
+                  TextWidget(
+                    text: KString.mobileNumber,
+                    fontWeight: 400,
+                    fontSize: 13,
+                  ),
+                  Gap(5),
+                  InputText(
+                    hint: "9862000000",
+                    controller: mNumber,
+                    isPhoneNumber: true,
+                    isNumber: true,
+                    validation: true,
+                    validationMsg: "mobile number",
+                  ),
+                  Gap(20),
 
-                                // BlocProvider.of<FeeTransportCubit>(context)
-                                //     .getFeeTransport();
-                                // BlocProvider.of<FeeHostelCubit>(context)
-                                //     .getFeeHostel();
+                  // Submit
+                  ButtonWidget(
+                    text: "Send OTP",
+                    height: 50,
+                    onTap: termAndCondition == true
+                        ? () async {
+                            if (_form.currentState!.validate()) {
+                              // String admissonNumber = admissionNumber.text;
+                              // String dateOfBirth =
+                              //     convertDateFormat(dateController.text);
+                              // String sID = schoolID!;
+                              String mobileNumber = mNumber.text;
 
-                                showDialog(
-                                    context:
-                                        context.mounted ? context : context,
-                                    builder: (context) {
-                                      return OtpDialog(
-                                        context: context,
-                                        data: LoginDataModel(
-                                            registrationNumber: admissonNumber,
+                              await apiRepo
+                                  .sendOtp(
+                                context: context,
+                                mobileNumber: mobileNumber,
+                              )
+                                  .then((value) {
+                                if (value == true) {
+                                  // BlocProvider.of<StudentProfileCubit>(context)
+                                  //     .getStudentProfile();
+                                  // BlocProvider.of<FeeDetailsCubit>(context)
+                                  //     .getFeeDetails();
+
+                                  // BlocProvider.of<FeeTransportCubit>(context)
+                                  //     .getFeeTransport();
+                                  // BlocProvider.of<FeeHostelCubit>(context)
+                                  //     .getFeeHostel();
+
+                                  showDialog(
+                                      context:
+                                          context.mounted ? context : context,
+                                      builder: (context) {
+                                        return OtpDialog(
+                                          context: context,
+                                          data: LoginDataModel(
                                             mobileNumber: mobileNumber,
-                                            dob: dateOfBirth,
-                                            schoolId: sID),
-                                      );
-                                    });
-                              }
-                            });
+                                          ),
+                                        );
+                                      });
+                                }
+                              });
+                            }
                           }
-                        }
-                      : null,
-                  fullWidth: true,
-                ),
-                SizedBox(
-                    height: MediaQuery.of(context).size.height *
-                        0.05), // Spacer with dynamic height
-                IntrinsicHeight(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      InkWell(
-                          onTap: () {
-                            redirectToNewTab(Endpoint.privacy);
-                          },
-                          child: TextWidget(
-                            text: "Privacy Policy",
-                            fontSize: 10,
-                          )),
-                      VerticalDivider(
-                        color: KColor.black,
-                      ),
-                      InkWell(
-                          onTap: () {
-                            redirectToNewTab(Endpoint.about);
-                          },
-                          child: TextWidget(
-                            text: "About us",
-                            fontSize: 10,
-                          )),
-                    ],
+                        : null,
+                    fullWidth: true,
                   ),
-                ),
-                Gap(5),
-                IntrinsicHeight(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      InkWell(
-                          onTap: () {
-                            redirectToNewTab(Endpoint.cancellation);
-                          },
-                          child: TextWidget(
-                            text: "Cancellation & Refund",
-                            fontSize: 10,
-                          )),
-                      VerticalDivider(
-                        color: KColor.black,
-                      ),
-                      InkWell(
-                          onTap: () {
-                            redirectToNewTab(Endpoint.contact);
-                          },
-                          child: TextWidget(
-                            text: "Contact us",
-                            fontSize: 10,
-                          )),
-                    ],
-                  ),
-                ),
-                Gap(10),
-                Center(
-                    child: InkWell(
-                  onTap: () {
-                    redirectToNewTab(Endpoint.globizs);
-                  },
-                  child: Row(
+                ],
+              ),
+
+              Column(
+                children: [
+                  IntrinsicHeight(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        TextWidget(
-                          text: "Powered by ",
-                          fontSize: 12,
-                          fontWeight: 900,
+                        InkWell(
+                            onTap: () {
+                              redirectToNewTab(Endpoint.privacy);
+                            },
+                            child: TextWidget(
+                              text: "Privacy Policy",
+                              fontSize: 10,
+                            )),
+                        VerticalDivider(
+                          color: KColor.black,
                         ),
-                        TextWidget(
-                          text: "Globizs",
-                          fontSize: 15,
-                          fontWeight: 900,
-                          tColor: KColor.red,
-                        )
-                      ]),
-                ))
-              ],
-            ),
+                        InkWell(
+                            onTap: () {
+                              redirectToNewTab(Endpoint.about);
+                            },
+                            child: TextWidget(
+                              text: "About us",
+                              fontSize: 10,
+                            )),
+                      ],
+                    ),
+                  ),
+                  Gap(5),
+                  IntrinsicHeight(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                            onTap: () {
+                              redirectToNewTab(Endpoint.cancellation);
+                            },
+                            child: TextWidget(
+                              text: "Cancellation & Refund",
+                              fontSize: 10,
+                            )),
+                        VerticalDivider(
+                          color: KColor.black,
+                        ),
+                        InkWell(
+                            onTap: () {
+                              redirectToNewTab(Endpoint.contact);
+                            },
+                            child: TextWidget(
+                              text: "Contact us",
+                              fontSize: 10,
+                            )),
+                      ],
+                    ),
+                  ),
+                  Gap(10),
+                  Center(
+                      child: InkWell(
+                    onTap: () {
+                      redirectToNewTab(Endpoint.globizs);
+                    },
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextWidget(
+                            text: "Powered by ",
+                            fontSize: 12,
+                            fontWeight: 900,
+                          ),
+                          TextWidget(
+                            text: "Globizs",
+                            fontSize: 15,
+                            fontWeight: 900,
+                            tColor: KColor.red,
+                          )
+                        ]),
+                  ))
+                ],
+              )
+            ],
           ),
         ),
       ),

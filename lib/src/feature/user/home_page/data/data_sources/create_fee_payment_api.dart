@@ -3,6 +3,7 @@ import 'package:edulooker_online_school_fee_payment/src/core/services/dio/endpoi
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/data/models/student_profile_model.dart';
 
 import '../../../../../core/services/dio/dio_interceptor.dart';
+import '../../../../../core/services/dio/dio_interceptor_siblings.dart';
 import '../../../../../core/shared/models/shared_model.dart';
 import '../../../../../core/storage/storage.dart';
 import '../models/create_fee_model.dart';
@@ -12,7 +13,7 @@ class CreateFeePaymentAPI {
 
   CreateFeePaymentAPI() {
     _dio = Dio();
-    _dio.interceptors.add(DioInterceptors());
+    _dio.interceptors.add(DioInterceptorsSiblings());
   }
 
   final String _url = Endpoint.createFeePayment;

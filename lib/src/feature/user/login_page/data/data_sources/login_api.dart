@@ -23,17 +23,11 @@ class LoginAPI {
 
   /// send OTP to device
   Future<SharedModel> sendOtp({
-    required String regdNumber,
-    required String dob,
     required String mobileNumber,
-    required String schoolId,
   }) async {
     try {
       _body = {
-        "registration_no": regdNumber,
-        "date_of_birth": dob,
         "mobile_no": int.parse(mobileNumber),
-        "school_id": int.parse(schoolId)
       };
 
       final response = await _dio.post(_sendOtp, data: _body);
@@ -102,14 +96,11 @@ class LoginAPI {
 
   /// verify otp to device
   Future<VerifyOtpModel> verifyOTP(
-      {required String regdNumber,
-      required String mobileNumber,
-      required String otp}) async {
+      {required String mobileNumber, required String otp}) async {
     try {
       _body = {
-        "registration_no": int.parse(regdNumber),
         "mobile_no": int.parse(mobileNumber),
-        "otp": int.parse(otp),
+        "otp": otp,
       };
 
       final response = await _dio.post(_verifyOtp, data: _body);

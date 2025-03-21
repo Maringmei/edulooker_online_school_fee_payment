@@ -40,7 +40,8 @@ class _DropDownSchoolListWidgetState extends State<DropDownSchoolListWidget> {
       isExpanded: true,
       decoration: InputDecoration(
         isDense: true,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5),
           borderSide: BorderSide.none,
@@ -58,17 +59,18 @@ class _DropDownSchoolListWidgetState extends State<DropDownSchoolListWidget> {
       ),
       items: widget.dataModel.data!
           .map((item) => DropdownMenuItem(
-          value: item.label,
-          child: TextWidget(
-            text: item.label!,
-          )))
+              value: item.label,
+              child: TextWidget(
+                text: item.label!,
+              )))
           .toList(),
-      validator: widget.validator ?? (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please select a school';
-        }
-        return null;
-      },
+      validator: widget.validator ??
+          (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please select a school';
+            }
+            return null;
+          },
       value: selectedValue,
       onChanged: (value) {
         setState(() {
@@ -78,7 +80,7 @@ class _DropDownSchoolListWidgetState extends State<DropDownSchoolListWidget> {
         // Find the corresponding SchoolData object
         if (value != null) {
           SchoolData selectedDatum = widget.dataModel.data!.firstWhere(
-                  (datum) => datum.label == value,
+              (datum) => datum.label == value,
               orElse: () => SchoolData(id: "0", label: ''));
 
           // Call the onChanged callback with the selected ID as a string
@@ -106,8 +108,8 @@ class _DropDownSchoolListWidgetState extends State<DropDownSchoolListWidget> {
         offset: const Offset(0, -5),
         scrollbarTheme: ScrollbarThemeData(
           radius: const Radius.circular(40),
-          thickness: MaterialStateProperty.all(6),
-          thumbVisibility: MaterialStateProperty.all(true),
+          thickness: WidgetStateProperty.all(6),
+          thumbVisibility: WidgetStateProperty.all(true),
         ),
       ),
       menuItemStyleData: const MenuItemStyleData(

@@ -41,6 +41,7 @@
 // }
 
 import 'package:dio/dio.dart';
+import 'package:edulooker_online_school_fee_payment/src/core/services/dio/endpoint_urls.dart';
 import '../../storage/storage.dart';
 
 class DioInterceptors extends Interceptor {
@@ -49,6 +50,7 @@ class DioInterceptors extends Interceptor {
       RequestOptions options, RequestInterceptorHandler handler) async {
     // Fetch the base URL dynamically before making the request
     String? baseUrl = await Store.getBaseUrl();
+    // String baseUrl = Endpoint.baseUrl;
     if (baseUrl != null) {
       options.baseUrl = baseUrl; // Set the baseUrl in the request options
     } else {
