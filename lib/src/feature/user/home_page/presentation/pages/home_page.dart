@@ -19,8 +19,19 @@ import '../widgets/sliver_widgets/persistant_header.dart';
 import '../widgets/sliver_widgets/sliver_title.dart';
 import '../widgets/tuition_fee_widget.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    BlocProvider.of<StudentProfileCubit>(context).getStudentProfile(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,9 +92,9 @@ class HomePage extends StatelessWidget {
                                       ).then((value) {
                                         if (value == true) {
                                           Store.clear();
-                                          BlocProvider.of<FeeListCubit>(context).clear();
+                                          BlocProvider.of<FeeListCubit>(context)
+                                              .clear();
                                           context.go(RouteList.login);
-
                                         }
                                       });
                                     },

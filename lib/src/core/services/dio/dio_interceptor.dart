@@ -49,8 +49,8 @@ class DioInterceptors extends Interceptor {
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
     // Fetch the base URL dynamically before making the request
-    String? baseUrl = await Store.getBaseUrl();
-    // String baseUrl = Endpoint.baseUrl;
+   // String? baseUrl = await Store.getBaseUrl();
+    String baseUrl = Endpoint.baseUrl;
     if (baseUrl != null) {
       options.baseUrl = baseUrl; // Set the baseUrl in the request options
     } else {

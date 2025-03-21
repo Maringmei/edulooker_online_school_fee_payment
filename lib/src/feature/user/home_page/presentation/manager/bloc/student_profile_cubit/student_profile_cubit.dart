@@ -7,15 +7,13 @@ import '../../../../data/models/sibling_list_model.dart';
 part 'student_profile_state.dart';
 
 class StudentProfileCubit extends Cubit<StudentProfileState> {
-  StudentProfileCubit() : super(StudentProfileInitial()){
-    getStudentProfile();
-  }
+  StudentProfileCubit() : super(StudentProfileInitial());
 
   StudentProfileRepo apiRepo = StudentProfileRepo();
 
-  getStudentProfile() async {
+  getStudentProfile(context) async {
     emit(StudentProfileInitial());
-    SiblingModel response = await apiRepo.getStudentProfile();
+    SiblingModel response = await apiRepo.getStudentProfile(context);
     if (response.success == true) {
       emit(StudentProfileLoaded(response: response));
     } else {

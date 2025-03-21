@@ -6,9 +6,7 @@ import 'package:equatable/equatable.dart';
 part 'fee_details_state.dart';
 
 class FeeDetailsCubit extends Cubit<FeeDetailsState> {
-  FeeDetailsCubit() : super(FeeDetailsInitial()) {
-    getFeeDetails();
-  }
+  FeeDetailsCubit() : super(FeeDetailsInitial());
 
   FeeDetailsRepo apiRepo = FeeDetailsRepo();
 

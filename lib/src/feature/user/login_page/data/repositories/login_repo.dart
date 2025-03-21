@@ -51,8 +51,8 @@ class LoginRepo {
       Store.saveUserInfo(username: "", data: res);
       await Future.delayed(const Duration(seconds: 1));
 
-      BlocProvider.of<StudentProfileCubit>(context).getStudentProfile();
-      BlocProvider.of<FeeDetailsCubit>(context).getFeeDetails();
+     // BlocProvider.of<StudentProfileCubit>(context).getStudentProfile(context);
+     // BlocProvider.of<FeeDetailsCubit>(context).getFeeDetails();
 
       context.go(RouteList.home);
       showDismiss();
