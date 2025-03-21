@@ -2,6 +2,7 @@ import 'package:edulooker_online_school_fee_payment/src/core/constants/strings/s
 import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/loading_shimmer.dart';
 import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/top_title.dart';
 import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/widget_spacing.dart';
+import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/manager/bloc/fee_list_cubit/fee_list_cubit.dart';
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/manager/bloc/student_profile_cubit/student_profile_cubit.dart';
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/widgets/student_profile_widget.dart';
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/widgets/transport_fee_widget.dart';
@@ -80,7 +81,9 @@ class HomePage extends StatelessWidget {
                                       ).then((value) {
                                         if (value == true) {
                                           Store.clear();
+                                          BlocProvider.of<FeeListCubit>(context).clear();
                                           context.go(RouteList.login);
+
                                         }
                                       });
                                     },
