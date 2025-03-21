@@ -526,7 +526,8 @@ class _TuitionFeeWidgetState extends State<TuitionFeeWidget> {
                                   child: ButtonWidget(
                                     text: "Pay",
                                     onTap: () async {
-                                      List<String> feeList = state.checkedFeeList;
+                                      List<String> feeList =
+                                          state.checkedFeeList;
                                       BlocProvider.of<TotalFeeCubit>(context)
                                           .getFeeTotalMultiple(feeList);
                                       // Payment logic
@@ -541,14 +542,15 @@ class _TuitionFeeWidgetState extends State<TuitionFeeWidget> {
                                               await apiRepo
                                                   .createFeePayment(
                                                       feeType: FeeType.tuition,
-                                                      feeID: feePayList)
+                                                      feeID: feeList)
                                                   .then((paymentDetails) {
                                             if (paymentDetails.success ==
                                                     true &&
                                                 paymentDetails.data!.data!
                                                         .atomTokenId !=
                                                     null) {
-                                              BlocProvider.of<FeeListCubit>(context)
+                                              BlocProvider.of<FeeListCubit>(
+                                                      context)
                                                   .clear();
                                               openPay(
                                                 paymentDetails
@@ -569,7 +571,6 @@ class _TuitionFeeWidgetState extends State<TuitionFeeWidget> {
                                                 paymentDetails.data!.data!.mode
                                                     .toString(),
                                               );
-
                                             } else {
                                               TopSnackBar.showError(context,
                                                   "Unable to make payment, try again later");

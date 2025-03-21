@@ -36,6 +36,8 @@ class StudentProfileAPI {
       if (response.statusCode == 200) {
         final responseData = response.data;
         if (responseData['success'] == true) {
+          Store.setBaseUrlSiblings(responseData["data"][0]["base_url"]);
+          Store.setTokenSibling(responseData["data"][0]["accessToken"]);
           return SiblingModel.fromJson(responseData);
         } else {
           return SiblingModel(
