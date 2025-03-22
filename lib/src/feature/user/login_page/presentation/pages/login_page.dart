@@ -101,12 +101,12 @@ class _LoginPageState extends State<LoginPage> {
                     width: 250,
                   ),
                   Gap(10),
-                  TextWidget(
-                    text: KString.schoolOnline,
-                    fontWeight: 700,
-                    fontSize: 25,
-                    lineHeight: 2,
-                  ),
+                  // TextWidget(
+                  //   text: KString.schoolOnline,
+                  //   fontWeight: 700,
+                  //   fontSize: 25,
+                  //   lineHeight: 2,
+                  // ),
                   TextWidget(
                     text: KString.feePayment,
                     fontWeight: 700,

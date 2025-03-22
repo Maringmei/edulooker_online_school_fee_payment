@@ -4,7 +4,7 @@ class KString {
   // Login
   static const schoolName = "Unacco";
   static const schoolOnline = "Unacco School Online";
-  static const feePayment = "Fee Payment";
+  static const feePayment = "Online Fee Payment";
 
   static const selectSchool = "Select School";
   static const admissionNumber = "Admission Number";
