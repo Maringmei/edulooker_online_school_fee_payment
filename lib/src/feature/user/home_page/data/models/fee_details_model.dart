@@ -99,9 +99,9 @@ class FeeData {
 
 class ExtraFee {
   String? fee;
-  int? fine;
-  int? disc;
-  int? pay;
+  dynamic? fine;
+  dynamic? disc;
+  dynamic? pay;
   List<dynamic>? defParts;
   String? registrationId;
 
