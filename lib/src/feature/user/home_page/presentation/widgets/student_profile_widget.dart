@@ -14,8 +14,26 @@ import '../../../../../core/constants/widgets/loading_shimmer.dart';
 import '../../../../../core/constants/widgets/text_widgets.dart';
 import '../manager/bloc/student_profile_cubit/student_profile_cubit.dart';
 
-class StudentProfileWidget extends StatelessWidget {
+class StudentProfileWidget extends StatefulWidget {
   const StudentProfileWidget({super.key});
+
+  @override
+  State<StudentProfileWidget> createState() => _StudentProfileWidgetState();
+}
+
+class _StudentProfileWidgetState extends State<StudentProfileWidget> {
+  int currentIndex = 0;
+  final ScrollController _scrollController = ScrollController();
+
+  void _scrollToIndex(int index) {
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        index * MediaQuery.of(context).size.width / 1.5, // Adjust offset based on item width
+        duration: Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +56,7 @@ class StudentProfileWidget extends StatelessWidget {
                 },
               ),
               child: ListView.builder(
+                controller: _scrollController,
                   scrollDirection: Axis.horizontal,
                   physics: const BouncingScrollPhysics(),
                   shrinkWrap: true,
@@ -45,10 +64,13 @@ class StudentProfileWidget extends StatelessWidget {
                   itemBuilder: (context, index) {
                     SiblingData? studentData = state.response.data![index];
                     double screenWidth = MediaQuery.of(context).size.width;
-                    return GestureDetector(
+                    return InkWell(
                       onTap: () async {
                         if (studentData.accessToken != null ||
                             studentData.accessToken!.isNotEmpty) {
+                          currentIndex = index;
+                          _scrollToIndex(currentIndex);
+                          setState(() {});
                           Store.setBaseUrlSiblings(studentData.baseUrl!);
                           Store.setTokenSibling(studentData.accessToken!);
                           await Future.delayed(Duration(seconds: 1));
@@ -64,16 +86,18 @@ class StudentProfileWidget extends StatelessWidget {
                           width: screenWidth / 1.5,
                           height: 200,
                           margin: EdgeInsets.all(5),
-                          decoration: BoxDecoration(color: KColor.white),
+                          // decoration: BoxDecoration(color: KColor.white),
                           child: Container(
                             padding: EdgeInsets.all(20),
                             decoration: BoxDecoration(
-                                color: KColor.white,
+                                color:KColor.white,
                                 image: DecorationImage(
                                   image: AssetImage(KImage.student),
                                   alignment: Alignment.centerRight,
                                 ),
-                                borderRadius: BorderRadius.circular(8)),
+                                borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color:currentIndex == index ? KColor.black : Colors.transparent, width: currentIndex == index ? 2 : 0),
+                            ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [

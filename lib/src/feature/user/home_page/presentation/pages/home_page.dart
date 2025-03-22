@@ -5,7 +5,6 @@ import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/w
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/manager/bloc/fee_list_cubit/fee_list_cubit.dart';
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/manager/bloc/student_profile_cubit/student_profile_cubit.dart';
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/widgets/student_profile_widget.dart';
-import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/widgets/transport_fee_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -46,10 +45,14 @@ class _HomePageState extends State<HomePage> {
                     BlocBuilder<StudentProfileCubit, StudentProfileState>(
                   builder: (context, state) {
                     return state is StudentProfileLoaded
-                        ? TextWidget(
-                            text: "Fee Payment",
-                            fontSize: 15,
-                            fontWeight: 700,
+                        ? Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
+                            child: TextWidget(
+                              text: "Fee Payment",
+                              fontSize: 15,
+                              fontWeight: 700,
+                            ),
                           )
                         : LoadingWidget(count: 1);
                   },
