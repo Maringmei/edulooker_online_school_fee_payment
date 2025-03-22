@@ -16,6 +16,7 @@ import '../../../../../core/storage/storage.dart';
 import '../../../../../route/router_list.dart';
 import '../widgets/sliver_widgets/persistant_header.dart';
 import '../widgets/sliver_widgets/sliver_title.dart';
+import '../widgets/tran_test.dart';
 import '../widgets/tuition_fee_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -35,7 +36,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 1, // only tuition fee , set 3 for tuition, transport, hostel
+      length: 2, // only tuition fee , set 3 for tuition, transport, hostel
       child: Scaffold(
         body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -145,7 +146,7 @@ class _HomePageState extends State<HomePage> {
                     indicatorPadding: EdgeInsets.only(bottom: 10),
                     tabs: [
                       Tab(text: "Tuition Fee"),
-                      // Tab(text: "Transport Fee"),
+                      Tab(text: "Transport Fee"),
                       // Tab(text: "Hostel Fee"),
                     ],
                   ),
@@ -159,7 +160,12 @@ class _HomePageState extends State<HomePage> {
                   bottom: 0,
                   child:
                       TuitionFeeWidget()), // Wrap in CustomScrollView or fix scrolling below
-              // TransportFeeWidget(),
+
+              WidgetSpacing.padding(
+                bottom: 0,
+                child: TransportFeeWidget(),
+              ), // Wrap in CustomScrollView or fix scrolling below
+
               // HostelFeeWidget(),
             ],
           ),
