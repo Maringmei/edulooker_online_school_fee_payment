@@ -2,6 +2,7 @@ import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/b
 import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/top_snack_bar.dart';
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/data/models/create_fee_model.dart';
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/data/repositories/create_fee_payment_repo.dart';
+import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/manager/bloc/fee_hostel_cubit/fee_hostel_cubit.dart';
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/manager/bloc/fee_list_cubit/fee_list_cubit.dart';
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/manager/bloc/total_fee_cubit/total_fee_cubit.dart';
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/manager/fee_type.dart';
@@ -22,14 +23,14 @@ import '../../data/models/fee_details_model.dart';
 import '../manager/bloc/fee_details_cubit/fee_details_cubit.dart';
 import '../manager/transaction_status.dart';
 
-class TuitionFeeWidget extends StatefulWidget {
-  TuitionFeeWidget({super.key});
+class HostelFeeWidget extends StatefulWidget {
+  HostelFeeWidget({super.key});
 
   @override
-  State<TuitionFeeWidget> createState() => _TuitionFeeWidgetState();
+  State<HostelFeeWidget> createState() => _HostelFeeWidgetState();
 }
 
-class _TuitionFeeWidgetState extends State<TuitionFeeWidget> {
+class _HostelFeeWidgetState extends State<HostelFeeWidget> {
   CreateFeePaymentRepo apiRepo = CreateFeePaymentRepo();
   bool payButtonActive = false;
   List<String> feePayList = [];
@@ -40,17 +41,17 @@ class _TuitionFeeWidgetState extends State<TuitionFeeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FeeDetailsCubit, FeeDetailsState>(
+    return BlocBuilder<FeeHostelCubit, FeeHostelState>(
       builder: (context, state) {
-        if (state is FeeDetailsInitial) {
+        if (state is FeeHostelInitial) {
           return LoadingWidget(
             count: 3,
           );
         }
-        if (state is FeeDetailsLoaded) {
+        if (state is FeeHostelLoaded) {
           return feeListWidget(context, state);
         }
-        if (state is FeeDetailsEmpty) {
+        if (state is FeeHostelEmpty) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -64,7 +65,7 @@ class _TuitionFeeWidgetState extends State<TuitionFeeWidget> {
             ),
           );
         }
-        if (state is FeeDetailsError) {
+        if (state is FeeHostelError) {
           return errorWidget(state, context);
         }
         return Container();
@@ -73,13 +74,13 @@ class _TuitionFeeWidgetState extends State<TuitionFeeWidget> {
   }
 
   /*********************************************************************** FEE LIST **********************/
-  Column feeListWidget(BuildContext context, FeeDetailsLoaded state) {
+  Column feeListWidget(BuildContext context, FeeHostelLoaded state) {
     return Column(
       children: [
         Expanded(
           child: RefreshIndicator(
             onRefresh: () =>
-                BlocProvider.of<FeeDetailsCubit>(context).getFeeDetails(),
+                BlocProvider.of<FeeHostelCubit>(context).getFeeHostel(),
             child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: state.response.data!.length,
@@ -583,7 +584,7 @@ class _TuitionFeeWidgetState extends State<TuitionFeeWidget> {
     );
   }
 
-  Center errorWidget(FeeDetailsError state, BuildContext context) {
+  Center errorWidget(FeeHostelError state, BuildContext context) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

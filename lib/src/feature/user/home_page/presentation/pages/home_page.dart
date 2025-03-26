@@ -3,7 +3,9 @@ import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/l
 import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/top_title.dart';
 import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/widget_spacing.dart';
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/manager/bloc/fee_list_cubit/fee_list_cubit.dart';
+import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/manager/bloc/fee_type_cubit/fee_type_cubit.dart';
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/manager/bloc/student_profile_cubit/student_profile_cubit.dart';
+import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/manager/fee_type.dart';
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/widgets/student_profile_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,9 +16,9 @@ import '../../../../../core/constants/widgets/logout_dialog.dart';
 import '../../../../../core/constants/widgets/text_widgets.dart';
 import '../../../../../core/storage/storage.dart';
 import '../../../../../route/router_list.dart';
+import '../widgets/hostel_fee_updated_widget.dart';
 import '../widgets/sliver_widgets/persistant_header.dart';
 import '../widgets/sliver_widgets/sliver_title.dart';
-import '../widgets/tran_test.dart';
 import '../widgets/tuition_fee_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -133,6 +135,18 @@ class _HomePageState extends State<HomePage> {
                 pinned: true,
                 delegate: MySliverPersistentHeaderDelegate(
                   TabBar(
+                    onTap: (index){
+                      if(index == 0){
+                        BlocProvider.of<FeeTypeCubit>(context).setFeeType(FeeType.tuition);
+                      }
+                      if(index == 1){
+                        BlocProvider.of<FeeTypeCubit>(context).setFeeType(FeeType.hostel);
+                      }
+                      if(index == 2){
+                        BlocProvider.of<FeeTypeCubit>(context).setFeeType(FeeType.transport);
+                      }
+
+                    },
                     labelColor: KColor.appColor,
                     unselectedLabelColor: KColor.black,
                     indicatorColor: KColor.appColor,
@@ -146,8 +160,8 @@ class _HomePageState extends State<HomePage> {
                     indicatorPadding: EdgeInsets.only(bottom: 10),
                     tabs: [
                       Tab(text: "Tuition Fee"),
-                      Tab(text: "Transport Fee"),
-                      // Tab(text: "Hostel Fee"),
+                      Tab(text: "Hostel Fee"),
+                      // Tab(text: "Transport Fee"),
                     ],
                   ),
                 ),
@@ -163,10 +177,10 @@ class _HomePageState extends State<HomePage> {
 
               WidgetSpacing.padding(
                 bottom: 0,
-                child: TransportFeeWidget(),
+                child: HostelFeeWidget(),
               ), // Wrap in CustomScrollView or fix scrolling below
 
-              // HostelFeeWidget(),
+              // TransportFeeWidget(),
             ],
           ),
         ),

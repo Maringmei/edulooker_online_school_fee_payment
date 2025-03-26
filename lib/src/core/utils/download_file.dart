@@ -17,6 +17,8 @@ Future<void> downloadFile(String receiptNo, {String? fileName, required String b
       ),
     );
 
+   // https://unnaco.com/pay-fee/download?receiptNo=123
+
     final blob = html.Blob([response.data]);
     final url = html.Url.createObjectUrlFromBlob(blob);
     final anchor = html.AnchorElement(href: url)

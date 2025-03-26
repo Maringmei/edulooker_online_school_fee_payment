@@ -8,6 +8,7 @@ class Assets {
   static const String imagesLogo = 'assets/images/logo.png';
   static const String imagesLogoFull = 'assets/images/logo_full.png';
   static const String imagesNoData = 'assets/images/no_data.png';
+  static const String imagesNoDataConceptIllustration63419628498RemovebgPreviewMin = 'assets/images/no-data-concept-illustration_634196-28498-removebg-preview-min.png';
   static const String imagesNotFound = 'assets/images/not_found.png';
   static const String imagesSessionExpire = 'assets/images/session_expire.png';
   static const String imagesStudent = 'assets/images/student.png';

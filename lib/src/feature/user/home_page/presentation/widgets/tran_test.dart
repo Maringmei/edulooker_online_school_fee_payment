@@ -20,6 +20,7 @@ import '../../../../../core/utils/date_format.dart';
 import '../../../../../core/utils/download_file.dart';
 import '../../data/models/fee_details_model.dart';
 import '../manager/bloc/fee_details_cubit/fee_details_cubit.dart';
+import '../manager/bloc/fee_transport_cubit/fee_transport_cubit.dart';
 import '../manager/transaction_status.dart';
 
 class TransportFeeWidget extends StatefulWidget {
@@ -40,17 +41,17 @@ class _TransportFeeWidgetState extends State<TransportFeeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FeeDetailsCubit, FeeDetailsState>(
+    return BlocBuilder<FeeTransportCubit, FeeTransportState>(
       builder: (context, state) {
-        if (state is FeeDetailsInitial) {
+        if (state is FeeTransportInitial) {
           return LoadingWidget(
             count: 3,
           );
         }
-        if (state is FeeDetailsLoaded) {
+        if (state is FeeTransportLoaded) {
           return feeListWidget(context, state);
         }
-        if (state is FeeDetailsEmpty) {
+        if (state is FeeTransportEmpty) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -64,7 +65,7 @@ class _TransportFeeWidgetState extends State<TransportFeeWidget> {
             ),
           );
         }
-        if (state is FeeDetailsError) {
+        if (state is FeeTransportError) {
           return errorWidget(state, context);
         }
         return Container();
@@ -73,7 +74,7 @@ class _TransportFeeWidgetState extends State<TransportFeeWidget> {
   }
 
   /*********************************************************************** FEE LIST **********************/
-  Column feeListWidget(BuildContext context, FeeDetailsLoaded state) {
+  Column feeListWidget(BuildContext context, FeeTransportLoaded state) {
     return Column(
       children: [
         Expanded(
@@ -583,7 +584,7 @@ class _TransportFeeWidgetState extends State<TransportFeeWidget> {
     );
   }
 
-  Center errorWidget(FeeDetailsError state, BuildContext context) {
+  Center errorWidget(FeeTransportError state, BuildContext context) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

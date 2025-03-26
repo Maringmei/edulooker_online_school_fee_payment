@@ -5,6 +5,7 @@ import '../feature/user/home_page/presentation/manager/bloc/fee_details_cubit/fe
 import '../feature/user/home_page/presentation/manager/bloc/fee_hostel_cubit/fee_hostel_cubit.dart';
 import '../feature/user/home_page/presentation/manager/bloc/fee_list_cubit/fee_list_cubit.dart';
 import '../feature/user/home_page/presentation/manager/bloc/fee_transport_cubit/fee_transport_cubit.dart';
+import '../feature/user/home_page/presentation/manager/bloc/fee_type_cubit/fee_type_cubit.dart';
 import '../feature/user/home_page/presentation/manager/bloc/student_profile_cubit/student_profile_cubit.dart';
 import '../feature/user/home_page/presentation/manager/bloc/total_fee_cubit/total_fee_cubit.dart';
 
@@ -31,12 +32,15 @@ class MultiBlocWrapper extends StatelessWidget {
       BlocProvider(
         create: (context) => FeeListCubit(),
       ),
-      // BlocProvider(
-      //   create: (context) => FeeTransportCubit(),
-      // ),
-      // BlocProvider(
-      //   create: (context) => FeeHostelCubit(),
-      // ),
+      BlocProvider(
+        create: (context) => FeeTransportCubit(),
+      ),
+      BlocProvider(
+        create: (context) => FeeHostelCubit(),
+      ),
+      BlocProvider(
+        create: (context) => FeeTypeCubit(),
+      ),
     ], child: app);
   }
 }

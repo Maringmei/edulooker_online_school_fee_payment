@@ -4,14 +4,18 @@ import 'package:edulooker_online_school_fee_payment/src/core/constants/colors/co
 import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/top_snack_bar.dart';
 import 'package:edulooker_online_school_fee_payment/src/core/storage/storage.dart';
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/data/models/sibling_list_model.dart';
-import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/manager/bloc/fee_details_cubit/fee_details_cubit.dart';
+import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/manager/bloc/fee_hostel_cubit/fee_hostel_cubit.dart';
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/manager/bloc/fee_list_cubit/fee_list_cubit.dart';
+import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/manager/bloc/fee_type_cubit/fee_type_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import '../../../../../core/constants/images/images_constants.dart';
 import '../../../../../core/constants/widgets/loading_shimmer.dart';
 import '../../../../../core/constants/widgets/text_widgets.dart';
+
+import '../../data/repositories/fee_type.dart';
+import '../manager/bloc/fee_details_cubit/fee_details_cubit.dart';
 import '../manager/bloc/student_profile_cubit/student_profile_cubit.dart';
 
 class StudentProfileWidget extends StatefulWidget {
@@ -28,7 +32,9 @@ class _StudentProfileWidgetState extends State<StudentProfileWidget> {
   void _scrollToIndex(int index) {
     if (_scrollController.hasClients) {
       _scrollController.animateTo(
-        index * MediaQuery.of(context).size.width / 1.5, // Adjust offset based on item width
+        index *
+            MediaQuery.of(context).size.width /
+            1.5, // Adjust offset based on item width
         duration: Duration(milliseconds: 500),
         curve: Curves.easeInOut,
       );
@@ -56,7 +62,7 @@ class _StudentProfileWidgetState extends State<StudentProfileWidget> {
                 },
               ),
               child: ListView.builder(
-                controller: _scrollController,
+                  controller: _scrollController,
                   scrollDirection: Axis.horizontal,
                   physics: const BouncingScrollPhysics(),
                   shrinkWrap: true,
@@ -75,8 +81,17 @@ class _StudentProfileWidgetState extends State<StudentProfileWidget> {
                           Store.setTokenSibling(studentData.accessToken!);
                           await Future.delayed(Duration(seconds: 1));
                           BlocProvider.of<FeeListCubit>(context).clear();
-                          BlocProvider.of<FeeDetailsCubit>(context)
-                              .getFeeDetails();
+                          String feeType =
+                              context.read<FeeTypeCubit>().state.feeType;
+                          debugPrint(feeType);
+                          if (feeType == FeeType.tuitionFee) {
+                            BlocProvider.of<FeeDetailsCubit>(context)
+                                .getFeeDetails();
+                          }
+                          if (feeType == FeeType.hostelFee) {
+                            BlocProvider.of<FeeHostelCubit>(context)
+                                .getFeeHostel();
+                          }
                         } else {
                           TopSnackBar.showError(
                               context, "Student data not found.");
@@ -90,13 +105,17 @@ class _StudentProfileWidgetState extends State<StudentProfileWidget> {
                           child: Container(
                             padding: EdgeInsets.all(20),
                             decoration: BoxDecoration(
-                                color:KColor.white,
-                                image: DecorationImage(
-                                  image: AssetImage(KImage.student),
-                                  alignment: Alignment.centerRight,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color:currentIndex == index ? KColor.black : Colors.transparent, width: currentIndex == index ? 2 : 0),
+                              color: KColor.white,
+                              image: DecorationImage(
+                                image: AssetImage(KImage.student),
+                                alignment: Alignment.centerRight,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                  color: currentIndex == index
+                                      ? KColor.black
+                                      : Colors.transparent,
+                                  width: currentIndex == index ? 2 : 0),
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
