@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:edulooker_online_school_fee_payment/src/core/constants/colors/color_constants.dart';
 import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/top_snack_bar.dart';
 import 'package:edulooker_online_school_fee_payment/src/core/storage/storage.dart';
@@ -13,7 +12,6 @@ import 'package:gap/gap.dart';
 import '../../../../../core/constants/images/images_constants.dart';
 import '../../../../../core/constants/widgets/loading_shimmer.dart';
 import '../../../../../core/constants/widgets/text_widgets.dart';
-
 import '../../data/repositories/fee_type.dart';
 import '../manager/bloc/fee_details_cubit/fee_details_cubit.dart';
 import '../manager/bloc/student_profile_cubit/student_profile_cubit.dart';
@@ -101,11 +99,11 @@ class _StudentProfileWidgetState extends State<StudentProfileWidget> {
                           width: screenWidth / 1.5,
                           height: 200,
                           margin: EdgeInsets.all(5),
-                          // decoration: BoxDecoration(color: KColor.white),
+                          decoration: BoxDecoration(color: KColor.white),
                           child: Container(
                             padding: EdgeInsets.all(20),
                             decoration: BoxDecoration(
-                              color: KColor.white,
+                              color: KColor.filledColor,
                               image: DecorationImage(
                                 image: AssetImage(KImage.student),
                                 alignment: Alignment.centerRight,

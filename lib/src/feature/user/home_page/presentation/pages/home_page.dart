@@ -40,6 +40,7 @@ class _HomePageState extends State<HomePage> {
     return DefaultTabController(
       length: 2, // only tuition fee , set 3 for tuition, transport, hostel
       child: Scaffold(
+
         body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return [
@@ -68,7 +69,7 @@ class _HomePageState extends State<HomePage> {
                 pinned: true,
                 floating: false,
                 expandedHeight: 250, // Adjust height as needed
-                backgroundColor: KColor.filledColor,
+                backgroundColor: KColor.white,
 
                 flexibleSpace: FlexibleSpaceBar(
                   collapseMode: CollapseMode.parallax,

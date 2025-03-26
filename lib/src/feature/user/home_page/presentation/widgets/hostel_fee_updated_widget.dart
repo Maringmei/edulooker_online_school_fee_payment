@@ -113,7 +113,7 @@ class _HostelFeeWidgetState extends State<HostelFeeWidget> {
                                   // color: feePayList.contains(data.feeId)
                                   //     ? KColor.appColor.withAlpha(30)
                                   //     : KColor.white,
-                                  color: KColor.white,
+                                  color: KColor.filledColor,
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Column(

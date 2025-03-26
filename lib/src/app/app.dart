@@ -26,7 +26,7 @@ class App extends StatelessWidget {
                 appBarTheme: const AppBarTheme(
                   backgroundColor: KColor.appColor, // Set background color here
                 ),
-                scaffoldBackgroundColor: KColor.filledColor,
+                scaffoldBackgroundColor: KColor.white,
                 visualDensity: VisualDensity.standard),
             routerConfig: router,
             builder: EasyLoading.init(builder: FlashyFlushbarProvider.init()),
