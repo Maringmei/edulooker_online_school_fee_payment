@@ -15,7 +15,7 @@ class StudentProfileRepo {
       Store.setBaseUrlSiblings(response.data![0].baseUrl!);
       Store.setTokenSibling(response.data![0].accessToken!);
       await Future.delayed(Duration(seconds: 1));
-      BlocProvider.of<FeeDetailsCubit>(context).getFeeDetails();
+      BlocProvider.of<FeeDetailsCubit>(context).getFeeDetails(context);
       return response;
     } else {
       return response;

@@ -602,7 +602,7 @@ class _TransportFeeWidgetState extends State<TransportFeeWidget> {
           ButtonWidget(
               text: "Retry",
               onTap: () {
-                BlocProvider.of<FeeDetailsCubit>(context).getFeeDetails();
+                BlocProvider.of<FeeTransportCubit>(context).getFeeTransport(context);
               }),
         ],
       ),

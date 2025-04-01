@@ -600,7 +600,7 @@ class _HostelFeeWidgetState extends State<HostelFeeWidget> {
           ButtonWidget(
               text: "Retry",
               onTap: () {
-                BlocProvider.of<FeeDetailsCubit>(context).getFeeDetails();
+                BlocProvider.of<FeeHostelCubit>(context).getFeeHostel();
               }),
         ],
       ),

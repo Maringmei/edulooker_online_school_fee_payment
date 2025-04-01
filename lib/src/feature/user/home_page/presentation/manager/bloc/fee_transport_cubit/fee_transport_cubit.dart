@@ -12,32 +12,31 @@ part 'fee_transport_state.dart';
 
 class FeeTransportCubit extends Cubit<FeeTransportState> {
   FeeTransportCubit() : super(FeeTransportInitial()) {
-   // getFeeTransport();
+    // getFeeTransport();
   }
 
   FeeDetailsRepo apiRepo = FeeDetailsRepo();
 
-   getFeeTransport(context) async {
+  getFeeTransport(context) async {
+    print("Transport init");
     int counter = 0;
     emit(FeeTransportInitial());
     FeeDetailsModel response = await apiRepo.getFeeTransport();
+    print("status" + response.data![0].status.toString());
     if (response.success == true) {
       if (response.data!.isNotEmpty) {
-
-
         // pre select fee
-        for(int i = 0 ; i < response.data!.length ; i++){
-          if(response.data![i].feeExempted == FeePaymentType.feeNotExempted && response.data![i].status ==  TransactionStatus.upPaid){
+        for (int i = 0; i < response.data!.length; i++) {
+          if (response.data![i].feeExempted == FeePaymentType.feeNotExempted &&
+              response.data![i].status == TransactionStatus.upPaid) {
             counter++;
             BlocProvider.of<FeeListCubit>(context)
                 .setFeeList(response.data![i].feeId.toString());
-            if(counter == 3){
+            if (counter == 3) {
               break;
             }
-
           }
         }
-
 
         emit(FeeTransportLoaded(response: response));
       } else {

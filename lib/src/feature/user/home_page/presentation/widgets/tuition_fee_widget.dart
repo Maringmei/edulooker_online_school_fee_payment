@@ -79,7 +79,7 @@ class _TuitionFeeWidgetState extends State<TuitionFeeWidget> {
         Expanded(
           child: RefreshIndicator(
             onRefresh: () =>
-                BlocProvider.of<FeeDetailsCubit>(context).getFeeDetails(),
+                BlocProvider.of<FeeDetailsCubit>(context).getFeeDetails(context),
             child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: state.response.data!.length,
@@ -599,7 +599,7 @@ class _TuitionFeeWidgetState extends State<TuitionFeeWidget> {
           ButtonWidget(
               text: "Retry",
               onTap: () {
-                BlocProvider.of<FeeDetailsCubit>(context).getFeeDetails();
+                BlocProvider.of<FeeDetailsCubit>(context).getFeeDetails(context);
               }),
         ],
       ),

@@ -86,7 +86,7 @@ class _StudentProfileWidgetState extends State<StudentProfileWidget> {
                           debugPrint(feeType);
                           if (feeType == FeeType.tuitionFee) {
                             BlocProvider.of<FeeDetailsCubit>(context)
-                                .getFeeDetails();
+                                .getFeeDetails(context);
                           }
                           if (feeType == FeeType.hostelFee) {
                             BlocProvider.of<FeeHostelCubit>(context)

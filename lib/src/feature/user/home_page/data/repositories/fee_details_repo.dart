@@ -26,7 +26,7 @@ class FeeDetailsRepo {
 
   Future<FeeDetailsModel> getFeeTransport() async {
     FeeDetailsModel response =
-        await api.getFeeDetails(id: FeeType.tuitionFee);
+        await api.getFeeDetails(id: FeeType.transportFee);
     if (response.success == true) {
       return response;
     } else {
