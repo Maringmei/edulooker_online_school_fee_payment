@@ -16,9 +16,11 @@ import '../../../../../core/constants/widgets/logout_dialog.dart';
 import '../../../../../core/constants/widgets/text_widgets.dart';
 import '../../../../../core/storage/storage.dart';
 import '../../../../../route/router_list.dart';
+import '../manager/bloc/fee_transport_cubit/fee_transport_cubit.dart';
 import '../widgets/hostel_fee_updated_widget.dart';
 import '../widgets/sliver_widgets/persistant_header.dart';
 import '../widgets/sliver_widgets/sliver_title.dart';
+import '../widgets/transport_fee_update_widget.dart';
 import '../widgets/tuition_fee_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -38,9 +40,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2, // only tuition fee , set 3 for tuition, transport, hostel
+      length: 3,
       child: Scaffold(
-
         body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return [
@@ -136,17 +137,21 @@ class _HomePageState extends State<HomePage> {
                 pinned: true,
                 delegate: MySliverPersistentHeaderDelegate(
                   TabBar(
-                    onTap: (index){
-                      if(index == 0){
-                        BlocProvider.of<FeeTypeCubit>(context).setFeeType(FeeType.tuition);
+                    onTap: (index) {
+                      if (index == 0) {
+                        BlocProvider.of<FeeTypeCubit>(context)
+                            .setFeeType(FeeType.tuition);
                       }
-                      if(index == 1){
-                        BlocProvider.of<FeeTypeCubit>(context).setFeeType(FeeType.hostel);
+                      if (index == 1) {
+                        BlocProvider.of<FeeTypeCubit>(context)
+                            .setFeeType(FeeType.hostel);
                       }
-                      if(index == 2){
-                        BlocProvider.of<FeeTypeCubit>(context).setFeeType(FeeType.transport);
+                      if (index == 2) {
+                        BlocProvider.of<FeeTypeCubit>(context)
+                            .setFeeType(FeeType.transport);
+                        BlocProvider.of<FeeTransportCubit>(context)
+                            .getFeeTransport(context);
                       }
-
                     },
                     labelColor: KColor.appColor,
                     unselectedLabelColor: KColor.black,
@@ -162,7 +167,7 @@ class _HomePageState extends State<HomePage> {
                     tabs: [
                       Tab(text: "Tuition Fee"),
                       Tab(text: "Hostel Fee"),
-                      // Tab(text: "Transport Fee"),
+                      Tab(text: "Transport Fee"),
                     ],
                   ),
                 ),
@@ -181,7 +186,10 @@ class _HomePageState extends State<HomePage> {
                 child: HostelFeeWidget(),
               ), // Wrap in CustomScrollView or fix scrolling below
 
-              // TransportFeeWidget(),
+              WidgetSpacing.padding(
+                bottom: 0,
+                child: TransportFeeWidget(),
+              ), // Wrap in CustomScrollView or fix scrolling below
             ],
           ),
         ),

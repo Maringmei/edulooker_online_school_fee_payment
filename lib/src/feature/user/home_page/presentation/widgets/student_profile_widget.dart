@@ -5,6 +5,7 @@ import 'package:edulooker_online_school_fee_payment/src/core/storage/storage.dar
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/data/models/sibling_list_model.dart';
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/manager/bloc/fee_hostel_cubit/fee_hostel_cubit.dart';
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/manager/bloc/fee_list_cubit/fee_list_cubit.dart';
+import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/manager/bloc/fee_transport_cubit/fee_transport_cubit.dart';
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/manager/bloc/fee_type_cubit/fee_type_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -79,6 +80,7 @@ class _StudentProfileWidgetState extends State<StudentProfileWidget> {
                           Store.setTokenSibling(studentData.accessToken!);
                           await Future.delayed(Duration(seconds: 1));
                           BlocProvider.of<FeeListCubit>(context).clear();
+
                           String feeType =
                               context.read<FeeTypeCubit>().state.feeType;
                           debugPrint(feeType);
@@ -89,6 +91,10 @@ class _StudentProfileWidgetState extends State<StudentProfileWidget> {
                           if (feeType == FeeType.hostelFee) {
                             BlocProvider.of<FeeHostelCubit>(context)
                                 .getFeeHostel();
+                          }
+                          if (feeType == FeeType.transportFee) {
+                            BlocProvider.of<FeeTransportCubit>(context)
+                                .getFeeTransport(context);
                           }
                         } else {
                           TopSnackBar.showError(
