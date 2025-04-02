@@ -22,17 +22,17 @@ class FeeDetailsCubit extends Cubit<FeeDetailsState> {
     if (response.success == true) {
       if (response.data!.isNotEmpty) {
         // pre select fee
-        for (int i = 0; i < response.data!.length; i++) {
-          if (response.data![i].feeExempted == FeePaymentType.feeNotExempted &&
-              response.data![i].status == TransactionStatus.upPaid) {
-            counter++;
-            BlocProvider.of<FeeListCubit>(context)
-                .setFeeList(response.data![i].feeId.toString());
-            if (counter == 3) {
-              break;
-            }
-          }
-        }
+        // for (int i = 0; i < response.data!.length; i++) {
+        //   if (response.data![i].feeExempted == FeePaymentType.feeNotExempted &&
+        //       response.data![i].status == TransactionStatus.upPaid) {
+        //     counter++;
+        //     BlocProvider.of<FeeListCubit>(context)
+        //         .setFeeList(response.data![i].feeId.toString());
+        //     if (counter == 3) {
+        //       break;
+        //     }
+        //   }
+        // }
         emit(FeeDetailsLoaded(response: response));
       } else {
         emit(FeeDetailsEmpty());

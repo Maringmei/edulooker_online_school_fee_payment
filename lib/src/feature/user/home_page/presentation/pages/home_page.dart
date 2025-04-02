@@ -146,12 +146,12 @@ class _HomePageState extends State<HomePage> {
                         BlocProvider.of<FeeTypeCubit>(context)
                             .setFeeType(FeeType.hostel);
                       }
-                      if (index == 2) {
-                        BlocProvider.of<FeeTypeCubit>(context)
-                            .setFeeType(FeeType.transport);
-                        BlocProvider.of<FeeTransportCubit>(context)
-                            .getFeeTransport(context);
-                      }
+                      // if (index == 2) {
+                      //   BlocProvider.of<FeeTypeCubit>(context)
+                      //       .setFeeType(FeeType.transport);
+                      //   BlocProvider.of<FeeTransportCubit>(context)
+                      //       .getFeeTransport(context);
+                      // }
                     },
                     labelColor: KColor.appColor,
                     unselectedLabelColor: KColor.black,
@@ -167,7 +167,7 @@ class _HomePageState extends State<HomePage> {
                     tabs: [
                       Tab(text: "Tuition Fee"),
                       Tab(text: "Hostel Fee"),
-                      Tab(text: "Transport Fee"),
+                      //Tab(text: "Transport Fee"),
                     ],
                   ),
                 ),
@@ -186,10 +186,10 @@ class _HomePageState extends State<HomePage> {
                 child: HostelFeeWidget(),
               ), // Wrap in CustomScrollView or fix scrolling below
 
-              WidgetSpacing.padding(
-                bottom: 0,
-                child: TransportFeeWidget(),
-              ), // Wrap in CustomScrollView or fix scrolling below
+              // WidgetSpacing.padding(
+              //   bottom: 0,
+              //   child: TransportFeeWidget(),
+              // ), // Wrap in CustomScrollView or fix scrolling below
             ],
           ),
         ),
