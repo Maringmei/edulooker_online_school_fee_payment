@@ -2,6 +2,8 @@ import 'package:edulooker_online_school_fee_payment/src/core/constants/strings/s
 import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/loading_shimmer.dart';
 import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/top_title.dart';
 import 'package:edulooker_online_school_fee_payment/src/core/constants/widgets/widget_spacing.dart';
+import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/manager/bloc/fee_details_cubit/fee_details_cubit.dart';
+import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/manager/bloc/fee_hostel_cubit/fee_hostel_cubit.dart';
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/manager/bloc/fee_list_cubit/fee_list_cubit.dart';
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/manager/bloc/fee_type_cubit/fee_type_cubit.dart';
 import 'package:edulooker_online_school_fee_payment/src/feature/user/home_page/presentation/manager/bloc/student_profile_cubit/student_profile_cubit.dart';
@@ -40,7 +42,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -139,10 +141,13 @@ class _HomePageState extends State<HomePage> {
                   TabBar(
                     onTap: (index) {
                       if (index == 0) {
+                        BlocProvider.of<FeeDetailsCubit>(context).getFeeDetails(context);
                         BlocProvider.of<FeeTypeCubit>(context)
                             .setFeeType(FeeType.tuition);
+
                       }
                       if (index == 1) {
+                        BlocProvider.of<FeeHostelCubit>(context).getFeeHostel();
                         BlocProvider.of<FeeTypeCubit>(context)
                             .setFeeType(FeeType.hostel);
                       }

@@ -55,10 +55,10 @@ class CreateFeeModelData {
 class Data {
   String? merchId;
   String? custEmail;
-  String? custMobile;
+  dynamic? custMobile;
   String? returnUrl;
   String? mode;
-  int? atomTokenId;
+  dynamic? atomTokenId;
 
   Data({
     this.merchId,
