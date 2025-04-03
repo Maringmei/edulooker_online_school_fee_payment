@@ -18,11 +18,9 @@ import '../../../../../core/constants/widgets/logout_dialog.dart';
 import '../../../../../core/constants/widgets/text_widgets.dart';
 import '../../../../../core/storage/storage.dart';
 import '../../../../../route/router_list.dart';
-import '../manager/bloc/fee_transport_cubit/fee_transport_cubit.dart';
 import '../widgets/hostel_fee_updated_widget.dart';
 import '../widgets/sliver_widgets/persistant_header.dart';
 import '../widgets/sliver_widgets/sliver_title.dart';
-import '../widgets/transport_fee_update_widget.dart';
 import '../widgets/tuition_fee_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -144,12 +142,14 @@ class _HomePageState extends State<HomePage> {
                         BlocProvider.of<FeeDetailsCubit>(context).getFeeDetails(context);
                         BlocProvider.of<FeeTypeCubit>(context)
                             .setFeeType(FeeType.tuition);
+                        BlocProvider.of<FeeListCubit>(context).clear();
 
                       }
                       if (index == 1) {
                         BlocProvider.of<FeeHostelCubit>(context).getFeeHostel();
                         BlocProvider.of<FeeTypeCubit>(context)
                             .setFeeType(FeeType.hostel);
+                        BlocProvider.of<FeeListCubit>(context).clear();
                       }
                       // if (index == 2) {
                       //   BlocProvider.of<FeeTypeCubit>(context)

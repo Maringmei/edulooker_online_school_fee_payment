@@ -7,7 +7,7 @@ part 'fee_hostel_state.dart';
 
 class FeeHostelCubit extends Cubit<FeeHostelState> {
   FeeHostelCubit() : super(FeeHostelInitial()) {
-    getFeeHostel();
+    // getFeeHostel();
   }
 
   FeeDetailsRepo apiRepo = FeeDetailsRepo();
